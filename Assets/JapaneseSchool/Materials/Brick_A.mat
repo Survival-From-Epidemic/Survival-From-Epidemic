@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5500092966473796046
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -8,17 +21,16 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Brick_A
-  m_Shader: {fileID: -6465566751694194690, guid: e66a6962a0a85c047a4562d2a5cbec3a,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0b92ddc99b146fe4a9953ec014f021ca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2225
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -31,8 +43,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_614c8d2b4a664bf998c3b06bd3c45069:
+        m_Texture: {fileID: 2800000, guid: 71cb7f81d8ae1c143bde3b847281a5de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_6448ff32583848edafcc41b3d808accf:
         m_Texture: {fileID: 2800000, guid: 71cb7f81d8ae1c143bde3b847281a5de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_6476defd4a784db180cc26424e483627:
+        m_Texture: {fileID: 2800000, guid: 07b4f777ce160d04985408a2df69f677, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8af013da5ee147c0865590860d3acc55:
@@ -43,8 +63,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: b6a0e82e0e3ab21479878450ea17a2fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_a7025f698edf4db7aac3cb34b1102621:
+        m_Texture: {fileID: 2800000, guid: 61a26cd3dc41c9741bd59a1c82b590b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_a7b6d46851c54c03b6019f4ac5970c32:
         m_Texture: {fileID: 2800000, guid: 07b4f777ce160d04985408a2df69f677, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_de08c9d8f52a4f1bb32ed04c25e2b3c5:
+        m_Texture: {fileID: 2800000, guid: b6a0e82e0e3ab21479878450ea17a2fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_dfa7f4ce05474940865aa474246390d0:
@@ -153,11 +181,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Boolean_1528e353445e4241bed245e515d1ab02: 1
+    - Boolean_907cf51abbcb4291928850a465cad51f: 1
     - Vector1_5c0cf45ade9842b7bad600cfe60d7010: 0
     - Vector1_6b83a9c0e7b44705a21cb457358d8b6d: 1
+    - Vector1_6c3f661a98e04de1ac634d3e8fbfba2a: 1
     - Vector1_8866bec10e134bc2969ce9655383164c: 1
     - Vector1_b06f5fef071d41889148733207a46fcc: 0.5
+    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 1
     - Vector1_b88089fea9cc48de897047ce2f13cc74: 1
+    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 0.5
     - Vector1_e092f1ac1a6241739ddb03abdf1519de: 0
     - Vector1_ed1998edc58541a0bca57bb6261612c0: 0
     - _AORemapMax: 1
@@ -177,7 +210,6 @@ Material:
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
-    - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
@@ -206,7 +238,6 @@ Material:
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
-    - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
     - _EmissiveColorMode: 1
@@ -244,6 +275,8 @@ Material:
     - _PPDMinSamples: 64
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
@@ -293,12 +326,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_0946a8f17a7e4e2cae939faaa2097c87: {r: 1, g: 1, b: 1, a: 0}
-    - Color_2b851b1dc25f4c43936e21ac86cbc424: {r: 0.18039206, g: 0.7843137, b: 0.23657417,
-        a: 0}
-    - Color_6e6a298527604413a6113bd9ae9cfc07: {r: 0.8584906, g: 0.22407135, b: 0.22407135,
-        a: 0}
-    - Color_c617285b68b74603a782762d06abb635: {r: 0.17147255, g: 0.30524716, b: 0.8018868,
-        a: 0}
+    - Color_2b851b1dc25f4c43936e21ac86cbc424: {r: 0.18039206, g: 0.7843137, b: 0.23657417, a: 0}
+    - Color_6e6a298527604413a6113bd9ae9cfc07: {r: 0.8584906, g: 0.22407135, b: 0.22407135, a: 0}
+    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 1, g: 1, b: 1, a: 0}
+    - Color_c617285b68b74603a782762d06abb635: {r: 0.17147255, g: 0.30524716, b: 0.8018868, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -330,7 +361,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 12
-  hdPluginSubTargetMaterialVersions:
-    m_Keys: []
-    m_Values: 
+  version: 11

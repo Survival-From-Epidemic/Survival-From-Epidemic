@@ -8,17 +8,16 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Drywall_A
-  m_Shader: {fileID: -6465566751694194690, guid: e66a6962a0a85c047a4562d2a5cbec3a,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0b92ddc99b146fe4a9953ec014f021ca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2225
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -31,8 +30,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_614c8d2b4a664bf998c3b06bd3c45069:
+        m_Texture: {fileID: 2800000, guid: 8cd27f5f1fb050942a8c1fc1e8b0d38e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_6448ff32583848edafcc41b3d808accf:
         m_Texture: {fileID: 2800000, guid: 8cd27f5f1fb050942a8c1fc1e8b0d38e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_6476defd4a784db180cc26424e483627:
+        m_Texture: {fileID: 2800000, guid: 943509b12afbf524a9ba17ab564d3cc8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8af013da5ee147c0865590860d3acc55:
@@ -43,8 +50,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: b6a0e82e0e3ab21479878450ea17a2fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_a7025f698edf4db7aac3cb34b1102621:
+        m_Texture: {fileID: 2800000, guid: 9a636e62ea65cbc42a1edce94762f5b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_a7b6d46851c54c03b6019f4ac5970c32:
         m_Texture: {fileID: 2800000, guid: 943509b12afbf524a9ba17ab564d3cc8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_de08c9d8f52a4f1bb32ed04c25e2b3c5:
+        m_Texture: {fileID: 2800000, guid: b6a0e82e0e3ab21479878450ea17a2fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_dfa7f4ce05474940865aa474246390d0:
@@ -52,6 +67,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BASE_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BUMP_MAP:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -79,6 +102,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EMISSION_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissiveColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -92,6 +119,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IridescenceThicknessMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _METALNESS_MAP:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -111,11 +142,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_IOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_ROUGHNESS_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubsurfaceMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TRANSPARENCY_MAP:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -149,12 +196,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Boolean_1528e353445e4241bed245e515d1ab02: 1
+    - Boolean_907cf51abbcb4291928850a465cad51f: 1
     - Vector1_5c0cf45ade9842b7bad600cfe60d7010: 3
     - Vector1_6a77dc48b91f4e00be67eaf15bbc863e: 0.1
     - Vector1_6b83a9c0e7b44705a21cb457358d8b6d: 2
+    - Vector1_6c3f661a98e04de1ac634d3e8fbfba2a: 2
     - Vector1_8866bec10e134bc2969ce9655383164c: 0.33333334
     - Vector1_b06f5fef071d41889148733207a46fcc: 0.33333334
-    - Vector1_b88089fea9cc48de897047ce2f13cc74: 1
+    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 1
+    - Vector1_b88089fea9cc48de897047ce2f13cc74: 0
+    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 0.33333334
     - _AORemapMax: 1.0000001
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -170,9 +222,10 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
+    - _BASE_COLOR_WEIGHT: 1
+    - _BUMP_MAP_STRENGTH: 0.3
     - _BlendMode: 0
     - _CoatMask: 0
-    - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
@@ -200,9 +253,9 @@ Material:
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
-    - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
+    - _EMISSION_WEIGHT: 1
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -225,6 +278,7 @@ Material:
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 1
+    - _METALNESS: 0
     - _MaterialID: 1
     - _Metallic: 0
     - _MetallicRemapMax: 1
@@ -237,6 +291,11 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _REFLECTIONS_IOR: 1.52
+    - _REFLECTIONS_ROUGHNESS: 1
+    - _REFLECTIONS_WEIGHT: 1
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
@@ -263,6 +322,7 @@ Material:
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
     - _SurfaceType: 0
+    - _TRANSPARENCY: 0
     - _TexWorldScale: 0.33333334
     - _TexWorldScaleEmissive: 1
     - _Thickness: 1
@@ -286,21 +346,23 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_0946a8f17a7e4e2cae939faaa2097c87: {r: 0.9975, g: 1, b: 0.95, a: 1}
-    - Color_2b851b1dc25f4c43936e21ac86cbc424: {r: 0.3123294, g: 0.5283019, b: 0.33196324,
-        a: 0}
+    - Color_2b851b1dc25f4c43936e21ac86cbc424: {r: 0.3123294, g: 0.5283019, b: 0.33196324, a: 0}
     - Color_6e6a298527604413a6113bd9ae9cfc07: {r: 1, g: 0, b: 0.48463917, a: 0}
-    - Color_c617285b68b74603a782762d06abb635: {r: 0.17147255, g: 0.30524716, b: 0.8018868,
-        a: 0}
+    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 0.8948186, g: 0.899, b: 0.85300463, a: 0}
+    - Color_c617285b68b74603a782762d06abb635: {r: 0.17147255, g: 0.30524716, b: 0.8018868, a: 0}
+    - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 0.98845, b: 0.901, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 0.98845, b: 0.901, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
+    - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _REFLECTIONS_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
@@ -320,7 +382,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 12
-  hdPluginSubTargetMaterialVersions:
-    m_Keys: []
-    m_Values: 
+  version: 11
+--- !u!114 &5545684300044907407
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
