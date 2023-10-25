@@ -1790,7 +1790,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7234155245310129856}
   m_Layer: 0
-  m_Name: 2floor class model
+  m_Name: 2floor class 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
