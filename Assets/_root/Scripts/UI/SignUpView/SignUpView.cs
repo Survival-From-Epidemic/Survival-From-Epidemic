@@ -6,30 +6,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _root.Scripts.UI.SignInView
+namespace _root.Scripts.UI.SignUpView
 {
-    public class SignInView : SingleMonoComponent<SignInView, Canvas>
+    public class SignUpView : SingleMonoComponent<SignUpView, Canvas>
     {
         [SerializeField] private TMP_InputField idInputField;
         [SerializeField] private TMP_InputField passwordInputField;
 
-        [SerializeField] private Button findPwButton;
-        [SerializeField] private Button signUpButton;
+        [SerializeField] private Button signInButton;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
-                    new Networking.Post<string>("/auth/tokens", new SignInRequest
+                    new Networking.Post<string>("/users", new SignUpRequest
                         {
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
                         .OnResponse(Debug.Log)
                         .Build();
-            signUpButton.onClick.AddListener((() => {
-                UIManager.Instance.EnableUI(UIElements.SignUp);
+            signInButton.onClick.AddListener((() =>
+            {
+                UIManager.Instance.EnableUI(UIElements.SignIn);
             }));
-    }
+        }
     }
 }
