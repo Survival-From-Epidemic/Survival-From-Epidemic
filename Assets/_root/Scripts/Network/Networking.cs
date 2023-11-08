@@ -14,10 +14,9 @@ namespace _root.Scripts.Network
         private static int _timeOut;
         private static Networking _networking;
 
-        [SerializeField]
-        private string baseUrl;
-        [SerializeField]
-        private int timeOut = 30;
+        [SerializeField] private string baseUrl;
+
+        [SerializeField] private int timeOut = 30;
 
         private void Start()
         {
@@ -28,17 +27,16 @@ namespace _root.Scripts.Network
             _networking = this;
         }
 
-        public abstract class Request<T>
+        public abstract class Request<T> where T : class
         {
-            private readonly LinkedList<string> _params;
             private readonly Dictionary<string, string> _headers;
+            private readonly LinkedList<string> _params;
 
             private readonly string _path;
 
-            [CanBeNull]
-            private Action _errorAction;
-            [CanBeNull]
-            private Action<T> _responseAction;
+            [CanBeNull] private Action _errorAction;
+
+            [CanBeNull] private Action<T> _responseAction;
 
             protected Request(string path)
             {
@@ -75,7 +73,8 @@ namespace _root.Scripts.Network
 
             private IEnumerator _Request(string url)
             {
-                using var webRequest = UnityWebRequest.Get(url);
+                Debug.Log($"Sending Request to {url}");
+                using var webRequest = WebRequest(url);
                 webRequest.timeout = _timeOut;
                 foreach (var (key, value) in _headers)
                     webRequest.SetRequestHeader(key, value);
@@ -83,9 +82,11 @@ namespace _root.Scripts.Network
 
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
-                    _responseAction?.Invoke(
-                        JsonUtility.FromJson<T>(webRequest.downloadHandler.text)
-                    );
+                    if (typeof(T) == typeof(string))
+                        _responseAction?.Invoke(webRequest.downloadHandler.text as T);
+                    else
+                        _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
+
                     yield break;
                 }
 
@@ -94,44 +95,65 @@ namespace _root.Scripts.Network
 
             public void Build()
             {
-                var parameters = $"?{string.Join("&", _params)}";
+                var parameters = _params.Count > 0 ? $"?{string.Join("&", _params)}" : "";
                 _networking.StartCoroutine(_Request(_baseUrl + _path + parameters));
             }
         }
 
-        public class Get<T> : Request<T>
+        public class Get<T> : Request<T> where T : class
         {
-            public Get(string path) : base(path) { }
+            public Get(string path) : base(path)
+            {
+            }
 
-            protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Get(url);
+            protected override UnityWebRequest WebRequest(string url)
+            {
+                return UnityWebRequest.Get(url);
+            }
         }
 
-        public class Post<T> : Request<T>
+        public class Post<T> : Request<T> where T : class
         {
             private readonly string _body;
 
-            public Post(string path, object body) : base(path) => _body = JsonUtility.ToJson(body);
+            public Post(string path, object body) : base(path)
+            {
+                _body = JsonUtility.ToJson(body);
+                Debug.Log($"Added to body: {_body}");
+            }
 
-            protected override UnityWebRequest WebRequest(string url) =>
-                UnityWebRequest.PostWwwForm(url, _body);
+            protected override UnityWebRequest WebRequest(string url)
+            {
+                return UnityWebRequest.Post(url, _body, "application/json");
+            }
         }
 
-        public class Put<T> : Request<T>
+        public class Put<T> : Request<T> where T : class
         {
             private readonly string _body;
 
-            public Put(string path, object body) : base(path) => _body = JsonUtility.ToJson(body);
+            public Put(string path, object body) : base(path)
+            {
+                _body = JsonUtility.ToJson(body);
+                Debug.Log($"Added to body: {_body}");
+            }
 
-            protected override UnityWebRequest WebRequest(string url) =>
-                UnityWebRequest.Put(url, _body);
+            protected override UnityWebRequest WebRequest(string url)
+            {
+                return UnityWebRequest.Put(url, _body);
+            }
         }
 
-        public class Delete<T> : Request<T>
+        public class Delete<T> : Request<T> where T : class
         {
-            public Delete(string path) : base(path) { }
+            public Delete(string path) : base(path)
+            {
+            }
 
-            protected override UnityWebRequest WebRequest(string url) =>
-                UnityWebRequest.Delete(url);
+            protected override UnityWebRequest WebRequest(string url)
+            {
+                return UnityWebRequest.Delete(url);
+            }
         }
     }
 }
