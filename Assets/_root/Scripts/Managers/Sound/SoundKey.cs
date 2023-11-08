@@ -1,4 +1,4 @@
-﻿namespace Managers.Sound
+﻿namespace _root.Scripts.Managers.Sound
 {
     public enum SoundKey
     {

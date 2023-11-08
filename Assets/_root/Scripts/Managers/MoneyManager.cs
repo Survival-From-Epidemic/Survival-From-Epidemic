@@ -1,9 +1,9 @@
 using System;
-using SingleTon;
+using _root.Scripts.SingleTon;
+using _root.Scripts.Utils;
 using UnityEngine;
-using Utils;
 
-namespace Managers
+namespace _root.Scripts.Managers
 {
     public class MoneyManager : SingleMono<MoneyManager>
     {

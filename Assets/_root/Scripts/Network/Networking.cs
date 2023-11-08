@@ -28,7 +28,7 @@ namespace _root.Scripts.Network
             _networking = this;
         }
 
-        public abstract class Request<T>
+        public abstract class Request<T> where T : class
         {
             private readonly LinkedList<string> _params;
             private readonly Dictionary<string, string> _headers;
@@ -83,9 +83,12 @@ namespace _root.Scripts.Network
 
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
-                    _responseAction?.Invoke(
-                        JsonUtility.FromJson<T>(webRequest.downloadHandler.text)
-                    );
+                    var text = webRequest.downloadHandler.text;
+                    if (typeof(T) == typeof(string)) {
+                        _responseAction?.Invoke(text as T);
+                    } else {
+                        _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
+                    }
                     yield break;
                 }
 
@@ -99,14 +102,14 @@ namespace _root.Scripts.Network
             }
         }
 
-        public class Get<T> : Request<T>
+        public class Get<T> : Request<T> where T : class
         {
             public Get(string path) : base(path) { }
 
             protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Get(url);
         }
 
-        public class Post<T> : Request<T>
+        public class Post<T> : Request<T> where T : class
         {
             private readonly string _body;
 
@@ -116,7 +119,7 @@ namespace _root.Scripts.Network
                 UnityWebRequest.PostWwwForm(url, _body);
         }
 
-        public class Put<T> : Request<T>
+        public class Put<T> : Request<T> where T : class
         {
             private readonly string _body;
 
@@ -126,7 +129,7 @@ namespace _root.Scripts.Network
                 UnityWebRequest.Put(url, _body);
         }
 
-        public class Delete<T> : Request<T>
+        public class Delete<T> : Request<T> where T : class
         {
             public Delete(string path) : base(path) { }
 

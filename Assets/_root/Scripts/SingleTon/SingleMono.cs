@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SingleTon
+namespace _root.Scripts.SingleTon
 {
     public class SingleMono<T> : MonoBehaviour where T: MonoBehaviour
     {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Managers.Sound;
-using SingleTon;
+using _root.Scripts.Managers.Sound;
+using _root.Scripts.SingleTon;
 using UnityEngine;
 
-namespace Managers
+namespace _root.Scripts.Managers
 {
     public class SoundManager : SingleMono<SoundManager>
     {

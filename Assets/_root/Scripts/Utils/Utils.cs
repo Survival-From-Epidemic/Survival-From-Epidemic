@@ -1,4 +1,4 @@
-﻿namespace Utils
+﻿namespace _root.Scripts.Utils
 {
     public static class Utils
     {
