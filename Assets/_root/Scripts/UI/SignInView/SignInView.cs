@@ -1,5 +1,5 @@
 using _root.Scripts.Network;
-using SingleTon;
+using _root.Scripts.SingleTon;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
