@@ -1,3 +1,4 @@
+using System;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.Network;
@@ -16,6 +17,12 @@ namespace _root.Scripts.UI.SignInView
         [SerializeField] private Button findPwButton;
         [SerializeField] private Button signUpButton;
 
+        private void OnEnable()
+        {
+            idInputField.text = "";
+            passwordInputField.text = "";
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Return))
@@ -25,8 +32,18 @@ namespace _root.Scripts.UI.SignInView
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
-                        .OnResponse(Debug.Log)
+                        .OnResponse(value =>
+                        {
+                            UIManager.Instance.EnableUI(key: UIElements.GameStart);
+                        })
                         .Build();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (idInputField.isFocused == true)
+                {
+                    passwordInputField.Select();
+                }
+            }
             signUpButton.onClick.AddListener((() => {
                 UIManager.Instance.EnableUI(UIElements.SignUp);
             }));

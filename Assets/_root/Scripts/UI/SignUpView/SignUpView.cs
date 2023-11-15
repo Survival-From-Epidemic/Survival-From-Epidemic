@@ -15,21 +15,37 @@ namespace _root.Scripts.UI.SignUpView
 
         [SerializeField] private Button signInButton;
 
+        private void OnEnable()
+        {
+            idInputField.text = "";
+            passwordInputField.text = "";
+        }
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
-                    new Networking.Post<string>("/users", new SignUpRequest
+                    new Networking.Post<string>("/users/signup", new SignUpRequest
                         {
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
-                        .OnResponse(Debug.Log)
+                        .OnResponse(value =>
+                        {
+                            Debug.Log("회원가입 성공");
+                            Debug.Log(value);
+                        })
                         .Build();
             signInButton.onClick.AddListener((() =>
             {
                 UIManager.Instance.EnableUI(UIElements.SignIn);
             }));
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (idInputField.isFocused == true)
+                {
+                    passwordInputField.Select();
+                }
+            }
         }
     }
 }
