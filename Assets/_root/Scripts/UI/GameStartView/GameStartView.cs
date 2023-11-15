@@ -1,27 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using _root.Scripts.Managers;
+using _root.Scripts.Managers.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameStartView : MonoBehaviour
+namespace _root.Scripts.UI.GameStartView
 {
-    [SerializeField] private Button gameStartButton;
-    [SerializeField] private Button settingButton;
-    [SerializeField] private Button rankButton;
-    [SerializeField] private Button quitButton;
-
-    // Start is called before the first frame update
-    // Update is called once per frame
-    void Update()
+    public class GameStartView : View
     {
-        gameStartButton.onClick.AddListener((() =>
+        [SerializeField] private Button gameStartButton;
+        [SerializeField] private Button settingButton;
+        [SerializeField] private Button rankButton;
+        [SerializeField] private Button quitButton;
+
+        // Start is called before the first frame update
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("game");
-        }));
-        quitButton.onClick.AddListener((() =>
-        {
-            Debug.Log("quit");
-            Application.Quit();
-        }));
+            gameStartButton.onClick.AddListener((() => { UIManager.Instance.EnableUI(UIElements.InGame); }));
+            quitButton.onClick.AddListener((() =>
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }));
+        }
     }
 }
