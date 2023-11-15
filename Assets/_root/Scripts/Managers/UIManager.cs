@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
+using _root.Scripts.UI;
 using UnityEngine;
 
 namespace _root.Scripts.Managers
@@ -10,7 +11,7 @@ namespace _root.Scripts.Managers
     {
         [SerializeField] private List<UIElement> elements;
         [SerializeField] private UIElements startUIKey;
-        private GameObject _currentUI;
+        private View _currentUI;
 
         private Dictionary<UIElements, UIElement> _elementDictionary;
 
@@ -24,20 +25,25 @@ namespace _root.Scripts.Managers
                 uiElement.targetUI.gameObject.SetActive(false);
             }
 
-            (_currentUI = _elementDictionary[startUIKey].targetUI.gameObject).SetActive(true);
+            (_currentUI = _elementDictionary[startUIKey].targetUI).gameObject.SetActive(true);
         }
 
         public void EnableUI(UIElements key)
         {
-            _currentUI.SetActive(false);
-            (_currentUI = _elementDictionary[key].targetUI.gameObject).SetActive(true);
+            _currentUI.gameObject.SetActive(false);
+            (_currentUI = _elementDictionary[key].targetUI).gameObject.SetActive(true);
+        }
+
+        public void UpdateTime(DateTime dateTime)
+        {
+            _currentUI.OnTimeChanged(dateTime);
         }
 
         [Serializable]
         public struct UIElement
         {
             public UIElements key;
-            public Canvas targetUI;
+            public View targetUI;
         }
     }
 }

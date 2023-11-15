@@ -73,7 +73,7 @@ namespace _root.Scripts.Network
 
             private IEnumerator _Request(string url)
             {
-                Debug.Log($"Sending Request to {url}");
+                Debug.unityLogger.Log($"Sending Request to {url}");
                 using var webRequest = WebRequest(url);
                 webRequest.timeout = _timeOut;
                 foreach (var (key, value) in _headers)
@@ -83,11 +83,15 @@ namespace _root.Scripts.Network
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
                     var text = webRequest.downloadHandler.text;
-                    if (typeof(T) == typeof(string)) {
+                    if (typeof(T) == typeof(string))
+                    {
                         _responseAction?.Invoke(text as T);
-                    } else {
+                    }
+                    else
+                    {
                         _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
                     }
+
                     yield break;
                 }
 
@@ -107,10 +111,7 @@ namespace _root.Scripts.Network
             {
             }
 
-            protected override UnityWebRequest WebRequest(string url)
-            {
-                return UnityWebRequest.Get(url);
-            }
+            protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Get(url);
         }
 
         public class Post<T> : Request<T> where T : class
@@ -120,13 +121,10 @@ namespace _root.Scripts.Network
             public Post(string path, object body) : base(path)
             {
                 _body = JsonUtility.ToJson(body);
-                Debug.Log($"Added to body: {_body}");
+                Debug.unityLogger.Log($"Added to body: {_body}");
             }
 
-            protected override UnityWebRequest WebRequest(string url)
-            {
-                return UnityWebRequest.Post(url, _body, "application/json");
-            }
+            protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Post(url, _body, "application/json");
         }
 
         public class Put<T> : Request<T> where T : class
@@ -136,13 +134,10 @@ namespace _root.Scripts.Network
             public Put(string path, object body) : base(path)
             {
                 _body = JsonUtility.ToJson(body);
-                Debug.Log($"Added to body: {_body}");
+                Debug.unityLogger.Log($"Added to body: {_body}");
             }
 
-            protected override UnityWebRequest WebRequest(string url)
-            {
-                return UnityWebRequest.Put(url, _body);
-            }
+            protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Put(url, _body);
         }
 
         public class Delete<T> : Request<T> where T : class
@@ -151,10 +146,7 @@ namespace _root.Scripts.Network
             {
             }
 
-            protected override UnityWebRequest WebRequest(string url)
-            {
-                return UnityWebRequest.Delete(url);
-            }
+            protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Delete(url);
         }
     }
 }

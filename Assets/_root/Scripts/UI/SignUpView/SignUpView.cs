@@ -1,14 +1,13 @@
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.Network;
-using _root.Scripts.SingleTon;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _root.Scripts.UI.SignUpView
 {
-    public class SignUpView : SingleMonoComponent<SignUpView, Canvas>
+    public class SignUpView : View
     {
         [SerializeField] private TMP_InputField idInputField;
         [SerializeField] private TMP_InputField passwordInputField;
@@ -24,12 +23,9 @@ namespace _root.Scripts.UI.SignUpView
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
-                        .OnResponse(Debug.Log)
+                        .OnResponse(Debug.unityLogger.Log)
                         .Build();
-            signInButton.onClick.AddListener((() =>
-            {
-                UIManager.Instance.EnableUI(UIElements.SignIn);
-            }));
+            signInButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignIn));
         }
     }
 }
