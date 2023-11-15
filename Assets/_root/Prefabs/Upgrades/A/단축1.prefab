@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 1621750584793629381}
   - component: {fileID: 5996181517836217302}
   - component: {fileID: 6418917235911970042}
+  - component: {fileID: 481337474690192522}
   m_Layer: 5
   m_Name: "\uB2E8\uCD951"
   m_TagString: Untagged
@@ -214,6 +215,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &481337474690192522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317365161129839457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97491c461c0549eda153b154f3c4b726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultImage: {fileID: 0}
+  hoverImage: {fileID: 0}
+  clickImage: {fileID: 0}
+  selectImage: {fileID: 0}
+  isSelected: 0
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3469110739476912349
 GameObject:
   m_ObjectHideFlags: 0
