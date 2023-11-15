@@ -43,8 +43,8 @@ namespace _root.Scripts.Game
 
         private float GetInfectPower()
         {
-            var rate = _persons.Count / person.totalPerson;
-            return 1 + rate * rate;
+            var rate = (float)_persons.Count / person.totalPerson;
+            return 1 + rate * rate * 25;
         }
 
         public void Cycle()
@@ -56,7 +56,8 @@ namespace _root.Scripts.Game
             if (person.healthyPerson > 0)
                 if (disease.infectWeight.Chance())
                 {
-                    var count = Mathf.FloorToInt(Mathf.Min(disease.infectivity, person.healthyPerson) * GetInfectPower());
+                    disease.infectPower = GetInfectPower();
+                    var count = Mathf.FloorToInt(Mathf.Min(disease.infectivity, person.healthyPerson) * disease.infectPower);
                     person.healthyPerson -= count;
                     _persons.Add(new PersonData
                     {
@@ -85,32 +86,32 @@ namespace _root.Scripts.Game
                         break;
                     case Weak:
                         p.recoverWeight += Random.Range(3f, 10f);
-                        p.deathWeight += Random.Range(0.2f, 0.8f);
+                        p.deathWeight += Random.Range(0.5f, 2f);
                         break;
                     case Normal:
-                        p.recoverWeight += Random.Range(1f, 3f);
-                        p.deathWeight += Random.Range(0.8f, 2f);
+                        p.recoverWeight += Random.Range(2f, 6f);
+                        p.deathWeight += Random.Range(1f, 4f);
                         break;
                     case Strong:
-                        p.recoverWeight += Random.Range(0.7f, 2f);
-                        p.deathWeight += Random.Range(1f, 2.5f);
+                        p.recoverWeight += Random.Range(1f, 4f);
+                        p.deathWeight += Random.Range(2f, 6f);
                         break;
                     case Emergency:
-                        p.recoverWeight += Random.Range(0.5f, 1.5f);
-                        p.deathWeight += Random.Range(4f, 10f);
+                        p.recoverWeight += Random.Range(0.5f, 2f);
+                        p.deathWeight += Random.Range(3f, 10f);
                         break;
                 }
 
                 if (vaccineEnded) p.recoverWeight += Random.Range(30, 60);
 
-                if (p.symptomType is not Strong and Emergency && p.deathWeight >= 50)
+                if (p.symptomType is not Emergency && p.deathWeight >= 50)
                 {
                     p.recoverWeight = 40;
                     p.deathWeight = 40;
                     p.symptomType++;
                 }
 
-                if (p.symptomType is Strong or Emergency && p.recoverWeight >= 80)
+                if (p.symptomType is Emergency && p.recoverWeight >= 80)
                 {
                     p.recoverWeight = 40;
                     p.deathWeight = 40;
@@ -119,11 +120,12 @@ namespace _root.Scripts.Game
             }
 
             person.deathPerson += _persons.RemoveWhere(p => p.deathWeight >= 100);
+            person.infectedPerson = _persons.Count(p => p.isInfected);
             _persons.RemoveWhere(p => p.recoverWeight >= 100);
 
             if (Debugger.IsDebug()) persons = _persons.ToList();
             else if (persons.Count > 0) persons = new List<PersonData>();
-            person.healthyPerson = person.totalPerson - person.deathPerson - _persons.Count(p => p.isInfected);
+            person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
         }
     }
 }

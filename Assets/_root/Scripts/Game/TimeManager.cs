@@ -56,8 +56,8 @@ namespace _root.Scripts.Game
         private Disease NewDisease() =>
             new()
             {
-                infectivity = Mathf.FloorToInt(Random.Range(1f, 3f) * ModificationWeight()),
-                infectWeight = Random.Range(1f, 5f) * ModificationWeight()
+                infectivity = Mathf.CeilToInt(ValueManager.Instance.person.totalPerson * Random.Range(0.05f, 0.15f) * ModificationWeight()),
+                infectWeight = Random.Range(5, 25f) * ModificationWeight()
             };
 
         private IEnumerator DayCycle()
