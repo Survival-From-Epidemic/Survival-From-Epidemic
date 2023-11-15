@@ -17,6 +17,8 @@ namespace _root.Scripts.UI.InGameMenuView
         [SerializeField] private GameObject clicker;
         [SerializeField] private TextMeshProUGUI clickerTitle;
         [SerializeField] private TextMeshProUGUI clickerDescription;
+        [SerializeField] private GameObject clickerDisable;
+        [SerializeField] private GameObject clickerEnable;
         [SerializeField] private TextMeshProUGUI clickerCost;
         [SerializeField] private InGameMenuPage inGameMenuPage = InGameMenuPage.Policy;
 
@@ -41,32 +43,35 @@ namespace _root.Scripts.UI.InGameMenuView
                 serviceGrid.SetActive(true);
             });
 
-            var policyGridTransform = policyGrid.transform;
-            for (var i = policyGridTransform.childCount - 1; i >= 0; i--)
+            Revoker(policyGrid.transform);
+            Revoker(adminGrid.transform);
+            Revoker(serviceGrid.transform);
+        }
+
+        private int SellPricer(DateTime date)
+        {
+            var today = TimeManager.Instance.today;
+            if (date >= today.AddDays(-14)) return 15000;
+            if (date >= today.AddDays(-30)) return 8000;
+            if (date >= today.AddDays(-60)) return 3500;
+            return 500;
+        }
+
+        private void Revoker(Transform trans)
+        {
+            for (var i = trans.childCount - 1; i >= 0; i--)
             {
-                var uiImage = policyGridTransform.GetChild(i).GetComponent<UIImage>();
+                var uiImage = trans.GetChild(i).GetComponent<UIImage>();
                 var data = LocalDataManager.Instance.GetGridData(uiImage.name);
                 uiImage.onClickDown.AddListener(_ =>
                 {
                     clicker.SetActive(true);
                     clickerTitle.text = data.name;
                     clickerDescription.text = data.message;
-                    clickerCost.text = $"{data.weight * 30000}";
+                    clickerCost.text = LocalDataManager.Instance.IsBought(data.name)
+                        ? $"{data.weight * 30000}"
+                        : $"{data.weight * SellPricer(LocalDataManager.Instance.GetBuy(data.name) ?? TimeManager.Instance.today)}";
                 });
-            }
-
-            var adminGridTransform = adminGrid.transform;
-            for (var i = adminGridTransform.childCount - 1; i >= 0; i--)
-            {
-                var uiImage = adminGridTransform.GetChild(i).GetComponent<UIImage>();
-                uiImage.onClickDown.AddListener(_ => { });
-            }
-
-            var serviceGridTransform = serviceGrid.transform;
-            for (var i = serviceGridTransform.childCount - 1; i >= 0; i--)
-            {
-                var uiImage = serviceGridTransform.GetChild(i).GetComponent<UIImage>();
-                uiImage.onClickDown.AddListener(_ => { });
             }
         }
 

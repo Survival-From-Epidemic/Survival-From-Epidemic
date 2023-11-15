@@ -833,6 +833,7 @@ GameObject:
   - component: {fileID: 1434078630736969488}
   - component: {fileID: 2787435307795492399}
   - component: {fileID: 24460996319900707}
+  - component: {fileID: 1190261964378228218}
   m_Layer: 5
   m_Name: SignUpView
   m_TagString: Untagged
@@ -949,6 +950,27 @@ MonoBehaviour:
   idInputField: {fileID: 5548037435535096983}
   passwordInputField: {fileID: 6769595137588805240}
   signInButton: {fileID: 1467547174304522650}
+--- !u!95 &1190261964378228218
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646695122399913470}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6a9c8d8f7a29e4f538e9063df6e060d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5153871613065333278
 GameObject:
   m_ObjectHideFlags: 0

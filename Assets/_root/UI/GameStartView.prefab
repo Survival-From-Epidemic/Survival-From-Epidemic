@@ -903,6 +903,7 @@ GameObject:
   - component: {fileID: 1434078630736969488}
   - component: {fileID: 2787435307795492399}
   - component: {fileID: 7981821468645983923}
+  - component: {fileID: 7345750103603620495}
   m_Layer: 5
   m_Name: GameStartView
   m_TagString: Untagged
@@ -1018,6 +1019,27 @@ MonoBehaviour:
   settingButton: {fileID: 1778189030121473333}
   rankButton: {fileID: 7659353658491462448}
   quitButton: {fileID: 7389866954068376247}
+--- !u!95 &7345750103603620495
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646695122399913470}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e04e2dcda2c084776a69e4a729a081ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4214817831384171839
 GameObject:
   m_ObjectHideFlags: 0
