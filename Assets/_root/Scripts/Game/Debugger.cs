@@ -7,7 +7,7 @@ namespace _root.Scripts.Game
     {
         [SerializeField] private bool debug = true;
 
-        public static void Log(string msg)
+        public static void Log(object msg)
         {
             if (Instance.debug) Debug.unityLogger.Log(msg);
         }
