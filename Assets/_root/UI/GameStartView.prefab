@@ -539,14 +539,14 @@ RectTransform:
   m_GameObject: {fileID: 1608641242757013534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3100011310154479019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.7921, y: 1.9307}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2031.9797, y: 1145.6431}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3199558499094252482
@@ -721,6 +721,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2219953792437512966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7529498898546811929}
+  m_Layer: 5
+  m_Name: BackgroundAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7529498898546811929
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219953792437512966}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3100011310154479019}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2955239735440435966
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +923,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8920557055063854944}
+  - {fileID: 7529498898546811929}
   - {fileID: 6948424115261762816}
   - {fileID: 3040945395212778543}
   - {fileID: 7416367028324704166}
@@ -910,7 +946,7 @@ Canvas:
   m_GameObject: {fileID: 3646695122399913470}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -976,6 +1012,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8acbc5bc093e748b9a4dbac693393bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 6948424115261762816}
+  backgroundAnchor: {fileID: 7529498898546811929}
   gameStartButton: {fileID: 1467547174304522650}
   settingButton: {fileID: 1778189030121473333}
   rankButton: {fileID: 7659353658491462448}

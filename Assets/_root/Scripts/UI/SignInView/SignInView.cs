@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace _root.Scripts.UI.SignInView
 {
-    public class SignInView : View
+    public class SignInView : RectBackgroundView
     {
         [SerializeField] private TMP_InputField idInputField;
         [SerializeField] private TMP_InputField passwordInputField;
@@ -17,6 +17,8 @@ namespace _root.Scripts.UI.SignInView
 
         private void Update()
         {
+            UpdateBackground();
+
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
                     new Networking.Post<string>("/auth/tokens", new SignInRequest

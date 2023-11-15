@@ -8,20 +8,16 @@ using UnityEngine.UI;
 
 namespace _root.Scripts.UI.SignUpView
 {
-    public class SignUpView : View
+    public class SignUpView : RectBackgroundView
     {
         [SerializeField] private TMP_InputField idInputField;
         [SerializeField] private TMP_InputField passwordInputField;
 
         [SerializeField] private Button signInButton;
 
-        private void OnEnable()
-        {
-            idInputField.text = "";
-            passwordInputField.text = "";
-        }
         private void Update()
         {
+            UpdateBackground();
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
                     new Networking.Post<string>("/users/signup", new SignUpRequest
@@ -37,12 +33,19 @@ namespace _root.Scripts.UI.SignUpView
                         .Build();
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                if (idInputField.isFocused == true)
+                if (idInputField.isFocused)
                 {
                     passwordInputField.Select();
                 }
             }
+
             signInButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignIn));
+        }
+
+        private void OnEnable()
+        {
+            idInputField.text = "";
+            passwordInputField.text = "";
         }
     }
 }
