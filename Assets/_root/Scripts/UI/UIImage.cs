@@ -26,20 +26,44 @@ namespace _root.Scripts.UI
             _image = GetComponent<Image>();
             _image.sprite = GetDefaultImage();
             _trigger = _image.gameObject.AddComponent<EventTrigger>();
+            onHover = new EventTrigger.TriggerEvent();
+            onHoverOut = new EventTrigger.TriggerEvent();
+            onClickDown = new EventTrigger.TriggerEvent();
+            onClickUp = new EventTrigger.TriggerEvent();
 
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter,
+                callback = onHover
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit,
+                callback = onHoverOut
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown,
+                callback = onClickDown
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerUp,
+                callback = onClickUp
+            });
             _isClicked = false;
 
-            onHover = new EventTrigger.TriggerEvent();
+
+            if (!defaultImage) return;
+
             onHover.AddListener(_ => _image.sprite = hoverImage ? hoverImage : GetDefaultImage());
 
-            onHoverOut = new EventTrigger.TriggerEvent();
             onHoverOut.AddListener(_ =>
             {
                 if (_isClicked) return;
                 _image.sprite = GetDefaultImage();
             });
 
-            onClickDown = new EventTrigger.TriggerEvent();
             onClickDown.AddListener(_ =>
             {
                 _isClicked = true;
@@ -47,29 +71,11 @@ namespace _root.Scripts.UI
                 _image.sprite = clickImage;
             });
 
-            onClickUp = new EventTrigger.TriggerEvent();
             onClickUp.AddListener(_ =>
             {
                 _isClicked = false;
                 if (!clickImage) return;
                 _image.sprite = GetDefaultImage();
-            });
-
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerEnter,
-                callback = onHover
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerExit,
-                callback = onHoverOut
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerDown,
-                callback = onClickDown
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerUp,
-                callback = onClickUp
             });
         }
 

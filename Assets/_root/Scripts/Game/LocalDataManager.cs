@@ -20,6 +20,7 @@ namespace _root.Scripts.Game
         [Serializable]
         public struct GridData
         {
+            public string name;
             public string message;
             public int weight;
         }
