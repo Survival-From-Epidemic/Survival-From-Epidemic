@@ -1,3 +1,4 @@
+using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.Network;
@@ -14,17 +15,33 @@ namespace _root.Scripts.UI.SignUpView
 
         [SerializeField] private Button signInButton;
 
+        private void OnEnable()
+        {
+            idInputField.text = "";
+            passwordInputField.text = "";
+        }
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
-                    new Networking.Post<string>("/users", new SignUpRequest
+                    new Networking.Post<string>("/users/signup", new SignUpRequest
                         {
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
-                        .OnResponse(Debug.unityLogger.Log)
+                        .OnResponse(value =>
+                        {
+                            Debugger.Log("회원가입 성공");
+                            Debugger.Log(value);
+                        })
                         .Build();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (idInputField.isFocused == true)
+                {
+                    passwordInputField.Select();
+                }
+            }
             signInButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignIn));
         }
     }
