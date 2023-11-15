@@ -4,6 +4,7 @@ namespace _root.Scripts.Managers.UI
     {
         SignIn,
         SignUp,
+        GameStart,
         InGameMenu,
         InGame
     }
