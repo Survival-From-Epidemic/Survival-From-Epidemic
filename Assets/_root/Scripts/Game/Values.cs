@@ -8,6 +8,7 @@ namespace _root.Scripts.Game
     {
         public float infectWeight;
         public int infectivity;
+        public float infectPower;
 
         public static Disease operator *(Disease disease, float value) =>
             new()
@@ -23,6 +24,7 @@ namespace _root.Scripts.Game
         public int totalPerson;
         public int healthyPerson;
         public int deathPerson;
+        public int infectedPerson;
     }
 
     [Serializable]
