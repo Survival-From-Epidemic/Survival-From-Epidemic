@@ -51,13 +51,13 @@ namespace _root.Scripts.Game
             StartCoroutine(DayCycle());
         }
 
-        private float ModificationWeight() => modificationCount * 15f / (modificationCount + 30f);
+        public float ModificationWeight() => modificationCount * 20f / (modificationCount + 30f);
 
         private Disease NewDisease() =>
             new()
             {
-                infectivity = Mathf.CeilToInt(ValueManager.Instance.person.totalPerson * Random.Range(0.05f, 0.15f) * ModificationWeight()),
-                infectWeight = Random.Range(5, 25f) * ModificationWeight()
+                infectivity = Mathf.CeilToInt(ValueManager.Instance.person.totalPerson * Random.Range(0.0005f, 0.01f) * ModificationWeight()),
+                infectWeight = Random.Range(2f, 8f) * ModificationWeight()
             };
 
         private IEnumerator DayCycle()
