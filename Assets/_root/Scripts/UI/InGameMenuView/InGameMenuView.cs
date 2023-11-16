@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using DG.Tweening;
@@ -37,10 +38,14 @@ namespace _root.Scripts.UI.InGameMenuView
         [SerializeField] private Sprite[] disableSprites;
         [SerializeField] private Sprite previewSprite;
 
+        [SerializeField] private UIImage graphButton;
+        [SerializeField] private InGameMenuGraph graphType;
+        [SerializeField] private GameObject[] graphs;
+
         private UnityAction<BaseEventData> _closer;
-
         private int _currentCost;
-
+        private List<Image>[] _graphImages;
+        private List<TextMeshProUGUI>[] _graphTexts;
         private Dictionary<string, ImageData> _images;
 
         private void Awake()
@@ -123,7 +128,23 @@ namespace _root.Scripts.UI.InGameMenuView
                     });
             };
 
+            _graphImages = new[] { new List<Image>(), new(), new() };
+            _graphTexts = new[] { new List<TextMeshProUGUI>(), new(), new() };
+            for (var i = 0; i < graphs.Length; i++)
+            {
+                var trans = graphs[i].transform;
+                var childCount = graphs[i].transform.childCount;
+                for (var j = 0; j < childCount; j++)
+                {
+                    var child = trans.GetChild(j);
+                    _graphImages[i].Add(child.GetComponent<Image>());
+                    _graphTexts[i].Add(child.GetChild(1).GetComponent<TextMeshProUGUI>());
+                }
+            }
+
             clickerBackground.onClickDown.AddListener(_closer);
+
+            graphButton.onClickDown.AddListener(_ => graphType = (InGameMenuGraph)(((int)graphType + 1) % 3));
         }
 
         protected override void Update()
@@ -133,12 +154,59 @@ namespace _root.Scripts.UI.InGameMenuView
             {
                 clickerCost.color = MoneyManager.Instance.HasMoney(_currentCost) ? Color.white : Color.red;
             }
+
+            for (var i = 0; i < 3; i++) graphs[i].SetActive(i == (int)graphType);
+
+            var images = _graphImages[(int)graphType];
+            var texts = _graphTexts[(int)graphType];
+            var valueManager = ValueManager.Instance;
+            switch (graphType)
+            {
+                case InGameMenuGraph.Person:
+                    images[0].fillAmount = (float)valueManager.person.healthyPerson / valueManager.person.totalPerson;
+                    images[1].fillAmount = (float)valueManager.person.infectedPerson / valueManager.person.totalPerson;
+                    images[2].fillAmount = (float)valueManager.person.deathPerson / valueManager.person.totalPerson;
+
+                    texts[0].text = $"{valueManager.person.healthyPerson}명";
+                    texts[1].text = $"{valueManager.person.infectedPerson}명";
+                    texts[2].text = $"{valueManager.person.deathPerson}명";
+
+                    for (var i = 0; i < 3; i++) texts[0].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
+                    break;
+                case InGameMenuGraph.State:
+                    var var1 = valueManager.personsSet.Count(v => v.symptomType is SymptomType.Nothing or SymptomType.Weak);
+                    var var2 = valueManager.personsSet.Count(v => v.symptomType is SymptomType.Normal);
+                    var var3 = valueManager.personsSet.Count(v => v.symptomType is SymptomType.Strong);
+                    var var4 = valueManager.personsSet.Count(v => v.symptomType is SymptomType.Emergency);
+
+                    images[0].fillAmount = (float)var1 / valueManager.person.totalPerson;
+                    images[1].fillAmount = (float)var2 / valueManager.person.totalPerson;
+                    images[2].fillAmount = (float)var3 / valueManager.person.totalPerson;
+                    images[3].fillAmount = (float)var4 / valueManager.person.totalPerson;
+
+                    texts[0].text = $"{var1}명";
+                    texts[1].text = $"{var2}명";
+                    texts[2].text = $"{var3}명";
+                    texts[3].text = $"{var4}명";
+
+                    for (var i = 0; i < 4; i++) texts[0].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
+                    break;
+                case InGameMenuGraph.Disease:
+                    images[0].fillAmount = TimeManager.Instance.ModificationWeight() * 0.08f;
+                    images[1].fillAmount = valueManager.disease.infectivity * valueManager.disease.infectWeight * valueManager.disease.infectPower
+                                           / valueManager.disease.infectivity;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void OnEnable()
         {
             Rerender();
         }
+
+        private static float GetGraphYPos(float value) => 32 - 332 * value;
 
         private static int SellPricer(DateTime date)
         {

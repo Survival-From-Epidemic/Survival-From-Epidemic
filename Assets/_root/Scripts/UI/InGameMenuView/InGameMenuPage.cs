@@ -6,4 +6,11 @@
         Administration,
         Service
     }
+
+    public enum InGameMenuGraph
+    {
+        Person,
+        State,
+        Disease
+    }
 }
