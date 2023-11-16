@@ -1,5 +1,4 @@
-﻿using _root.Scripts.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -80,9 +79,10 @@ namespace _root.Scripts.UI
             });
         }
 
+        public void UpdateImage() => image.sprite = GetDefaultImage();
+
         public void ForceChangeImage(Sprite sprite)
         {
-            if (!image) Debugger.Log(name);
             image.sprite = sprite;
         }
 

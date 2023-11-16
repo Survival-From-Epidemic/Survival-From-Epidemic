@@ -31,11 +31,8 @@ namespace _root.Scripts.Game
 
         public bool IsBought(string key) => _buyDictionary.ContainsKey(key);
 
-        public DateTime? GetBuy(string key)
-        {
-            if (_buyDictionary.TryGetValue(key, out var value)) return value;
-            return null;
-        }
+        // public DateTime GetBuy(string key) => _buyDictionary.TryGetValue(key, out var value) ? value : TimeManager.Instance.today;
+        public DateTime GetBuy(string key) => _buyDictionary[key];
 
         public GridData GetGridData(string key) => _gridDataDictionary[key];
 
