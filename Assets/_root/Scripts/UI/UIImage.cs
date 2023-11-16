@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _root.Scripts.Game;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -17,15 +18,15 @@ namespace _root.Scripts.UI
         public EventTrigger.TriggerEvent onHoverOut;
         public EventTrigger.TriggerEvent onClickDown;
         public EventTrigger.TriggerEvent onClickUp;
-        private Image _image;
+        public Image image;
         private bool _isClicked;
         private EventTrigger _trigger;
 
-        private void Start()
+        private void Awake()
         {
-            _image = GetComponent<Image>();
-            _image.sprite = GetDefaultImage();
-            _trigger = _image.gameObject.AddComponent<EventTrigger>();
+            image = GetComponent<Image>();
+            image.sprite = GetDefaultImage();
+            _trigger = image.gameObject.AddComponent<EventTrigger>();
             onHover = new EventTrigger.TriggerEvent();
             onHoverOut = new EventTrigger.TriggerEvent();
             onClickDown = new EventTrigger.TriggerEvent();
@@ -56,27 +57,33 @@ namespace _root.Scripts.UI
 
             if (!defaultImage) return;
 
-            onHover.AddListener(_ => _image.sprite = hoverImage ? hoverImage : GetDefaultImage());
+            onHover.AddListener(_ => image.sprite = hoverImage ? hoverImage : GetDefaultImage());
 
             onHoverOut.AddListener(_ =>
             {
                 if (_isClicked) return;
-                _image.sprite = GetDefaultImage();
+                image.sprite = GetDefaultImage();
             });
 
             onClickDown.AddListener(_ =>
             {
                 _isClicked = true;
                 if (!clickImage) return;
-                _image.sprite = clickImage;
+                image.sprite = clickImage;
             });
 
             onClickUp.AddListener(_ =>
             {
                 _isClicked = false;
                 if (!clickImage) return;
-                _image.sprite = GetDefaultImage();
+                image.sprite = GetDefaultImage();
             });
+        }
+
+        public void ForceChangeImage(Sprite sprite)
+        {
+            if (!image) Debugger.Log(name);
+            image.sprite = sprite;
         }
 
         private Sprite GetDefaultImage() => isSelected ? selectImage : defaultImage;

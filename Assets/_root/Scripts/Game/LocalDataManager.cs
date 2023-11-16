@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _root.Scripts.SingleTon;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace _root.Scripts.Game
@@ -9,13 +10,20 @@ namespace _root.Scripts.Game
     {
         private Dictionary<string, DateTime> _buyDictionary;
         private Dictionary<string, GridData> _gridDataDictionary;
+        private Dictionary<string, string> _keySet;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+            _keySet = new Dictionary<string, string>();
             _buyDictionary = new Dictionary<string, DateTime>();
             var textAsset = Resources.Load<TextAsset>("Data/grid_data");
-            _gridDataDictionary = JsonUtility.FromJson<Dictionary<string, GridData>>(textAsset.text);
+            _gridDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, GridData>>(textAsset.text);
+
+            foreach (var (key, value) in _gridDataDictionary) _keySet.Add(value.name, key);
         }
+
+        public string GetKey(string key) => _keySet[key];
 
         public void Buy(string key) => _buyDictionary.Add(key, TimeManager.Instance.today);
 
@@ -37,6 +45,8 @@ namespace _root.Scripts.Game
             public string name;
             public string message;
             public int weight;
+            public List<string> parent;
+            public List<string> child;
         }
     }
 }
