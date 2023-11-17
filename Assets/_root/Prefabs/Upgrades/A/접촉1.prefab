@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 3233663246687079276}
   - component: {fileID: 2314011496445615637}
   - component: {fileID: 954122123765190052}
+  - component: {fileID: 625849008641253665}
   m_Layer: 5
   m_Name: "\uC811\uCD091"
   m_TagString: Untagged
@@ -346,6 +347,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &625849008641253665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7510810916601077354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97491c461c0549eda153b154f3c4b726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultImage: {fileID: 0}
+  hoverImage: {fileID: 0}
+  clickImage: {fileID: 0}
+  selectImage: {fileID: 0}
+  isSelected: 0
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8908448166844644415
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
+using _root.Scripts.Managers;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
 using UnityEngine;
 using static _root.Scripts.Game.SymptomType;
+using Random = UnityEngine.Random;
 
 namespace _root.Scripts.Game
 {
@@ -17,114 +20,147 @@ namespace _root.Scripts.Game
         [SerializeField] public bool vaccineResearch;
         [SerializeField] public bool vaccineEnded;
 
-        [Space] [SerializeField] public Disease disease;
+        [Space] public LocalDataManager.LocalGridData localGridData;
+
+        [Space] [SerializeField] public Disease preDisease;
+        [SerializeField] public Disease disease;
 
         [Space] [SerializeField] public Person person;
 
         [ReadOnly] [SerializeField] private List<PersonData> persons;
-        private HashSet<PersonData> _persons;
+        public HashSet<PersonData> personsSet;
 
         private void Start()
         {
-            _persons = new HashSet<PersonData>();
+            personsSet = new HashSet<PersonData>();
         }
 
         private static SymptomType GenerateSymptomType()
         {
-            return Random.Range(0f, 100f) switch
+            return Random.Range(0f + TimeManager.Instance.ModificationWeight() * 8, 100f) switch
             {
-                < 5 => Nothing,
-                < 60 => Weak,
-                < 85 => Normal,
-                < 95 => Strong,
+                < 20 => Nothing,
+                < 50 => Weak,
+                < 80 => Normal,
+                < 92.5f => Strong,
                 _ => Emergency
             };
         }
 
         private float GetInfectPower()
         {
-            var rate = (float)_persons.Count / person.totalPerson;
-            return 1 + rate * rate * 25;
+            var rate = (float)personsSet.Count / person.healthyPerson;
+            return 1 + rate * rate * 5;
         }
 
         public void Cycle()
         {
-            if (!diseaseEnabled) return;
-
-            var now = TimeManager.Instance.date;
-
-            if (person.healthyPerson > 0)
-                if (disease.infectWeight.Chance())
-                {
-                    disease.infectPower = GetInfectPower();
-                    var count = Mathf.FloorToInt(Mathf.Min(disease.infectivity, person.healthyPerson) * disease.infectPower);
-                    person.healthyPerson -= count;
-                    _persons.Add(new PersonData
-                    {
-                        catchDate = now,
-                        deathWeight = 0,
-                        isInfected = false,
-                        recoverWeight = 0,
-                        symptomType = GenerateSymptomType()
-                    });
-                }
-
-            foreach (var p in _persons)
+            disease.infectPower = GetInfectPower();
+            if (diseaseEnabled)
             {
-                if (pcrEnabled)
-                    if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
-                        p.isInfected = true;
-
-                if (kitEnabled && kitChance.Chance())
-                    if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1.5f)) <= now)
-                        p.isInfected = true;
-
-                switch (p.symptomType)
+                var now = TimeManager.Instance.date;
+                var gridDisease = localGridData.gridDisease;
+                preDisease = new Disease
                 {
-                    case Nothing:
-                        p.recoverWeight += Random.Range(3f, 10f);
-                        break;
-                    case Weak:
-                        p.recoverWeight += Random.Range(3f, 10f);
-                        p.deathWeight += Random.Range(0.5f, 2f);
-                        break;
-                    case Normal:
-                        p.recoverWeight += Random.Range(2f, 6f);
-                        p.deathWeight += Random.Range(1f, 4f);
-                        break;
-                    case Strong:
-                        p.recoverWeight += Random.Range(1f, 4f);
-                        p.deathWeight += Random.Range(2f, 6f);
-                        break;
-                    case Emergency:
-                        p.recoverWeight += Random.Range(0.5f, 2f);
-                        p.deathWeight += Random.Range(3f, 10f);
-                        break;
+                    infectivity = disease.infectivity - Mathf.FloorToInt(gridDisease.infectivity),
+                    infectPower = disease.infectPower - gridDisease.infectPower,
+                    infectWeight = disease.infectWeight - gridDisease.infectWeight
+                };
+
+                var total = person.totalPerson - personsSet.Count - person.deathPerson;
+                var chance = preDisease.infectWeight * preDisease.infectPower;
+                if (total > 0 && chance > 0)
+                {
+                    if (chance.Chance())
+                    {
+                        var count = Mathf.Max(Mathf.FloorToInt(Mathf.Min(preDisease.infectivity, total)), 0);
+                        person.healthyPerson -= count;
+                        for (var i = 0; i < count; i++)
+                        {
+                            personsSet.Add(new PersonData
+                            {
+                                catchDate = now,
+                                deathWeight = 0,
+                                isInfected = false,
+                                recoverWeight = 0,
+                                symptomType = GenerateSymptomType()
+                            });
+                        }
+                    }
                 }
 
-                if (vaccineEnded) p.recoverWeight += Random.Range(30, 60);
+                var mad1 = LocalDataManager.Instance.IsBought("의료 1");
+                var mad2 = LocalDataManager.Instance.IsBought("의료 2");
+                var mad3 = LocalDataManager.Instance.IsBought("의료 3");
+                var mad4 = LocalDataManager.Instance.IsBought("의료 4");
+                var kit1 = LocalDataManager.Instance.IsBought("키트");
+                var kit2 = LocalDataManager.Instance.IsBought("키트2");
 
-                if (p.symptomType is not Emergency && p.deathWeight >= 50)
+                var infected = personsSet.Where(v => v.isInfected).ToList();
+                if (mad4) mad4 = MoneyManager.Instance.RemoveMoney(infected.Count * 35);
+                if (!mad4 && mad3) mad3 = MoneyManager.Instance.RemoveMoney(infected.Count * 20);
+                if (!mad4 && !mad3)
                 {
-                    p.recoverWeight = 40;
-                    p.deathWeight = 40;
-                    p.symptomType++;
+                    if (mad2) mad2 = MoneyManager.Instance.RemoveMoney(infected.Count(v => v.symptomType is Emergency or Strong or Normal) * 20);
+                    if (!mad2 && mad1) mad1 = MoneyManager.Instance.RemoveMoney(infected.Count(v => v.symptomType is Emergency) * 20);
                 }
 
-                if (p.symptomType is Emergency && p.recoverWeight >= 80)
+                foreach (var p in personsSet)
                 {
-                    p.recoverWeight = 40;
-                    p.deathWeight = 40;
-                    p.symptomType--;
+                    if (pcrEnabled)
+                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
+                            p.isInfected = true;
+
+                    if (kitEnabled && kitChance.Chance())
+                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
+                            p.isInfected = true;
+
+                    p.recoverWeight += Random.Range(0.5f, 1f);
+                    switch (p.symptomType)
+                    {
+                        case Nothing:
+                            break;
+                        case Weak:
+                            p.deathWeight += Random.Range(0.2f, 0.5f) * (mad4 ? 0.6f : mad3 ? 0.85f : 1);
+                            break;
+                        case Normal:
+                            p.deathWeight += Random.Range(0.5f, 1f) * (mad4 ? 0.5f : mad2 ? 0.85f : 1);
+                            break;
+                        case Strong:
+                            p.deathWeight += Random.Range(1.5f, 3f) * (mad4 ? 0.4f : mad2 ? 0.8f : 1);
+                            break;
+                        case Emergency:
+                            p.deathWeight += Random.Range(2f, 6f) * (mad4 ? 0.3f : mad1 ? 0.7f : 1);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    if (vaccineEnded) p.recoverWeight += Random.Range(0, 35);
+
+                    // if (p.symptomType is not Emergency && p.deathWeight >= 60)
+                    // {
+                    //     p.recoverWeight = 40;
+                    //     p.deathWeight = 0;
+                    //     p.symptomType++;
+                    // }
+                    //
+                    // if (p.symptomType is Emergency && p.recoverWeight >= 60)
+                    // {
+                    //     p.recoverWeight = 10;
+                    //     p.deathWeight = 10;
+                    //     p.symptomType--;
+                    // }
                 }
+
+                person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
+                person.infectedPerson = personsSet.Count(p => p.isInfected);
+                personsSet.RemoveWhere(p => p.recoverWeight >= 100);
+
+                if (Debugger.IsDebug()) persons = personsSet.ToList();
+                else if (persons.Count > 0) persons = new List<PersonData>();
             }
 
-            person.deathPerson += _persons.RemoveWhere(p => p.deathWeight >= 100);
-            person.infectedPerson = _persons.Count(p => p.isInfected);
-            _persons.RemoveWhere(p => p.recoverWeight >= 100);
-
-            if (Debugger.IsDebug()) persons = _persons.ToList();
-            else if (persons.Count > 0) persons = new List<PersonData>();
             person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
         }
     }

@@ -17,60 +17,73 @@ namespace _root.Scripts.UI
         public EventTrigger.TriggerEvent onHoverOut;
         public EventTrigger.TriggerEvent onClickDown;
         public EventTrigger.TriggerEvent onClickUp;
-        private Image _image;
+        public Image image;
         private bool _isClicked;
         private EventTrigger _trigger;
 
-        private void Start()
+        private void Awake()
         {
-            _image = GetComponent<Image>();
-            _image.sprite = GetDefaultImage();
-            _trigger = _image.gameObject.AddComponent<EventTrigger>();
+            image = GetComponent<Image>();
+            image.sprite = GetDefaultImage();
+            _trigger = image.gameObject.AddComponent<EventTrigger>();
+            onHover = new EventTrigger.TriggerEvent();
+            onHoverOut = new EventTrigger.TriggerEvent();
+            onClickDown = new EventTrigger.TriggerEvent();
+            onClickUp = new EventTrigger.TriggerEvent();
 
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter,
+                callback = onHover
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit,
+                callback = onHoverOut
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown,
+                callback = onClickDown
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerUp,
+                callback = onClickUp
+            });
             _isClicked = false;
 
-            onHover = new EventTrigger.TriggerEvent();
-            onHover.AddListener(_ => _image.sprite = hoverImage ? hoverImage : GetDefaultImage());
 
-            onHoverOut = new EventTrigger.TriggerEvent();
+            if (!defaultImage) return;
+
+            onHover.AddListener(_ => image.sprite = hoverImage ? hoverImage : GetDefaultImage());
+
             onHoverOut.AddListener(_ =>
             {
                 if (_isClicked) return;
-                _image.sprite = GetDefaultImage();
+                image.sprite = GetDefaultImage();
             });
 
-            onClickDown = new EventTrigger.TriggerEvent();
             onClickDown.AddListener(_ =>
             {
                 _isClicked = true;
                 if (!clickImage) return;
-                _image.sprite = clickImage;
+                image.sprite = clickImage;
             });
 
-            onClickUp = new EventTrigger.TriggerEvent();
             onClickUp.AddListener(_ =>
             {
                 _isClicked = false;
                 if (!clickImage) return;
-                _image.sprite = GetDefaultImage();
+                image.sprite = GetDefaultImage();
             });
+        }
 
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerEnter,
-                callback = onHover
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerExit,
-                callback = onHoverOut
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerDown,
-                callback = onClickDown
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry {
-                eventID = EventTriggerType.PointerUp,
-                callback = onClickUp
-            });
+        public void UpdateImage() => image.sprite = GetDefaultImage();
+
+        public void ForceChangeImage(Sprite sprite)
+        {
+            image.sprite = sprite;
         }
 
         private Sprite GetDefaultImage() => isSelected ? selectImage : defaultImage;

@@ -543,6 +543,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1433d2f69ab45ec82fe9d9bdf706836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultUI:
+    moneyText: {fileID: 2471003166547512648}
+    playButton: {fileID: 6252788338371237389}
+    playButtonImage: {fileID: 4099043326688664476}
 --- !u!1 &410615306774348762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,6 +1392,7 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  image: {fileID: 0}
 --- !u!1 &2596760651336669260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,6 +1614,7 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  image: {fileID: 0}
 --- !u!1 &3830713416118215956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,6 +1972,7 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  image: {fileID: 0}
 --- !u!1 &5660843853934251071
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,6 +2116,7 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  image: {fileID: 0}
 --- !u!1 &5943502510015139136
 GameObject:
   m_ObjectHideFlags: 0

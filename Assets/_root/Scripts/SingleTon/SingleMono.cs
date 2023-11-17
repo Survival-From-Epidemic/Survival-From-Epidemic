@@ -10,7 +10,7 @@ namespace _root.Scripts.SingleTon
 
         public static T Instance => _instance ? _instance : _instance = FindObjectOfType<T>();
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _instance = this as T;
             if (!canBeDestroy) DontDestroyOnLoad(gameObject);
