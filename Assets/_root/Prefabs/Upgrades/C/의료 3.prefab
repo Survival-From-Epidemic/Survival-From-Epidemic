@@ -108,6 +108,7 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  image: {fileID: 0}
 --- !u!1 &4707674921941961456
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +174,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: II
+  m_text: III
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 430d1df0f975547e7a06c7fbbdef1a89, type: 2}
   m_sharedMaterial: {fileID: 2312731244712493564, guid: 430d1df0f975547e7a06c7fbbdef1a89, type: 2}
@@ -307,7 +308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: II
+  m_text: III
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f02cd653549da74184c2ead06bfe80e, type: 2}
   m_sharedMaterial: {fileID: 2312731244712493564, guid: 3f02cd653549da74184c2ead06bfe80e, type: 2}

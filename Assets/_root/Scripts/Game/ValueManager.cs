@@ -19,7 +19,8 @@ namespace _root.Scripts.Game
         [SerializeField] public bool vaccineResearch;
         [SerializeField] public bool vaccineEnded;
 
-        [Space] [SerializeField] public Disease disease;
+        [Space] [SerializeField] public Disease preDisease;
+        [SerializeField] public Disease disease;
 
         [Space] [SerializeField] public Person person;
 
@@ -36,9 +37,9 @@ namespace _root.Scripts.Game
             return Random.Range(0f + TimeManager.Instance.ModificationWeight() * 8, 100f) switch
             {
                 < 20 => Nothing,
-                < 60 => Weak,
-                < 85 => Normal,
-                < 95 => Strong,
+                < 50 => Weak,
+                < 80 => Normal,
+                < 92.5f => Strong,
                 _ => Emergency
             };
         }
@@ -52,15 +53,24 @@ namespace _root.Scripts.Game
         public void Cycle()
         {
             if (!diseaseEnabled) return;
+            disease.infectPower = GetInfectPower();
 
             var now = TimeManager.Instance.date;
-
-            disease.infectPower = GetInfectPower();
-            if (person.healthyPerson > 0)
+            var gridDisease = LocalDataManager.Instance.GetGridDisease();
+            preDisease = new Disease
             {
-                if ((disease.infectWeight * disease.infectPower).Chance())
+                infectivity = disease.infectivity - Mathf.FloorToInt(gridDisease.infectivity),
+                infectPower = disease.infectPower - gridDisease.infectPower,
+                infectWeight = disease.infectWeight - gridDisease.infectWeight
+            };
+
+            var total = person.totalPerson - personsSet.Count - person.deathPerson;
+            var chance = preDisease.infectWeight * preDisease.infectPower;
+            if (total > 0 && chance > 0)
+            {
+                if (chance.Chance())
                 {
-                    var count = Mathf.FloorToInt(Mathf.Min(disease.infectivity, person.healthyPerson));
+                    var count = Mathf.Max(Mathf.FloorToInt(Mathf.Min(preDisease.infectivity, total)), 0);
                     person.healthyPerson -= count;
                     for (var i = 0; i < count; i++)
                     {
@@ -76,6 +86,12 @@ namespace _root.Scripts.Game
                 }
             }
 
+            var mad1 = LocalDataManager.Instance.IsBought("의료 1");
+            var mad2 = LocalDataManager.Instance.IsBought("의료 2");
+            var mad3 = LocalDataManager.Instance.IsBought("의료 3");
+            var mad4 = LocalDataManager.Instance.IsBought("의료 4");
+            var kit1 = LocalDataManager.Instance.IsBought("키트");
+            var kit2 = LocalDataManager.Instance.IsBought("키트2");
             foreach (var p in personsSet)
             {
                 if (pcrEnabled)
@@ -83,7 +99,7 @@ namespace _root.Scripts.Game
                         p.isInfected = true;
 
                 if (kitEnabled && kitChance.Chance())
-                    if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1.5f)) <= now)
+                    if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
                         p.isInfected = true;
 
                 p.recoverWeight += Random.Range(0.5f, 1f);
@@ -92,31 +108,31 @@ namespace _root.Scripts.Game
                     case Nothing:
                         break;
                     case Weak:
-                        p.deathWeight += Random.Range(0.1f, 0.5f);
+                        p.deathWeight += Random.Range(0.2f, 0.5f) * (mad4 ? 0.6f : mad3 ? 0.85f : 1);
                         break;
                     case Normal:
-                        p.deathWeight += Random.Range(0.4f, 0.8f);
+                        p.deathWeight += Random.Range(0.5f, 1f) * (mad4 ? 0.5f : mad2 ? 0.85f : 1);
                         break;
                     case Strong:
-                        p.deathWeight += Random.Range(0.8f, 2f);
+                        p.deathWeight += Random.Range(1.5f, 3f) * (mad4 ? 0.4f : mad2 ? 0.8f : 1);
                         break;
                     case Emergency:
-                        p.deathWeight += Random.Range(1.5f, 4f);
+                        p.deathWeight += Random.Range(2f, 6f) * (mad4 ? 0.3f : mad1 ? 0.7f : 1);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (vaccineEnded) p.recoverWeight += Random.Range(10, 25);
+                if (vaccineEnded) p.recoverWeight += Random.Range(0, 35);
 
-                // if (p.symptomType is not Emergency && p.deathWeight >= 50)
+                // if (p.symptomType is not Emergency && p.deathWeight >= 60)
                 // {
-                //     p.recoverWeight = 30;
+                //     p.recoverWeight = 40;
                 //     p.deathWeight = 0;
                 //     p.symptomType++;
                 // }
                 //
-                // if (p.symptomType is Emergency && p.recoverWeight >= 80)
+                // if (p.symptomType is Emergency && p.recoverWeight >= 60)
                 // {
                 //     p.recoverWeight = 10;
                 //     p.deathWeight = 10;

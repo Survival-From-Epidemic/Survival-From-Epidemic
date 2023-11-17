@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
+using _root.Scripts.Utils;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -44,6 +45,9 @@ namespace _root.Scripts.UI.InGameMenuView
 
         private UnityAction<BaseEventData> _closer;
         private int _currentCost;
+
+        private LocalDataManager.GridData _currentGridData;
+        private TextMeshProUGUI _graphButtonText;
         private List<Image>[] _graphImages;
         private List<TextMeshProUGUI>[] _graphTexts;
         private Dictionary<string, ImageData> _images;
@@ -144,6 +148,7 @@ namespace _root.Scripts.UI.InGameMenuView
 
             clickerBackground.onClickDown.AddListener(_closer);
 
+            _graphButtonText = graphButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             graphButton.onClickDown.AddListener(_ => graphType = (InGameMenuGraph)(((int)graphType + 1) % 3));
         }
 
@@ -153,9 +158,17 @@ namespace _root.Scripts.UI.InGameMenuView
             if (clickerCost.isActiveAndEnabled)
             {
                 clickerCost.color = MoneyManager.Instance.HasMoney(_currentCost) ? Color.white : Color.red;
+                UpdateClickerText();
             }
 
             for (var i = 0; i < 3; i++) graphs[i].SetActive(i == (int)graphType);
+
+            var mad1 = LocalDataManager.Instance.IsBought("의료 1");
+            var mad2 = LocalDataManager.Instance.IsBought("의료 2");
+            var mad3 = LocalDataManager.Instance.IsBought("의료 3");
+            var mad4 = LocalDataManager.Instance.IsBought("의료 4");
+
+            var deathValue = mad4 ? 0.25f : mad3 ? 0.55f : mad2 ? 0.7f : mad1 ? 0.85f : 1;
 
             var images = _graphImages[(int)graphType];
             var texts = _graphTexts[(int)graphType];
@@ -171,7 +184,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     texts[1].text = $"{valueManager.person.infectedPerson}명";
                     texts[2].text = $"{valueManager.person.deathPerson}명";
 
-                    for (var i = 0; i < 3; i++) texts[0].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
+                    for (var i = 0; i < 3; i++) texts[i].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
                     break;
                 case InGameMenuGraph.State:
                     var var1 = valueManager.personsSet.Count(v => v.symptomType is SymptomType.Nothing or SymptomType.Weak);
@@ -189,16 +202,18 @@ namespace _root.Scripts.UI.InGameMenuView
                     texts[2].text = $"{var3}명";
                     texts[3].text = $"{var4}명";
 
-                    for (var i = 0; i < 4; i++) texts[0].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
+                    for (var i = 0; i < 4; i++) texts[i].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[i].fillAmount));
                     break;
                 case InGameMenuGraph.Disease:
-                    images[0].fillAmount = TimeManager.Instance.ModificationWeight() * 0.08f;
-                    images[1].fillAmount = valueManager.disease.infectivity * valueManager.disease.infectWeight * valueManager.disease.infectPower
+                    images[0].fillAmount = TimeManager.Instance.ModificationWeight() * 0.1f * deathValue;
+                    images[1].fillAmount = valueManager.disease.infectivity * valueManager.disease.infectWeight * 0.01f * valueManager.disease.infectPower
                                            / valueManager.disease.infectivity;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _graphButtonText.text = graphType.GetGraphName();
         }
 
         private void OnEnable()
@@ -206,7 +221,7 @@ namespace _root.Scripts.UI.InGameMenuView
             Rerender();
         }
 
-        private static float GetGraphYPos(float value) => 32 - 332 * value;
+        private static float GetGraphYPos(float value) => 32 - 332 * (1 - value);
 
         private static int SellPricer(DateTime date)
         {
@@ -248,7 +263,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     value.text1.gameObject.SetActive(true);
                     value.text2.gameObject.SetActive(true);
                 }
-                else if (data.parent.Exists(v => enable.Contains(v)))
+                else if (data.parent.Exists(v => enable.Contains(v) || bought.Contains(v)))
                 {
                     value.uiImage.gameObject.SetActive(true);
                     value.uiImage.ForceChangeImage(previewSprite);
@@ -262,6 +277,45 @@ namespace _root.Scripts.UI.InGameMenuView
                     value.icon.gameObject.SetActive(false);
                     value.text1.gameObject.SetActive(false);
                     value.text2.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void UpdateClickerText()
+        {
+            var isBought = LocalDataManager.Instance.IsBought(_currentGridData.name);
+            var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
+            if (isBought)
+            {
+                if (_currentGridData.name is "연구 지원 1" or "연구 지원 2" or "연구 지원 3")
+                {
+                    clickerText.color = Color.red;
+                    clickerText.text = "판매 불가";
+                    return;
+                }
+
+                if (_currentGridData.child.Count <= 0 || _currentGridData.child.TrueForAll(v => !LocalDataManager.Instance.IsBought(v)))
+                {
+                    clickerText.color = Color.white;
+                    clickerText.text = "다시 클릭하여 환불";
+                }
+                else
+                {
+                    clickerText.color = Color.red;
+                    clickerText.text = "하위 노드가 활성화됨";
+                }
+            }
+            else
+            {
+                if (canBuy)
+                {
+                    clickerText.color = Color.white;
+                    clickerText.text = "다시 클릭하여 구매";
+                }
+                else
+                {
+                    clickerText.color = Color.red;
+                    clickerText.text = "돈 부족!";
                 }
             }
         }
@@ -282,12 +336,14 @@ namespace _root.Scripts.UI.InGameMenuView
                     text2 = obj.GetChild(2).GetComponent<TextMeshProUGUI>()
                 };
                 var localDataManager = LocalDataManager.Instance;
-                var data = localDataManager.GetGridData(uiImage.name);
+                _currentGridData = localDataManager.GetGridData(uiImage.name);
                 uiImage.onClickDown.AddListener(_ =>
                 {
-                    if (data.parent.Count > 0 && !data.parent.TrueForAll(v => localDataManager.IsBought(v))) return;
-                    var isBought = localDataManager.IsBought(data.name);
-                    _currentCost = data.weight * (isBought ? SellPricer(localDataManager.GetBuy(data.name)) : 30000);
+                    _currentGridData = localDataManager.GetGridData(uiImage.name);
+                    if (_currentGridData.parent.Count > 0 && !_currentGridData.parent.TrueForAll(v => localDataManager.IsBought(v))) return;
+                    var isBought = localDataManager.IsBought(_currentGridData.name);
+
+                    _currentCost = Mathf.FloorToInt(_currentGridData.weight * (isBought ? SellPricer(localDataManager.GetBuy(_currentGridData.name)) : 30000));
                     var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
                     var uiImagePosition = uiImage.image.rectTransform.position;
                     clicker.gameObject.SetActive(true);
@@ -303,61 +359,14 @@ namespace _root.Scripts.UI.InGameMenuView
                     clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1.5 ? -4f : 4f), uiImagePosition.y);
                     clickerText.rectTransform.position = new Vector3(uiImagePosition.x, uiImagePosition.y - 0.8f);
 
-                    clickerTitle.text = data.name;
-                    clickerDescription.text = data.message;
+                    clickerTitle.text = _currentGridData.name;
+                    clickerDescription.text = _currentGridData.message;
 
                     clickerCost.text = $"{_currentCost:n0}\uffe6";
 
                     clickerCost.color = canBuy ? Color.white : Color.red;
 
-                    if (isBought)
-                    {
-                        if (data.child.Count <= 0 || data.child.TrueForAll(v => !localDataManager.IsBought(v)))
-                        {
-                            clickerText.color = Color.white;
-                            clickerText.text = "다시 클릭해 비활성화";
-                        }
-                        else
-                        {
-                            clickerText.color = Color.red;
-                            clickerText.text = "하위 노드가 활성화 되어 있음";
-                        }
-                    }
-                    else
-                    {
-                        if (canBuy)
-                        {
-                            clickerText.color = Color.white;
-                            clickerText.text = "다시 클릭해 활성화";
-                        }
-                        else
-                        {
-                            clickerText.color = Color.red;
-                            clickerText.text = "돈 부족!";
-                        }
-                    }
-
                     clickerPreObjectImage.onClickDown.RemoveAllListeners();
-                    clickerPreObjectImage.onClickDown.AddListener(_ =>
-                    {
-                        if (isBought)
-                        {
-                            if (data.child.Count <= 0 || data.child.TrueForAll(v => !localDataManager.IsBought(v)))
-                            {
-                                LocalDataManager.Instance.Sell(data.name);
-                                MoneyManager.Instance.AddMoney(_currentCost);
-                            }
-                            else return;
-                        }
-                        else
-                        {
-                            if (!MoneyManager.Instance.RemoveMoney(_currentCost)) return;
-                            LocalDataManager.Instance.Buy(data.name);
-                        }
-
-                        _closer.Invoke(null);
-                        Rerender();
-                    });
 
                     clickerPreObjectImage.gameObject.SetActive(true);
                     clickerPreObjectImage.image.rectTransform.position = uiImagePosition;
@@ -367,8 +376,25 @@ namespace _root.Scripts.UI.InGameMenuView
                     clickerPreObjectText2.text = imageData.text2.text;
                     clickerBackground.gameObject.SetActive(true);
                     clickerBackground.image.DOFade(0.85f, 0.2f).SetUpdate(true);
+
+                    clickerPreObjectImage.onClickDown.AddListener(_ =>
+                    {
+                        if (isBought)
+                        {
+                            LocalDataManager.Instance.Sell(_currentGridData.name);
+                            MoneyManager.Instance.AddMoney(_currentCost);
+                        }
+                        else
+                        {
+                            if (!MoneyManager.Instance.RemoveMoney(_currentCost)) return;
+                            LocalDataManager.Instance.Buy(_currentGridData.name);
+                        }
+
+                        _closer.Invoke(null);
+                        Rerender();
+                    });
                 });
-                _images.Add(data.name, imageData);
+                _images.Add(_currentGridData.name, imageData);
             }
         }
 
