@@ -547,6 +547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultUI:
     moneyText: {fileID: 2471003166547512648}
+    dateText: {fileID: 7755413614501141389}
     playButton: {fileID: 6252788338371237389}
     playButtonImage: {fileID: 4099043326688664476}
   banbalText: {fileID: 8348462145610355096}

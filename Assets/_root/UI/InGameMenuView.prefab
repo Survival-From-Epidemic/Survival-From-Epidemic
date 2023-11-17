@@ -351,9 +351,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultUI:
     moneyText: {fileID: 2471003166547512648}
+    dateText: {fileID: 7755413614501141389}
     playButton: {fileID: 6252788338371237389}
     playButtonImage: {fileID: 4099043326688664476}
-  dateText: {fileID: 7755413614501141389}
   policyImage: {fileID: 3627628335747712128}
   adminImage: {fileID: 9124726364619084971}
   serviceImage: {fileID: 809846143269527338}

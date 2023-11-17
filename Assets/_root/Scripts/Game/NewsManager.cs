@@ -43,7 +43,8 @@ namespace _root.Scripts.Game
                 .Pause()
                 .OnStart(() => newsChatText.rectTransform.DOAnchorPosX(680, 0))
                 .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
-                .SetDelay(1);
+                .OnStepComplete(ShowRandomNews)
+                .SetDelay(3);
         }
 
         public bool IsNotShowed(int id) => importantNewsLeft.Contains(id);
@@ -66,11 +67,10 @@ namespace _root.Scripts.Game
 
         public void ShowRandomNews()
         {
+            if (newsLeft.Count <= 0) newsLeft = LinqUtility.ToHashSet(newsList);
             var str = newsLeft.ToArray()[Random.Range(0, newsLeft.Count)];
-            if (!newsLeft.Contains(str)) return;
             newsLeft.Remove(str);
             newsChatText.text = str;
-
             _newsSequence.Restart();
         }
 
