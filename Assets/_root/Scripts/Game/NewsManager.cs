@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using Sequence = DG.Tweening.Sequence;
 
@@ -40,11 +39,14 @@ namespace _root.Scripts.Game
             importantNewsLeft = LinqUtility.ToHashSet(importantNewsList.Select(v => v.id));
             _newsSequence = DOTween.Sequence()
                 .SetAutoKill(false)
+                .SetLoops(-1)
                 .Pause()
                 .OnStart(() => newsChatText.rectTransform.DOAnchorPosX(680, 0))
-                .Append(newsChatText.rectTransform.DOAnchorPosX(-1360, 14f))
+                .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
                 .SetDelay(1);
         }
+
+        public bool IsNotShowed(int id) => importantNewsLeft.Contains(id);
 
         public void ShowNews(int id)
         {

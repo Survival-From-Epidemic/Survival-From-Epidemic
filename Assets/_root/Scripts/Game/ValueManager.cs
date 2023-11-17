@@ -28,6 +28,13 @@ namespace _root.Scripts.Game
         [Space] [SerializeField] public Person person;
 
         [ReadOnly] [SerializeField] private List<PersonData> persons;
+
+        [SerializeField] public float banbal;
+        [SerializeField] public float authority;
+        [SerializeField] public int currentBanbal;
+        [SerializeField] public int banbalDate;
+        [SerializeField] public int authorityDate;
+        [SerializeField] public float currentAuthority;
         public HashSet<PersonData> personsSet;
 
         private void Start()
@@ -55,6 +62,46 @@ namespace _root.Scripts.Game
 
         public void Cycle()
         {
+            var gridAuthority = localGridData.gridAuthority;
+            currentBanbal = gridAuthority.concentration + gridAuthority.mask + gridAuthority.annoy + gridAuthority.study;
+            if (gridAuthority.concentration >= 10) NewsManager.Instance.ShowNews(28);
+            if (currentBanbal >= 80)
+            {
+                if (banbalDate >= 3) NewsManager.Instance.ShowNews(27);
+                if (banbalDate >= 7)
+                {
+                    //TODO: Game end
+                }
+
+                banbalDate++;
+            }
+            else
+            {
+                banbalDate = 0;
+            }
+
+            if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
+
+            currentAuthority = (person.deathPerson * 4 + person.infectedPerson / 1.33f) / person.totalPerson;
+            switch (currentAuthority)
+            {
+                case >= 1:
+                    //TODO: Game end
+                    break;
+                case >= 0.75f:
+                    NewsManager.Instance.ShowNews(26);
+                    break;
+                case <= 0.2f:
+                {
+                    authorityDate++;
+                    if (TimeManager.Instance.today >= TimeManager.Instance.pcrDate && authorityDate >= 30) NewsManager.Instance.ShowNews(29);
+                    break;
+                }
+            }
+
+            banbal = Mathf.Lerp(banbal, currentBanbal / 80f, 0.1f);
+            authority = Mathf.Lerp(authority, currentAuthority, 0.1f);
+
             disease.infectPower = GetInfectPower();
             if (diseaseEnabled)
             {

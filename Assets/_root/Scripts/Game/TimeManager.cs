@@ -10,8 +10,9 @@ namespace _root.Scripts.Game
 {
     public class TimeManager : SingleMono<TimeManager>
     {
-        [Range(0.01f, 2f)] [SerializeField] public float timeScale = 1f;
+        [Range(0.01f, 4f)] [SerializeField] public float timeScale = 2f;
         [SerializeField] public int date;
+        [SerializeField] public int nextNews;
         public int modificationCount;
 
         [ReadOnly] [SerializeField] private string infectDateSerialized;
@@ -36,6 +37,7 @@ namespace _root.Scripts.Game
         public DateTime today;
         public DateTime vaccineEndDate;
         public DateTime vaccineStartDate;
+        private double vaccineTotalDays;
 
         private void Start()
         {
@@ -47,6 +49,11 @@ namespace _root.Scripts.Game
             pcrDateSerialized = (pcrDate = infectGlobalDate.AddDays(Random.Range(14, 21))).ToShortDateString();
             kitDateSerialized = (kitDate = startDate.AddDays(Random.Range(84, 105))).ToShortDateString();
             vaccineStartDateSerialized = (vaccineStartDate = startDate.AddDays(Random.Range(154, 203))).ToShortDateString();
+            vaccineEndDateSerialized = (vaccineEndDate = startDate.AddDays(Random.Range(679, 728))).ToShortDateString();
+            vaccineTotalDays = (vaccineEndDate - vaccineStartDate).TotalDays;
+            nextNews = Random.Range(14, 44);
+
+            NewsManager.Instance.ShowNews(1);
 
             StartCoroutine(DayCycle());
         }
@@ -60,6 +67,27 @@ namespace _root.Scripts.Game
                 infectWeight = Random.Range(2.5f, 9f) * ModificationWeight()
             };
 
+        private void NewsCycle()
+        {
+            if (today >= infectGlobalDate.AddDays(3)) NewsManager.Instance.ShowNews(3);
+
+            if (ValueManager.Instance.person.infectedPerson > 0) NewsManager.Instance.ShowNews(6);
+
+            if (ValueManager.Instance.person.deathPerson > 0) NewsManager.Instance.ShowNews(30);
+
+            if (today >= infectDate.AddDays(100)) NewsManager.Instance.ShowNews(11);
+
+            if (today >= infectDate.AddDays(150)) NewsManager.Instance.ShowNews(13);
+
+            if (today >= infectDate.AddDays(220)) NewsManager.Instance.ShowNews(21);
+
+            if (today >= infectDate.AddDays(300)) NewsManager.Instance.ShowNews(17);
+
+            if (today >= infectDate.AddDays(340)) NewsManager.Instance.ShowNews(12);
+
+            if (today >= infectDate.AddDays(400)) NewsManager.Instance.ShowNews(20);
+        }
+
         private IEnumerator DayCycle()
         {
             while (true)
@@ -69,14 +97,18 @@ namespace _root.Scripts.Game
                 ValueManager.Instance.Cycle();
                 UIManager.Instance.UpdateTime(today);
 
+                NewsCycle();
+
                 if (!_globalInfected && today >= infectGlobalDate)
                 {
+                    NewsManager.Instance.ShowNews(2);
                     Debugger.Log("First Infected");
                     _globalInfected = true;
                 }
 
                 if (!ValueManager.Instance.diseaseEnabled && today >= infectDate)
                 {
+                    NewsManager.Instance.ShowNews(4);
                     Debugger.Log("Disease Enabled");
                     nextModificationDateSerialized = (nextModificationDate = today.AddDays(Random.Range(30, 90))).ToShortDateString();
                     ValueManager.Instance.diseaseEnabled = true;
@@ -86,23 +118,42 @@ namespace _root.Scripts.Game
 
                 if (!ValueManager.Instance.pcrEnabled && today >= pcrDate)
                 {
+                    NewsManager.Instance.ShowNews(5);
                     Debugger.Log("PCR Enabled");
                     ValueManager.Instance.pcrEnabled = true;
                 }
 
                 if (!ValueManager.Instance.kitEnabled && today >= kitDate)
                 {
+                    NewsManager.Instance.ShowNews(8);
                     Debugger.Log("Self-Kit Enabled: 40% Chance");
                     ValueManager.Instance.kitEnabled = true;
                     ValueManager.Instance.kitChance = 40;
                     nextKitUpgradeDateSerialized = (nextKitUpgradeDate = today.AddDays(Random.Range(60, 120))).ToShortDateString();
                 }
 
-                if (ValueManager.Instance.kitEnabled && ValueManager.Instance.kitChance < 70 && today >= nextKitUpgradeDate)
+                if (ValueManager.Instance.kitEnabled)
                 {
-                    ValueManager.Instance.kitChance += 15;
-                    Debugger.Log($"Increased Self-Kit Chance: {ValueManager.Instance.kitChance}%");
-                    nextKitUpgradeDateSerialized = (nextKitUpgradeDate = today.AddDays(Random.Range(60, 120))).ToShortDateString();
+                    if (ValueManager.Instance.kitChance <= 40 && NewsManager.Instance.IsNotShowed(9) && today.AddDays(30) >= nextKitUpgradeDate)
+                    {
+                        NewsManager.Instance.ShowNews(9);
+                    }
+
+                    if (ValueManager.Instance.kitChance < 70 && today >= nextKitUpgradeDate)
+                    {
+                        if (ValueManager.Instance.kitChance <= 40)
+                        {
+                            NewsManager.Instance.ShowNews(10);
+                        }
+                        else
+                        {
+                            NewsManager.Instance.ShowNews(14);
+                        }
+
+                        ValueManager.Instance.kitChance += 15;
+                        Debugger.Log($"Increased Self-Kit Chance: {ValueManager.Instance.kitChance}%");
+                        nextKitUpgradeDateSerialized = (nextKitUpgradeDate = today.AddDays(Random.Range(60, 120))).ToShortDateString();
+                    }
                 }
 
                 if (ValueManager.Instance.diseaseEnabled && today >= nextModificationDate)
@@ -115,18 +166,53 @@ namespace _root.Scripts.Game
 
                 if (!ValueManager.Instance.vaccineResearch && today >= vaccineStartDate)
                 {
+                    NewsManager.Instance.ShowNews(31);
                     Debugger.Log("Vaccine Research Enabled");
                     ValueManager.Instance.vaccineResearch = true;
                     vaccineEndDateSerialized = (vaccineEndDate = startDate.AddDays(Random.Range(679, 728))).ToShortDateString();
                 }
 
+                if (ValueManager.Instance.vaccineResearch && 1 - (vaccineEndDate - today).TotalDays / vaccineTotalDays >= 0.2)
+                {
+                    NewsManager.Instance.ShowNews(7);
+                }
+
+                if (ValueManager.Instance.vaccineResearch && 1 - (vaccineEndDate - today).TotalDays / vaccineTotalDays >= 0.4)
+                {
+                    NewsManager.Instance.ShowNews(15);
+                }
+
+                if (ValueManager.Instance.vaccineResearch && 1 - (vaccineEndDate - today).TotalDays / vaccineTotalDays >= 0.7)
+                {
+                    NewsManager.Instance.ShowNews(18);
+                }
+
+                if (ValueManager.Instance.vaccineResearch && 1 - (vaccineEndDate - today).TotalDays / vaccineTotalDays >= 0.85)
+                {
+                    NewsManager.Instance.ShowNews(19);
+                }
+
+                if (ValueManager.Instance.vaccineResearch && 1 - (vaccineEndDate - today).TotalDays / vaccineTotalDays >= 0.95)
+                {
+                    NewsManager.Instance.ShowNews(22);
+                }
+
                 if (ValueManager.Instance.vaccineResearch && today >= vaccineEndDate)
                 {
+                    NewsManager.Instance.ShowNews(23);
                     Debugger.Log("Vaccine Completion");
                     ValueManager.Instance.vaccineEnded = true;
                 }
 
                 date++;
+                nextNews--;
+
+                if (nextNews <= 0)
+                {
+                    NewsManager.Instance.ShowRandomNews();
+                    nextNews = Random.Range(14, 44);
+                }
+
                 yield return new WaitForSeconds(timeScale);
             }
         }

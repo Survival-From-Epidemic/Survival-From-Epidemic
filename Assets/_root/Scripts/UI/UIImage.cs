@@ -79,6 +79,11 @@ namespace _root.Scripts.UI
             });
         }
 
+        protected virtual void OnEnable()
+        {
+            image.sprite = GetDefaultImage();
+        }
+
         public void UpdateImage() => image.sprite = GetDefaultImage();
 
         public void ForceChangeImage(Sprite sprite)

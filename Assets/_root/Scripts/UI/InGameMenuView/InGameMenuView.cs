@@ -15,7 +15,6 @@ namespace _root.Scripts.UI.InGameMenuView
 {
     public class InGameMenuView : GameView
     {
-        [SerializeField] private TextMeshProUGUI dateText;
         [SerializeField] private UIImage policyImage;
         [SerializeField] private UIImage adminImage;
         [SerializeField] private UIImage serviceImage;
@@ -51,6 +50,9 @@ namespace _root.Scripts.UI.InGameMenuView
         private List<Image>[] _graphImages;
         private List<TextMeshProUGUI>[] _graphTexts;
         private Dictionary<string, ImageData> _images;
+
+        private float _preRealGameTimeScale;
+        private float _preTimeScale;
 
         private void Awake()
         {
@@ -219,7 +221,16 @@ namespace _root.Scripts.UI.InGameMenuView
 
         private void OnEnable()
         {
+            _preRealGameTimeScale = Time.timeScale;
+            _preTimeScale = TimeManager.Instance.timeScale;
+            Time.timeScale = 0;
             Rerender();
+        }
+
+        private void OnDisable()
+        {
+            Time.timeScale = _preRealGameTimeScale;
+            TimeManager.Instance.timeScale = _preTimeScale;
         }
 
         private static float GetGraphYPos(float value) => 32 - 332 * (1 - value);
@@ -403,11 +414,6 @@ namespace _root.Scripts.UI.InGameMenuView
                 });
                 _images.Add(_currentGridData.name, imageData);
             }
-        }
-
-        public override void OnTimeChanged(DateTime dateTime)
-        {
-            dateText.text = dateTime.ToShortDateString();
         }
 
         [Serializable]

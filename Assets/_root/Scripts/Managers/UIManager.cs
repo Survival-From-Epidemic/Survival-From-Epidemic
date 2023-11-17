@@ -12,6 +12,7 @@ namespace _root.Scripts.Managers
         [SerializeField] private List<UIElement> elements;
         [SerializeField] private UIElements startUIKey;
         private View _currentUI;
+        private UIElements _currentUIKey;
 
         private Dictionary<UIElements, UIElement> _elementDictionary;
 
@@ -26,11 +27,15 @@ namespace _root.Scripts.Managers
             }
 
             (_currentUI = _elementDictionary[startUIKey].targetUI).gameObject.SetActive(true);
+            _currentUIKey = startUIKey;
         }
+
+        public UIElements GetKey() => _currentUIKey;
 
         public void EnableUI(UIElements key)
         {
             _currentUI.gameObject.SetActive(false);
+            _currentUIKey = key;
             (_currentUI = _elementDictionary[key].targetUI).gameObject.SetActive(true);
         }
 

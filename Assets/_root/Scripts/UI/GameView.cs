@@ -1,6 +1,7 @@
 ﻿using System;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
+using _root.Scripts.Managers.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,23 +16,24 @@ namespace _root.Scripts.UI
         {
             defaultUI.playButton.onClickDown.AddListener(_ =>
             {
+                if (UIManager.Instance.GetKey() == UIElements.InGameMenu) return;
                 if (Time.timeScale == 0)
                 {
-                    Time.timeScale = 1;
+                    Time.timeScale = 2;
                     TimeManager.Instance.timeScale = 1;
                 }
                 else
                 {
                     switch (TimeManager.Instance.timeScale)
                     {
-                        case <= 0.3f:
+                        case <= 0.7f:
                             Time.timeScale = 0;
                             break;
-                        case <= 0.6f:
-                            TimeManager.Instance.timeScale = 0.3f;
+                        case <= 1.3f:
+                            TimeManager.Instance.timeScale = 0.66f;
                             break;
                         default:
-                            TimeManager.Instance.timeScale = 0.55f;
+                            TimeManager.Instance.timeScale = 1.22f;
                             break;
                     }
                 }
@@ -44,21 +46,27 @@ namespace _root.Scripts.UI
             defaultUI.playButtonImage.sprite = GetPlaySprite();
         }
 
+        public override void OnTimeChanged(DateTime dateTime)
+        {
+            defaultUI.dateText.text = dateTime.ToShortDateString();
+        }
+
         private Sprite GetPlaySprite()
         {
             if (Time.timeScale == 0) return Variables.Instance.pauseSprite;
             return TimeManager.Instance.timeScale switch
             {
-                <= 0.3f => Variables.Instance.superFastPlaySprite,
-                <= 0.6f => Variables.Instance.fastPlaySprite,
+                <= 0.7f => Variables.Instance.superFastPlaySprite,
+                <= 1.3f => Variables.Instance.fastPlaySprite,
                 _ => Variables.Instance.playSprite
             };
         }
 
         [Serializable]
-        public struct DefaultUI
+        public class DefaultUI
         {
             public TextMeshProUGUI moneyText;
+            public TextMeshProUGUI dateText;
             public UIImage playButton;
             public Image playButtonImage;
         }
