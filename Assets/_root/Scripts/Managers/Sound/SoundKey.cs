@@ -2,6 +2,11 @@
 {
     public enum SoundKey
     {
-        ShootSound
+        MoneySound,
+        ClickSound,
+        PageTurnSound,
+        SpinJumpSound,
+        ClockSingleSound,
+        ShootArrowSound
     }
 }
