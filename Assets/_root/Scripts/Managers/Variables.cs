@@ -7,5 +7,7 @@ namespace _root.Scripts.Managers
     {
         public Sprite playSprite;
         public Sprite pauseSprite;
+        public Sprite fastPlaySprite;
+        public Sprite superFastPlaySprite;
     }
 }

@@ -140,7 +140,7 @@ namespace _root.Scripts.Game
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    if (vaccineEnded) p.recoverWeight += Random.Range(0, 25);
+                    if (vaccineEnded) p.recoverWeight += Random.Range(0, 25f);
 
                     // if (p.symptomType is not Emergency && p.deathWeight >= 60)
                     // {
