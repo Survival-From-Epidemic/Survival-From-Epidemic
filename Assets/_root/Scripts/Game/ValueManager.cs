@@ -62,7 +62,7 @@ namespace _root.Scripts.Game
                 var gridDisease = localGridData.gridDisease;
                 preDisease = new Disease
                 {
-                    infectivity = disease.infectivity - Mathf.FloorToInt(gridDisease.infectivity),
+                    infectivity = disease.infectivity - Mathf.FloorToInt(gridDisease.infectivity * (person.totalPerson / 750f)),
                     infectPower = disease.infectPower - gridDisease.infectPower,
                     infectWeight = disease.infectWeight - gridDisease.infectWeight
                 };
@@ -89,12 +89,12 @@ namespace _root.Scripts.Game
                     }
                 }
 
-                var mad1 = LocalDataManager.Instance.IsBought("의료 1");
-                var mad2 = LocalDataManager.Instance.IsBought("의료 2");
-                var mad3 = LocalDataManager.Instance.IsBought("의료 3");
-                var mad4 = LocalDataManager.Instance.IsBought("의료 4");
-                var kit1 = LocalDataManager.Instance.IsBought("키트");
-                var kit2 = LocalDataManager.Instance.IsBought("키트2");
+                var mad1 = LocalDataManager.Instance.IsBought("의료 지원 1");
+                var mad2 = LocalDataManager.Instance.IsBought("의료 지원 2");
+                var mad3 = LocalDataManager.Instance.IsBought("의료 지원 3");
+                var mad4 = LocalDataManager.Instance.IsBought("의료 지원 4");
+                var kit1 = LocalDataManager.Instance.IsBought("자가 진단 키트 지원 1");
+                var kit2 = LocalDataManager.Instance.IsBought("자가 진단 키트 지원 2");
 
                 var infected = personsSet.Where(v => v.isInfected).ToList();
                 if (mad4) mad4 = MoneyManager.Instance.RemoveMoney(infected.Count * 35);
@@ -115,28 +115,32 @@ namespace _root.Scripts.Game
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
                             p.isInfected = true;
 
-                    p.recoverWeight += Random.Range(0.5f, 1f);
+                    p.recoverWeight += Random.Range(0.5f, 1f) + (mad4 ? Random.Range(0.2f, 0.6f) : 0);
                     switch (p.symptomType)
                     {
                         case Nothing:
                             break;
                         case Weak:
-                            p.deathWeight += Random.Range(0.2f, 0.5f) * (mad4 ? 0.6f : mad3 ? 0.85f : 1);
+                            p.recoverWeight += mad3 ? Random.Range(0.1f, 0.3f) : 0;
+                            p.deathWeight += Random.Range(0.2f, 0.5f) * (mad4 ? 0.3f : mad3 ? 0.4f : 1);
                             break;
                         case Normal:
-                            p.deathWeight += Random.Range(0.5f, 1f) * (mad4 ? 0.5f : mad2 ? 0.85f : 1);
+                            p.recoverWeight += mad2 ? Random.Range(0.1f, 0.3f) : 0;
+                            p.deathWeight += Random.Range(0.5f, 1f) * (mad4 ? 0.3f : mad2 ? 0.4f : 1);
                             break;
                         case Strong:
-                            p.deathWeight += Random.Range(1.5f, 3f) * (mad4 ? 0.4f : mad2 ? 0.8f : 1);
+                            p.recoverWeight += mad2 ? Random.Range(0.1f, 0.3f) : 0;
+                            p.deathWeight += Random.Range(1.5f, 3f) * (mad4 ? 0.15f : mad2 ? 0.25f : 1);
                             break;
                         case Emergency:
-                            p.deathWeight += Random.Range(2f, 6f) * (mad4 ? 0.3f : mad1 ? 0.7f : 1);
+                            p.recoverWeight += mad1 ? Random.Range(0.1f, 0.3f) : 0;
+                            p.deathWeight += Random.Range(2f, 6f) * (mad4 ? 0.15f : mad1 ? 0.25f : 1);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    if (vaccineEnded) p.recoverWeight += Random.Range(0, 35);
+                    if (vaccineEnded) p.recoverWeight += Random.Range(0, 25);
 
                     // if (p.symptomType is not Emergency && p.deathWeight >= 60)
                     // {

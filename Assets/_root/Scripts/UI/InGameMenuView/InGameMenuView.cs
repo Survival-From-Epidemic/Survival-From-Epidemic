@@ -163,12 +163,13 @@ namespace _root.Scripts.UI.InGameMenuView
 
             for (var i = 0; i < 3; i++) graphs[i].SetActive(i == (int)graphType);
 
-            var mad1 = LocalDataManager.Instance.IsBought("의료 1");
-            var mad2 = LocalDataManager.Instance.IsBought("의료 2");
-            var mad3 = LocalDataManager.Instance.IsBought("의료 3");
-            var mad4 = LocalDataManager.Instance.IsBought("의료 4");
 
-            var deathValue = mad4 ? 0.25f : mad3 ? 0.55f : mad2 ? 0.7f : mad1 ? 0.85f : 1;
+            var mad1 = LocalDataManager.Instance.IsBought("의료 지원 1");
+            var mad2 = LocalDataManager.Instance.IsBought("의료 지원 2");
+            var mad3 = LocalDataManager.Instance.IsBought("의료 지원 3");
+            var mad4 = LocalDataManager.Instance.IsBought("의료 지원 4");
+
+            var deathValue = mad4 ? 0.06f : mad3 ? 0.2f : mad2 ? 0.45f : mad1 ? 0.75f : 1;
 
             var images = _graphImages[(int)graphType];
             var texts = _graphTexts[(int)graphType];
@@ -206,7 +207,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     break;
                 case InGameMenuGraph.Disease:
                     images[0].fillAmount = TimeManager.Instance.ModificationWeight() * 0.1f * deathValue;
-                    images[1].fillAmount = valueManager.disease.infectivity * valueManager.disease.infectWeight * 0.01f * valueManager.disease.infectPower
+                    images[1].fillAmount = valueManager.preDisease.infectivity * valueManager.preDisease.infectWeight * 0.01f * valueManager.preDisease.infectPower
                                            / valueManager.disease.infectivity;
                     break;
                 default:

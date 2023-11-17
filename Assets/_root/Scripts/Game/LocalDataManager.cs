@@ -48,15 +48,14 @@ namespace _root.Scripts.Game
 
         private void UpdateDisease()
         {
-            var localGridData = ValueManager.Instance.localGridData;
-            localGridData.gridDisease = new GridDisease
+            var gridDisease = new GridDisease
             {
                 infectivity = 0,
                 infectPower = 0,
                 infectWeight = 0,
                 modificationDecrease = 0
             };
-            localGridData.gridAuthority = new GridAuthority
+            var gridAuthority = new GridAuthority
             {
                 annoy = 0,
                 concentration = 0,
@@ -66,20 +65,23 @@ namespace _root.Scripts.Game
             foreach (var (key, _) in _buyDictionary)
             {
                 var data = _gridDataDictionary[_keySet[key]];
-                localGridData.gridDisease.infectWeight += data.disease.infectWeight;
-                localGridData.gridDisease.infectivity += data.disease.infectivity;
-                localGridData.gridDisease.infectPower += data.disease.infectPower;
-                localGridData.gridDisease.modificationDecrease += data.disease.modificationDecrease;
+                gridDisease.infectWeight += data.disease.infectWeight;
+                gridDisease.infectivity += data.disease.infectivity;
+                gridDisease.infectPower += data.disease.infectPower;
+                gridDisease.modificationDecrease += data.disease.modificationDecrease;
 
-                localGridData.gridAuthority.annoy += data.authority.annoy;
-                localGridData.gridAuthority.concentration += data.authority.concentration;
-                localGridData.gridAuthority.mask += data.authority.mask;
-                localGridData.gridAuthority.study += data.authority.study;
+                gridAuthority.annoy += data.authority.annoy;
+                gridAuthority.concentration += data.authority.concentration;
+                gridAuthority.mask += data.authority.mask;
+                gridAuthority.study += data.authority.study;
             }
+
+            ValueManager.Instance.localGridData.gridDisease = gridDisease;
+            ValueManager.Instance.localGridData.gridAuthority = gridAuthority;
         }
 
         [Serializable]
-        public struct LocalGridData
+        public class LocalGridData
         {
             public GridDisease gridDisease;
             public GridAuthority gridAuthority;

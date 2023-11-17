@@ -347,9 +347,9 @@
       "실외 마스크 착용"
     ],
     "disease": {
-      "infectWeight": 0,
+      "infectWeight": 0.5,
       "infectivity": 1,
-      "infectPower": 0,
+      "infectPower": 0.05,
       "modificationDecrease": 0
     },
     "authority": {
@@ -370,9 +370,9 @@
       "실내 마스크 착용 3"
     ],
     "disease": {
-      "infectWeight": 0,
+      "infectWeight": 0.5,
       "infectivity": 2.5,
-      "infectPower": 0,
+      "infectPower": 0.08,
       "modificationDecrease": 0
     },
     "authority": {
@@ -393,9 +393,9 @@
       "마스크 착용 의무화"
     ],
     "disease": {
-      "infectWeight": 0,
+      "infectWeight": 0.5,
       "infectivity": 4,
-      "infectPower": 0,
+      "infectPower": 0.1,
       "modificationDecrease": 0
     },
     "authority": {
@@ -416,15 +416,15 @@
       "마스크 착용 의무화"
     ],
     "disease": {
-      "infectWeight": 0,
-      "infectivity": 4,
-      "infectPower": 0,
+      "infectWeight": 1,
+      "infectivity": 5,
+      "infectPower": 0.15,
       "modificationDecrease": 0
     },
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": 30,
+      "mask": 40,
       "annoy": 10
     }
   },
@@ -447,7 +447,7 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": 40,
+      "mask": 50,
       "annoy": 15
     }
   },
@@ -917,7 +917,7 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": -20,
+      "mask": -25,
       "annoy": -15
     }
   },
@@ -940,7 +940,7 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": -40,
+      "mask": -45,
       "annoy": -15
     }
   },
@@ -962,7 +962,7 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": -80,
+      "mask": -85,
       "annoy": -25
     }
   },
@@ -1036,8 +1036,8 @@
   },
   "의료 1": {
     "name": "의료 지원 1",
-    "message": "해당 전염병으로 응급 수송된 학생들의 치료비를 지원합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 응급 학생당 20원이 부가됩니다.",
-    "weight": 0.1,
+    "message": "해당 전염병으로 응급 수송된 학생들의 치료비를 지원합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 응급 학생당 5원이 부가됩니다.",
+    "weight": 0.05,
     "parent": [
       "연구 지원 1"
     ],
@@ -1059,8 +1059,8 @@
   },
   "의료 2": {
     "name": "의료 지원 2",
-    "message": "해당 전염병으로 증상이 있는 모든 학생들의 치료비를 지원합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 보통 이상의 상태인 학생당 20원이 부가됩니다.",
-    "weight": 0.25,
+    "message": "해당 전염병으로 증상이 있는 모든 학생들의 치료비를 지원합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 보통 이상의 상태인 학생당 5원이 부가됩니다.",
+    "weight": 0.1,
     "parent": [
       "의료 지원 1"
     ],
@@ -1082,8 +1082,8 @@
   },
   "의료 3": {
     "name": "의료 지원 3",
-    "message": "해당 전염병에 감염된 모든 학생들에게 의료 지원금을 지급합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 감염된 학생당 20원이 부가됩니다.",
-    "weight": 0.5,
+    "message": "해당 전염병에 감염된 모든 학생들에게 의료 지원금을 지급합니다. 사망률이 감소합니다.\n\n주의: 해당 서비스는 하루에 감염된 학생당 5원이 부가됩니다.",
+    "weight": 0.175,
     "parent": [
       "의료 지원 2"
     ],
@@ -1105,8 +1105,8 @@
   },
   "의료 4": {
     "name": "의료 지원 4",
-    "message": "해당 전염병에 감염된 모든 학생들에게 의료 지원금을 크게 지급합니다. 사망률이 크게 감소합니다.\n\n주의: 해당 서비스는 하루에 감염된 학생당 35원이 부가됩니다.",
-    "weight": 0.75,
+    "message": "해당 전염병에 감염된 모든 학생들에게 의료 지원금을 크게 지급합니다. 사망률이 크게 감소합니다.\n\n주의: 해당 서비스는 하루에 감염된 학생당 10원이 부가됩니다.",
+    "weight": 0.25,
     "parent": [
       "의료 지원 3"
     ],
