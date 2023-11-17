@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &370709002862704774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5096376753900420041}
+  - component: {fileID: 4966362983872655169}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5096376753900420041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370709002862704774}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.64922, y: 10.354885, z: -19.561968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4966362983872655169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370709002862704774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed1a5e1c8cc41b5932eec4141e01918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeDestroy: 0
+  sounds:
+  - key: 0
+    audio: {fileID: 8300000, guid: 3b6baf148bdc34d33952b82e988b7190, type: 3}
+    volume: 0.492
+    pitch: 0.11
+  - key: 1
+    audio: {fileID: 8300000, guid: 654beb3c4a4fb4730adb9fe6ad345b1e, type: 3}
+    volume: 0.492
+    pitch: 0.11
+  - key: 2
+    audio: {fileID: 8300000, guid: a66e54c12ea644ecd8be5540f9d207a1, type: 3}
+    volume: 0.492
+    pitch: 0.11
+  - key: 3
+    audio: {fileID: 8300000, guid: 2056bacce81134ebb88161a2e2490819, type: 3}
+    volume: 0.492
+    pitch: 0.11
+  - key: 4
+    audio: {fileID: 8300000, guid: ae27ae0b55fb74e10a05be362d7357d9, type: 3}
+    volume: 0.492
+    pitch: 0.11
+  - key: 5
+    audio: {fileID: 8300000, guid: d8a942bc4cd7d4848b12c57fd18f6316, type: 3}
+    volume: 0.492
+    pitch: 0.11
