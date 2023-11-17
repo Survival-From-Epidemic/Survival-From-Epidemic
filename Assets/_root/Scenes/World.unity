@@ -608,7 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeDestroy: 0
-  money: 1000000
+  money: 10000000
 --- !u!4 &483585395
 Transform:
   m_ObjectHideFlags: 0
@@ -796,6 +796,21 @@ MonoBehaviour:
   kitChance: 0
   vaccineResearch: 0
   vaccineEnded: 0
+  localGridData:
+    gridDisease:
+      infectWeight: 0
+      infectivity: 0
+      infectPower: 0
+      modificationDecrease: 0
+    gridAuthority:
+      study: 0
+      concentration: 0
+      mask: 0
+      annoy: 0
+  preDisease:
+    infectWeight: 0
+    infectivity: 0
+    infectPower: 0
   disease:
     infectWeight: 0
     infectivity: 0
@@ -1564,9 +1579,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2115977572448925892, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3217713016454191101, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4036960597172179988, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_fontColor.a
@@ -1586,11 +1605,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7650962137167962414, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7770486731021459222, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9116915287885092809, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

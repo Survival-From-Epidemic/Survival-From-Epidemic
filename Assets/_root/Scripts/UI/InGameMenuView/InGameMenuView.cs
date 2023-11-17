@@ -281,7 +281,7 @@ namespace _root.Scripts.UI.InGameMenuView
             }
         }
 
-        private void UpdateClickerText()
+        private bool UpdateClickerText()
         {
             var isBought = LocalDataManager.Instance.IsBought(_currentGridData.name);
             var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
@@ -291,7 +291,7 @@ namespace _root.Scripts.UI.InGameMenuView
                 {
                     clickerText.color = Color.red;
                     clickerText.text = "판매 불가";
-                    return;
+                    return false;
                 }
 
                 if (_currentGridData.child.Count <= 0 || _currentGridData.child.TrueForAll(v => !LocalDataManager.Instance.IsBought(v)))
@@ -303,6 +303,7 @@ namespace _root.Scripts.UI.InGameMenuView
                 {
                     clickerText.color = Color.red;
                     clickerText.text = "하위 노드가 활성화됨";
+                    return false;
                 }
             }
             else
@@ -316,8 +317,11 @@ namespace _root.Scripts.UI.InGameMenuView
                 {
                     clickerText.color = Color.red;
                     clickerText.text = "돈 부족!";
+                    return false;
                 }
             }
+
+            return true;
         }
 
         private void Revoker(Transform trans)
@@ -379,6 +383,7 @@ namespace _root.Scripts.UI.InGameMenuView
 
                     clickerPreObjectImage.onClickDown.AddListener(_ =>
                     {
+                        if (!UpdateClickerText()) return;
                         if (isBought)
                         {
                             LocalDataManager.Instance.Sell(_currentGridData.name);
@@ -392,6 +397,7 @@ namespace _root.Scripts.UI.InGameMenuView
 
                         _closer.Invoke(null);
                         Rerender();
+                        clickerPreObjectImage.onClickDown.RemoveAllListeners();
                     });
                 });
                 _images.Add(_currentGridData.name, imageData);

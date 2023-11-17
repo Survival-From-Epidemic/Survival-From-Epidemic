@@ -10,9 +10,7 @@ namespace _root.Scripts.Game
     {
         private Dictionary<string, DateTime> _buyDictionary;
         private float _deathVolume;
-        private GridAuthority _gridAuthority;
         private Dictionary<string, GridData> _gridDataDictionary;
-        private GridDisease _gridDisease;
 
         private Dictionary<string, string> _keySet;
 
@@ -24,11 +22,7 @@ namespace _root.Scripts.Game
             var textAsset = Resources.Load<TextAsset>("Data/grid_data");
             _gridDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, GridData>>(textAsset.text);
 
-            foreach (var (key, value) in _gridDataDictionary)
-            {
-                _keySet.Add(value.name, key);
-                Debugger.Log(value);
-            }
+            foreach (var (key, value) in _gridDataDictionary) _keySet.Add(value.name, key);
         }
 
         public string GetKey(string key) => _keySet[key];
@@ -52,19 +46,17 @@ namespace _root.Scripts.Game
 
         public GridData GetGridData(string key) => _gridDataDictionary[key];
 
-        public GridDisease GetGridDisease() => _gridDisease;
-        public GridAuthority GetGridAuthority() => _gridAuthority;
-
         private void UpdateDisease()
         {
-            _gridDisease = new GridDisease
+            var localGridData = ValueManager.Instance.localGridData;
+            localGridData.gridDisease = new GridDisease
             {
                 infectivity = 0,
                 infectPower = 0,
                 infectWeight = 0,
                 modificationDecrease = 0
             };
-            _gridAuthority = new GridAuthority
+            localGridData.gridAuthority = new GridAuthority
             {
                 annoy = 0,
                 concentration = 0,
@@ -74,16 +66,23 @@ namespace _root.Scripts.Game
             foreach (var (key, _) in _buyDictionary)
             {
                 var data = _gridDataDictionary[_keySet[key]];
-                _gridDisease.infectWeight += data.disease.infectWeight;
-                _gridDisease.infectivity += data.disease.infectivity;
-                _gridDisease.infectPower += data.disease.infectPower;
-                _gridDisease.modificationDecrease += data.disease.modificationDecrease;
+                localGridData.gridDisease.infectWeight += data.disease.infectWeight;
+                localGridData.gridDisease.infectivity += data.disease.infectivity;
+                localGridData.gridDisease.infectPower += data.disease.infectPower;
+                localGridData.gridDisease.modificationDecrease += data.disease.modificationDecrease;
 
-                _gridAuthority.annoy += data.authority.annoy;
-                _gridAuthority.concentration += data.authority.concentration;
-                _gridAuthority.mask += data.authority.mask;
-                _gridAuthority.study += data.authority.study;
+                localGridData.gridAuthority.annoy += data.authority.annoy;
+                localGridData.gridAuthority.concentration += data.authority.concentration;
+                localGridData.gridAuthority.mask += data.authority.mask;
+                localGridData.gridAuthority.study += data.authority.study;
             }
+        }
+
+        [Serializable]
+        public struct LocalGridData
+        {
+            public GridDisease gridDisease;
+            public GridAuthority gridAuthority;
         }
 
         [Serializable]
