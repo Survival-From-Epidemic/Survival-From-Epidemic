@@ -11,6 +11,7 @@ namespace _root.Scripts.Game
         private Dictionary<string, DateTime> _buyDictionary;
         private float _deathVolume;
         private Dictionary<string, GridData> _gridDataDictionary;
+        private Dictionary<string, int> _gridIdxDictionary;
 
         private Dictionary<string, string> _keySet;
 
@@ -19,22 +20,29 @@ namespace _root.Scripts.Game
             base.Awake();
             _keySet = new Dictionary<string, string>();
             _buyDictionary = new Dictionary<string, DateTime>();
+            _gridIdxDictionary = new Dictionary<string, int>();
             var textAsset = Resources.Load<TextAsset>("Data/grid_data");
             _gridDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, GridData>>(textAsset.text);
 
-            foreach (var (key, value) in _gridDataDictionary) _keySet.Add(value.name, key);
+            foreach (var (key, value) in _gridDataDictionary)
+            {
+                _keySet.Add(value.name, key);
+                _gridIdxDictionary.Add(value.name, value.nodeIdx);
+            }
         }
 
         public string GetKey(string key) => _keySet[key];
 
         public void Buy(string key)
         {
+            ServerDataManager.Instance.nodeBuy[_gridIdxDictionary[key]]++;
             _buyDictionary.Add(key, TimeManager.Instance.today);
             UpdateDisease();
         }
 
         public void Sell(string key)
         {
+            ServerDataManager.Instance.nodeSell[_gridIdxDictionary[key]]++;
             _buyDictionary.Remove(key);
             UpdateDisease();
         }
@@ -90,6 +98,7 @@ namespace _root.Scripts.Game
         [Serializable]
         public struct GridData
         {
+            public int nodeIdx;
             public string name;
             public string message;
             public float weight;

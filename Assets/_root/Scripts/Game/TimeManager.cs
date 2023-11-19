@@ -213,6 +213,8 @@ namespace _root.Scripts.Game
                     nextNews = Random.Range(14, 44);
                 }
 
+                ServerDataManager.Instance.RecordTime();
+
                 yield return new WaitForSeconds(timeScale);
             }
         }
