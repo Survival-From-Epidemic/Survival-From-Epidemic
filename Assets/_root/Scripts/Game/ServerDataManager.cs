@@ -54,9 +54,9 @@ namespace _root.Scripts.Game
             });
         }
 
-        public void ForEachTimeLeap(Action<TimeLeap> action)
+        public void ForEachTimeLeap(Action<TimeLeap, DateTime> action)
         {
-            foreach (var timeLeap in _timeLeapData) action(timeLeap);
+            foreach (var timeLeap in _timeLeapData) action(timeLeap, TimeManager.Instance.startDate.AddDays(timeLeap.date));
         }
 
         [Serializable]
