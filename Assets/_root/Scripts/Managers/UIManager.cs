@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using _root.Scripts.Game;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
 using _root.Scripts.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _root.Scripts.Managers
 {
@@ -36,6 +38,7 @@ namespace _root.Scripts.Managers
         {
             _currentUI.gameObject.SetActive(false);
             _currentUIKey = key;
+            Debugger.Log(SceneManager.GetActiveScene().name);
             (_currentUI = _elementDictionary[key].targetUI).gameObject.SetActive(true);
         }
 
@@ -48,6 +51,7 @@ namespace _root.Scripts.Managers
         public struct UIElement
         {
             public UIElements key;
+            public UIScenes scene;
             public View targetUI;
         }
     }

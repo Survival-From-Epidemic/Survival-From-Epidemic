@@ -3697,7 +3697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c7fbb9a2e7430a9e09930f3285b58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 0
+  canBeDestroy: 1
   close: {fileID: 3114795389788412383}
   image: {fileID: 0}
 --- !u!1 &7999662581019951701

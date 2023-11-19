@@ -54,6 +54,10 @@ namespace _root.Scripts.Game
             });
         }
 
+        public TimeLeap GetTimeLeap(int time) => _timeLeapData[time];
+
+        public int TimeLeapLength() => _timeLeapData.Count;
+
         public void ForEachTimeLeap(Action<TimeLeap, DateTime> action)
         {
             foreach (var timeLeap in _timeLeapData) action(timeLeap, TimeManager.Instance.startDate.AddDays(timeLeap.date));

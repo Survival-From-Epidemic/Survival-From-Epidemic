@@ -24,19 +24,20 @@ namespace _root.Scripts.Game
         private Coroutine _newsCycle;
         private Sequence _newsSequence;
 
-        private HashSet<int> importantNewsLeft;
-        private HashSet<string> newsLeft;
+        private HashSet<int> _importantNewsLeft;
+        private HashSet<string> _newsLeft;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             var news = Resources.Load<TextAsset>("Data/news_data");
             newsList = JsonConvert.DeserializeObject<List<string>>(news.text);
 
             var importantNews = Resources.Load<TextAsset>("Data/important_news");
             importantNewsList = JsonConvert.DeserializeObject<List<News>>(importantNews.text);
 
-            newsLeft = LinqUtility.ToHashSet(newsList);
-            importantNewsLeft = LinqUtility.ToHashSet(importantNewsList.Select(v => v.id));
+            _newsLeft = LinqUtility.ToHashSet(newsList);
+            _importantNewsLeft = LinqUtility.ToHashSet(importantNewsList.Select(v => v.id));
             _newsSequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .SetLoops(-1)
@@ -47,12 +48,12 @@ namespace _root.Scripts.Game
                 .SetDelay(3);
         }
 
-        public bool IsNotShowed(int id) => importantNewsLeft.Contains(id);
+        public bool IsNotShowed(int id) => _importantNewsLeft.Contains(id);
 
         public void ShowNews(int id)
         {
-            if (!importantNewsLeft.Contains(id)) return;
-            importantNewsLeft.Remove(id);
+            if (!_importantNewsLeft.Contains(id)) return;
+            _importantNewsLeft.Remove(id);
             var first = importantNewsList.First(v => v.id == id);
             newsChatText.text = newsTitleText.text = first.title;
             newsDescriptionText.text = first.description;
@@ -67,9 +68,9 @@ namespace _root.Scripts.Game
 
         public void ShowRandomNews()
         {
-            if (newsLeft.Count <= 0) newsLeft = LinqUtility.ToHashSet(newsList);
-            var str = newsLeft.ToArray()[Random.Range(0, newsLeft.Count)];
-            newsLeft.Remove(str);
+            if (_newsLeft.Count <= 0) _newsLeft = LinqUtility.ToHashSet(newsList);
+            var str = _newsLeft.ToArray()[Random.Range(0, _newsLeft.Count)];
+            _newsLeft.Remove(str);
             newsChatText.text = str;
             _newsSequence.Restart();
         }
