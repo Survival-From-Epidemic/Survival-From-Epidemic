@@ -12,13 +12,11 @@ namespace _root.Scripts.Managers
             {
                 UIManager.Instance.EnableUI(UIElements.InGameMenu);
             }
-
-            if (Input.GetKeyDown(KeyCode.Tab) && NewsObject.Instance.isActiveAndEnabled)
+            else if (Input.GetKeyDown(KeyCode.Tab) && NewsObject.Instance.isActiveAndEnabled)
             {
                 NewsObject.Instance.gameObject.SetActive(false);
             }
-
-            if (Input.GetKeyDown(KeyCode.Escape) && UIManager.Instance.GetKey() is UIElements.InGameMenu)
+            else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q)) && UIManager.Instance.GetKey() is UIElements.InGameMenu)
             {
                 UIManager.Instance.EnableUI(UIElements.InGame);
             }
