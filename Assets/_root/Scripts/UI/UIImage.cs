@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using _root.Scripts.Game;
+using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -53,6 +56,20 @@ namespace _root.Scripts.UI
             });
             _isClicked = false;
 
+            var triggerEvent = new EventTrigger.TriggerEvent();
+            triggerEvent.AddListener(_ =>
+            {
+                Debugger.Log($"Click: {onClickDown.GetPersistentEventCount()}");
+                if (onClickDown.GetPersistentEventCount() > 0)
+                {
+                    SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                }
+            });
+            _trigger.triggers.Add(new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown,
+                callback = triggerEvent
+            });
 
             if (!defaultImage) return;
 

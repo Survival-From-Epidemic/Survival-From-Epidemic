@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using _root.Scripts.Game;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
 using _root.Scripts.UI;
@@ -28,9 +27,11 @@ namespace _root.Scripts.Managers
                 uiElement.targetUI.gameObject.SetActive(false);
             }
 
-            (_currentUI = _elementDictionary[startUIKey].targetUI).gameObject.SetActive(true);
+            var element = _elementDictionary[startUIKey];
+            (_currentUI = element.targetUI).gameObject.SetActive(true);
             _currentUIKey = startUIKey;
-            Debugger.Log(SceneManager.GetActiveScene().name);
+
+            if (SceneManager.GetActiveScene().name != element.scene.GetString()) SceneManager.LoadScene(element.scene.GetString());
         }
 
         public UIElements GetKey() => _currentUIKey;
@@ -39,7 +40,9 @@ namespace _root.Scripts.Managers
         {
             _currentUI.gameObject.SetActive(false);
             _currentUIKey = key;
-            (_currentUI = _elementDictionary[key].targetUI).gameObject.SetActive(true);
+            var element = _elementDictionary[key];
+            (_currentUI = element.targetUI).gameObject.SetActive(true);
+            if (SceneManager.GetActiveScene().name != element.scene.GetString()) SceneManager.LoadScene(element.scene.GetString());
         }
 
         public void UpdateTime(DateTime dateTime)
