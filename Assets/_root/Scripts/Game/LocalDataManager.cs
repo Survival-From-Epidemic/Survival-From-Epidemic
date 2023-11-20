@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -50,6 +52,7 @@ namespace _root.Scripts.Game
                     break;
             }
 
+            SoundManager.Instance.PlayEffectSound(SoundKey.BuySound);
             UpdateDisease();
         }
 
@@ -57,6 +60,7 @@ namespace _root.Scripts.Game
         {
             ServerDataManager.Instance.nodeSell[_gridIdxDictionary[key]]++;
             _buyDictionary.Remove(key);
+            SoundManager.Instance.PlayEffectSound(SoundKey.SellSound);
             UpdateDisease();
         }
 

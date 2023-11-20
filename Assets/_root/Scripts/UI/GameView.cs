@@ -14,30 +14,7 @@ namespace _root.Scripts.UI
 
         protected virtual void Start()
         {
-            defaultUI.playButton.onClickDown.AddListener(_ =>
-            {
-                if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                    TimeManager.Instance.timeScale = 2;
-                }
-                else
-                {
-                    switch (TimeManager.Instance.timeScale)
-                    {
-                        case <= 0.7f:
-                            Time.timeScale = 0;
-                            break;
-                        case <= 1.3f:
-                            TimeManager.Instance.timeScale = 0.66f;
-                            break;
-                        default:
-                            TimeManager.Instance.timeScale = 1.22f;
-                            break;
-                    }
-                }
-            });
+            defaultUI.playButton.onClickDown.AddListener(_ => SpeedCycle());
         }
 
         protected virtual void Update()
@@ -51,6 +28,53 @@ namespace _root.Scripts.UI
             Start();
         }
 
+        public static void SpeedCycle(int idx)
+        {
+            switch (idx)
+            {
+                case 0:
+                    Time.timeScale = 0;
+                    break;
+                case 1:
+                    Time.timeScale = 1;
+                    TimeManager.Instance.timeScale = 2;
+                    break;
+                case 2:
+                    Time.timeScale = 1;
+                    TimeManager.Instance.timeScale = 1.1f;
+                    break;
+                case 3:
+                    Time.timeScale = 1;
+                    TimeManager.Instance.timeScale = 0.5f;
+                    break;
+            }
+        }
+
+        public static void SpeedCycle()
+        {
+            if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+                TimeManager.Instance.timeScale = 2;
+            }
+            else
+            {
+                switch (TimeManager.Instance.timeScale)
+                {
+                    case <= 0.6f:
+                        Time.timeScale = 0;
+                        break;
+                    case <= 1.2f:
+                        TimeManager.Instance.timeScale = 0.5f;
+                        break;
+                    default:
+                        TimeManager.Instance.timeScale = 1.1f;
+                        break;
+                }
+            }
+        }
+
         public override void OnTimeChanged(DateTime dateTime)
         {
             defaultUI.dateText.text = dateTime.ToShortDateString();
@@ -61,8 +85,8 @@ namespace _root.Scripts.UI
             if (Time.timeScale == 0) return Variables.Instance.pauseSprite;
             return TimeManager.Instance.timeScale switch
             {
-                <= 0.7f => Variables.Instance.superFastPlaySprite,
-                <= 1.3f => Variables.Instance.fastPlaySprite,
+                <= 0.6f => Variables.Instance.superFastPlaySprite,
+                <= 1.2f => Variables.Instance.fastPlaySprite,
                 _ => Variables.Instance.playSprite
             };
         }
