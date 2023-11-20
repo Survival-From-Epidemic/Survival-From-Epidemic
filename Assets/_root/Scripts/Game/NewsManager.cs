@@ -21,11 +21,11 @@ namespace _root.Scripts.Game
         [SerializeField] private List<News> importantNewsList;
         [SerializeField] private List<string> newsList;
 
-        private Coroutine _newsCycle;
-        private Sequence _newsSequence;
-
         private HashSet<int> _importantNewsLeft;
+
+        private Coroutine _newsCycle;
         private HashSet<string> _newsLeft;
+        private Sequence _newsSequence;
 
         protected override void Awake()
         {
@@ -44,8 +44,7 @@ namespace _root.Scripts.Game
                 .Pause()
                 .OnStart(() => newsChatText.rectTransform.DOAnchorPosX(680, 0))
                 .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
-                .OnStepComplete(ShowRandomNews)
-                .SetDelay(3);
+                .OnStepComplete(ShowRandomNews);
         }
 
         public bool IsNotShowed(int id) => _importantNewsLeft.Contains(id);
