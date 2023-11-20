@@ -16,11 +16,11 @@ namespace _root.Scripts.UI
         {
             defaultUI.playButton.onClickDown.AddListener(_ =>
             {
-                if (UIManager.Instance.GetKey() == UIElements.InGameMenu) return;
+                if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
                 if (Time.timeScale == 0)
                 {
-                    Time.timeScale = 2;
-                    TimeManager.Instance.timeScale = 1;
+                    Time.timeScale = 1;
+                    TimeManager.Instance.timeScale = 2;
                 }
                 else
                 {
@@ -44,6 +44,11 @@ namespace _root.Scripts.UI
         {
             defaultUI.moneyText.text = $"{MoneyManager.Instance.GetMoney():n0}";
             defaultUI.playButtonImage.sprite = GetPlaySprite();
+        }
+
+        protected virtual void OnEnable()
+        {
+            Start();
         }
 
         public override void OnTimeChanged(DateTime dateTime)

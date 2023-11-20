@@ -13,8 +13,9 @@ namespace _root.Scripts.Game
         [ReadOnly] public int[] money;
         private List<TimeLeap> _timeLeapData;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             nodeBuy = new int[3];
             nodeSell = new int[3];
             money = new int[2];

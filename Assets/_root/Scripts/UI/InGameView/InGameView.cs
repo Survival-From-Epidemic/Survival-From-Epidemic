@@ -18,8 +18,9 @@ namespace _root.Scripts.UI.InGameView
 
         private Coroutine _coroutine;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _coroutine = StartCoroutine(TextUpdate());
         }
 
@@ -32,7 +33,6 @@ namespace _root.Scripts.UI.InGameView
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
                 banbalText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.banbal * 100):n0}%";
                 banbalImage.fillAmount = 1 - ValueManager.Instance.banbal;
 
@@ -42,6 +42,7 @@ namespace _root.Scripts.UI.InGameView
                 healthyText.text = $"{ValueManager.Instance.person.healthyPerson}";
                 infectText.text = $"{ValueManager.Instance.person.infectedPerson}";
                 deadText.text = $"{ValueManager.Instance.person.deathPerson}";
+                yield return new WaitForSeconds(1);
             }
         }
     }

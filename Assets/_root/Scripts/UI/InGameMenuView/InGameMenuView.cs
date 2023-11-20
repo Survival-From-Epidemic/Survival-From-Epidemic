@@ -219,8 +219,9 @@ namespace _root.Scripts.UI.InGameMenuView
             _graphButtonText.text = graphType.GetGraphName();
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _preRealGameTimeScale = Time.timeScale;
             _preTimeScale = TimeManager.Instance.timeScale;
             Time.timeScale = 0;

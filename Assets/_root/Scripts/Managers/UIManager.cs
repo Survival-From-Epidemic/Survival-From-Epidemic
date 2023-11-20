@@ -30,6 +30,7 @@ namespace _root.Scripts.Managers
 
             (_currentUI = _elementDictionary[startUIKey].targetUI).gameObject.SetActive(true);
             _currentUIKey = startUIKey;
+            Debugger.Log(SceneManager.GetActiveScene().name);
         }
 
         public UIElements GetKey() => _currentUIKey;
@@ -38,7 +39,6 @@ namespace _root.Scripts.Managers
         {
             _currentUI.gameObject.SetActive(false);
             _currentUIKey = key;
-            Debugger.Log(SceneManager.GetActiveScene().name);
             (_currentUI = _elementDictionary[key].targetUI).gameObject.SetActive(true);
         }
 
