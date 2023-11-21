@@ -13,6 +13,8 @@
         GameBackground,
         MainBackground,
         PanelOpen,
-        PanelClose
+        PanelClose,
+        InfoOpen,
+        InfoClose
     }
 }

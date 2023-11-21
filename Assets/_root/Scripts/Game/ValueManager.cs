@@ -87,24 +87,27 @@ namespace _root.Scripts.Game
             if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
 
             currentAuthority = (person.deathPerson * 4 + person.infectedPerson / 1.33f) / person.totalPerson;
-            switch (currentAuthority)
-            {
-                case >= 1:
-                    authorityGoodDate = 0;
-                    GameManager.Instance.GameEnd(GameEndType.Authority);
-                    break;
-                case >= 0.75f:
-                    authorityGoodDate = 0;
-                    NewsManager.Instance.ShowNews(26);
-                    break;
-                case <= 0.2f:
-                    authorityGoodDate++;
-                    if (TimeManager.Instance.today >= TimeManager.Instance.pcrDate && authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
-                    break;
-                default:
-                    authorityGoodDate = 0;
-                    break;
-            }
+                switch (currentAuthority)
+                {
+                    case >= 1:
+                        authorityGoodDate = 0;
+                        GameManager.Instance.GameEnd(GameEndType.Authority);
+                        break;
+                    case >= 0.75f:
+                        authorityGoodDate = 0;
+                        NewsManager.Instance.ShowNews(26);
+                        break;
+                    case <= 0.2f:
+                        if (TimeManager.Instance.today >= TimeManager.Instance.vaccineStartDate)
+                        {
+                            authorityGoodDate++;
+                            if(authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
+                        }
+                        break;
+                    default:
+                        authorityGoodDate = 0;
+                        break;
+                }
 
             banbal = Mathf.Lerp(banbal, currentBanbal / 80f, 0.1f);
             authority = Mathf.Lerp(authority, currentAuthority, 0.1f);

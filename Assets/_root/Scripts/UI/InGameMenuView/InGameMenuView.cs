@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.Utils;
 using DG.Tweening;
 using TMPro;
@@ -117,6 +118,7 @@ namespace _root.Scripts.UI.InGameMenuView
 
             _closer = _ =>
             {
+                SoundManager.Instance.PlayEffectSound(SoundKey.InfoClose);
                 clicker.DOFade(0, 0.2f).SetUpdate(true);
                 clickerTitle.DOFade(0, 0.2f).SetUpdate(true);
                 clickerDescription.DOFade(0, 0.2f).SetUpdate(true);
@@ -393,6 +395,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     clickerPreObjectText2.text = imageData.text2.text;
                     clickerBackground.gameObject.SetActive(true);
                     clickerBackground.image.DOFade(0.85f, 0.2f).SetUpdate(true);
+                    SoundManager.Instance.PlayEffectSound(SoundKey.InfoOpen);
 
                     clickerPreObjectImage.onClickDown.AddListener(_ =>
                     {

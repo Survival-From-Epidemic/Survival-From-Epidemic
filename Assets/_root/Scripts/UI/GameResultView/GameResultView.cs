@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
 using TMPro;
 using UnityEngine;
@@ -53,6 +54,20 @@ namespace _root.Scripts.UI.GameResultView
                 UpdateUI();
             });
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
+
+            switch (GameManager.Instance.gameEndType)
+            {
+                case GameEndType.Win:
+                    SoundManager.Instance.PlayEffectSound(SoundKey.WinSound);
+                    SoundManager.Instance.PlaySound(SoundKey.WinBackground);
+                    break;
+                case GameEndType.Banbal:
+                case GameEndType.Authority:
+                default:
+                    SoundManager.Instance.PlayEffectSound(SoundKey.LoseSound);
+                    SoundManager.Instance.PlaySound(SoundKey.LoseBackground);
+                    break;
+            }
         }
 
         private void OnEnable()

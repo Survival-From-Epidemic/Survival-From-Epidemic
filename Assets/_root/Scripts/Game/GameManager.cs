@@ -1,4 +1,4 @@
-﻿using _root.Scripts.Managers;
+﻿using System;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace _root.Scripts.Game
         public void GameEnd(GameEndType type)
         {
             gameEndType = type;
-            UIManager.Instance.EnableUI(UIElements.GameResult);
+            TimeManager.Instance.gameEndDate = DateTime.Today.AddDays(1);
         }
     }
 }

@@ -42,9 +42,13 @@ namespace _root.Scripts.Game
                 .SetAutoKill(false)
                 .SetLoops(-1)
                 .Pause()
-                .OnStart(() => newsChatText.rectTransform.DOAnchorPosX(680, 0))
+                .OnStart(() =>
+                {
+                    Debugger.Log("News Anim");
+                    newsChatText.rectTransform.DOAnchorPosX(680, 0);
+                })
                 .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
-                .OnStepComplete(ShowRandomNews);
+                .OnStepComplete(() => { Debugger.Log("Anim Step"); });
         }
 
         public bool IsNotShowed(int id) => _importantNewsLeft.Contains(id);
@@ -71,7 +75,7 @@ namespace _root.Scripts.Game
             var str = _newsLeft.ToArray()[Random.Range(0, _newsLeft.Count)];
             _newsLeft.Remove(str);
             newsChatText.text = str;
-            // _newsSequence.Restart();
+            _newsSequence.Restart();
         }
 
         [Serializable]

@@ -31,6 +31,7 @@ namespace _root.Scripts.Game
 
         private bool _globalInfected;
         private double _vaccineTotalDays;
+        public DateTime gameEndDate;
         public DateTime infectDate;
         public DateTime infectGlobalDate;
         public DateTime kitDate;
@@ -47,6 +48,7 @@ namespace _root.Scripts.Game
             speedIdx = 1;
             modificationCount = 0;
             today = startDate = DateTime.Today;
+            gameEndDate = DateTime.MaxValue;
 
             infectGlobalDateSerialized = (infectGlobalDate = startDate.AddDays(Random.Range(7, 15))).ToShortDateString();
             infectDateSerialized = (infectDate = infectGlobalDate.AddDays(Random.Range(7, 15))).ToShortDateString();
@@ -132,6 +134,11 @@ namespace _root.Scripts.Game
                 UIManager.Instance.UpdateTime(today);
 
                 NewsCycle();
+
+                if (today >= gameEndDate)
+                {
+                    UIManager.Instance.EnableUI(UIElements.GameResult);
+                }
 
                 if (!_globalInfected && today >= infectGlobalDate)
                 {
