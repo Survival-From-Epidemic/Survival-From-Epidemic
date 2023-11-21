@@ -1,5 +1,6 @@
-﻿using _root.Scripts.Managers.UI;
-using _root.Scripts.UI;
+﻿using _root.Scripts.Game;
+using _root.Scripts.Managers.Sound;
+using _root.Scripts.Managers.UI;
 using _root.Scripts.UI.InGameView;
 using UnityEngine;
 
@@ -21,9 +22,10 @@ namespace _root.Scripts.Managers
         {
             if (UIManager.Instance.GetKey() is UIElements.InGameMenu)
             {
-                if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.F))
                 {
                     UIManager.Instance.EnableUI(UIElements.InGame);
+                    SoundManager.Instance.PlaySound(SoundKey.PanelClose);
                 }
             }
             else
@@ -31,6 +33,7 @@ namespace _root.Scripts.Managers
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     UIManager.Instance.EnableUI(UIElements.InGameMenu);
+                    SoundManager.Instance.PlaySound(SoundKey.PanelOpen);
                 }
             }
 
@@ -39,24 +42,26 @@ namespace _root.Scripts.Managers
                 NewsObject.Instance.gameObject.SetActive(false);
             }
 
-            Cursor.lockState = Input.GetKey(KeyCode.LeftAlt) || NewsObject.Instance.isActiveAndEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = UIManager.Instance.GetKey() is not UIElements.InGame || Input.GetKey(KeyCode.LeftAlt) || NewsObject.Instance.isActiveAndEnabled
+                ? CursorLockMode.None
+                : CursorLockMode.Locked;
 
             if (UIManager.Instance.GetKey() is not UIElements.InGame) return;
             if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.Tilde))
             {
-                GameView.SpeedCycle(0);
+                TimeManager.SpeedCycle(0);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                GameView.SpeedCycle(1);
+                TimeManager.SpeedCycle(1);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                GameView.SpeedCycle(2);
+                TimeManager.SpeedCycle(2);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                GameView.SpeedCycle(3);
+                TimeManager.SpeedCycle(3);
             }
 
             var velocity = Vector3.zero;

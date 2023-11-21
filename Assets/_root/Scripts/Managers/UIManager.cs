@@ -28,10 +28,11 @@ namespace _root.Scripts.Managers
             }
 
             var element = _elementDictionary[startUIKey];
-            (_currentUI = element.targetUI).gameObject.SetActive(true);
-            _currentUIKey = startUIKey;
 
             if (SceneManager.GetActiveScene().name != element.scene.GetString()) SceneManager.LoadScene(element.scene.GetString());
+
+            (_currentUI = element.targetUI).gameObject.SetActive(true);
+            _currentUIKey = startUIKey;
         }
 
         public UIElements GetKey() => _currentUIKey;
@@ -41,8 +42,8 @@ namespace _root.Scripts.Managers
             _currentUI.gameObject.SetActive(false);
             _currentUIKey = key;
             var element = _elementDictionary[key];
-            (_currentUI = element.targetUI).gameObject.SetActive(true);
             if (SceneManager.GetActiveScene().name != element.scene.GetString()) SceneManager.LoadScene(element.scene.GetString());
+            (_currentUI = element.targetUI).gameObject.SetActive(true);
         }
 
         public void UpdateTime(DateTime dateTime)

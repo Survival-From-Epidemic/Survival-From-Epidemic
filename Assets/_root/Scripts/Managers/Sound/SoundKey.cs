@@ -11,6 +11,8 @@
         LoseSound,
         LoseBackground,
         GameBackground,
-        MainBackground
+        MainBackground,
+        PanelOpen,
+        PanelClose
     }
 }

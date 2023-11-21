@@ -12,8 +12,9 @@ namespace _root.Scripts.Managers
 
         private Dictionary<SoundKey, AudioSource> _soundDictionary;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             _soundDictionary = new Dictionary<SoundKey, AudioSource>();
             var root = new GameObject("@Sounds");
             DontDestroyOnLoad(root);

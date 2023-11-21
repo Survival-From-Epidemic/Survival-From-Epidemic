@@ -1,5 +1,4 @@
-﻿using _root.Scripts.Game;
-using _root.Scripts.Managers;
+﻿using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +12,8 @@ namespace _root.Scripts.UI
         [SerializeField] private Sprite hoverImage;
         [SerializeField] private Sprite clickImage;
         [SerializeField] private Sprite selectImage;
+        [SerializeField] private bool playDefaultClickSound = true;
+
         public bool isSelected;
 
         [Space] public EventTrigger.TriggerEvent onHover;
@@ -56,20 +57,23 @@ namespace _root.Scripts.UI
             });
             _isClicked = false;
 
-            var triggerEvent = new EventTrigger.TriggerEvent();
-            triggerEvent.AddListener(_ =>
+            if (playDefaultClickSound)
             {
-                Debugger.Log($"Click: {onClickDown.GetPersistentEventCount()}");
-                if (onClickDown.GetPersistentEventCount() > 0)
+                var triggerEvent = new EventTrigger.TriggerEvent();
+                triggerEvent.AddListener(_ =>
                 {
+                    // Debugger.Log($"Click: {onClickDown.GetPersistentEventCount()}");
+                    // if (onClickDown.GetPersistentEventCount() > 0)
+                    // {
                     SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
-                }
-            });
-            _trigger.triggers.Add(new EventTrigger.Entry
-            {
-                eventID = EventTriggerType.PointerDown,
-                callback = triggerEvent
-            });
+                    // }
+                });
+                _trigger.triggers.Add(new EventTrigger.Entry
+                {
+                    eventID = EventTriggerType.PointerDown,
+                    callback = triggerEvent
+                });
+            }
 
             if (!defaultImage) return;
 

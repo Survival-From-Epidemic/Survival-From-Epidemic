@@ -71,7 +71,7 @@ namespace _root.Scripts.Game
             var str = _newsLeft.ToArray()[Random.Range(0, _newsLeft.Count)];
             _newsLeft.Remove(str);
             newsChatText.text = str;
-            _newsSequence.Restart();
+            // _newsSequence.Restart();
         }
 
         [Serializable]

@@ -2,6 +2,8 @@
 using System.Collections;
 using _root.Scripts.Attribute;
 using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
+using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +12,7 @@ namespace _root.Scripts.Game
 {
     public class TimeManager : SingleMono<TimeManager>
     {
+        [SerializeField] public int speedIdx;
         [Range(0.01f, 4f)] [SerializeField] public float timeScale = 2f;
         [SerializeField] public int date;
         [SerializeField] public int nextNews;
@@ -41,6 +44,7 @@ namespace _root.Scripts.Game
 
         private void Start()
         {
+            speedIdx = 1;
             modificationCount = 0;
             today = startDate = DateTime.Today;
 
@@ -54,8 +58,33 @@ namespace _root.Scripts.Game
             nextNews = Random.Range(14, 44);
 
             NewsManager.Instance.ShowNews(1);
+            SoundManager.Instance.PlaySound(SoundKey.GameBackground);
 
             StartCoroutine(DayCycle());
+        }
+
+        public static void SpeedCycle(int idx)
+        {
+            if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
+            Debugger.Log($"SpeedCycle: {idx}");
+            switch (idx)
+            {
+                case 0:
+                    Time.timeScale = 0;
+                    break;
+                case 1:
+                    Time.timeScale = 1;
+                    Instance.timeScale = 2;
+                    break;
+                case 2:
+                    Time.timeScale = 1;
+                    Instance.timeScale = 1.1f;
+                    break;
+                case 3:
+                    Time.timeScale = 1;
+                    Instance.timeScale = 0.5f;
+                    break;
+            }
         }
 
         public void VaccineUpgrade(int days)
