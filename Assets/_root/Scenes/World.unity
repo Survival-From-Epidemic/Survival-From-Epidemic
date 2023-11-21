@@ -1124,6 +1124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeDestroy: 0
+  speedIdx: 0
   timeScale: 2
   date: 0
   nextNews: 0
@@ -1411,7 +1412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 347342186770230270, guid: 60348888e71013a489573cdcde3b4c75, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 507827135363484021, guid: 60348888e71013a489573cdcde3b4c75, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1985,6 +1986,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1484713618}
     m_Modifications:
+    - target: {fileID: 346424999639125102, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
     - target: {fileID: 347342186770230270, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_Name
       value: InGameMenuView
@@ -1992,6 +1997,10 @@ PrefabInstance:
     - target: {fileID: 347342186770230270, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 379931159808065746, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
       objectReference: {fileID: 0}
     - target: {fileID: 875649277087737167, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_Pivot.x
@@ -2077,17 +2086,53 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1086712161222312723, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3053453311
+      objectReference: {fileID: 0}
     - target: {fileID: 2115977572448925892, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471003166547512648, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3053453311
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923560846171144051, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3179202811145009686, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
       objectReference: {fileID: 0}
     - target: {fileID: 3217713016454191101, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3261348594109232872, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3558521699209397174, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947916462661933167, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: playDefaultClickSound
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036960597172179988, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_fontColor.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085229362667753608, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847882826164614306, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
       objectReference: {fileID: 0}
     - target: {fileID: 6267433279942684593, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -2101,9 +2146,17 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7129461802231404285, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
     - target: {fileID: 7650962137167962414, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7755413614501141389, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3053453311
       objectReference: {fileID: 0}
     - target: {fileID: 7770486731021459222, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -2113,9 +2166,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8398928103787468965, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
     - target: {fileID: 9116915287885092809, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150607233052683387, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158836703845015456, guid: 512f7ca2a9db071469058824de41fd76, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3422552063
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -2400,9 +2465,9 @@ MonoBehaviour:
   canBeDestroy: 0
   sounds:
   - key: 0
-    audio: {fileID: 8300000, guid: 6c96f17621974ab469d71b6645c210ae, type: 3}
-    volume: 1
-    pitch: 3
+    audio: {fileID: 8300000, guid: 68c40f19d721b844797f888c2e0fa94b, type: 3}
+    volume: 0.755
+    pitch: 1
     loop: 0
   - key: 2
     audio: {fileID: 8300000, guid: 9f14072541b8f2e4faad2dfd29ec4708, type: 3}
@@ -2424,6 +2489,21 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 1
+  - key: 8
+    audio: {fileID: 8300000, guid: 474ea9436aaf4e24ba954b970fdf1ed1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+  - key: 10
+    audio: {fileID: 8300000, guid: 10b5c2e768d9a264b90cac6c977347af, type: 3}
+    volume: 1
+    pitch: 1.45
+    loop: 0
+  - key: 11
+    audio: {fileID: 8300000, guid: ca536fe154e4a754eb1aac836e73f373, type: 3}
+    volume: 1
+    pitch: 1.53
+    loop: 0
 --- !u!4 &5096376754197224494
 Transform:
   m_ObjectHideFlags: 0

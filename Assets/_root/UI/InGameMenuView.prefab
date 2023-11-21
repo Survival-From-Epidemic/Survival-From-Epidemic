@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 1861150528398271203}
   - component: {fileID: 4858311423086454237}
   - component: {fileID: 7180126788503416579}
+  - component: {fileID: 8640788340942426102}
   m_Layer: 5
   m_Name: InGameMenuView
   m_TagString: Untagged
@@ -388,6 +389,27 @@ MonoBehaviour:
   - {fileID: 2115977572448925892}
   - {fileID: 9116915287885092809}
   - {fileID: 8121438522887947083}
+--- !u!95 &8640788340942426102
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347342186770230270}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 94d4dce29f9ef1e4f880edf677aaf7ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &410615306774348762
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,7 +559,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4194303999
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -671,7 +693,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4194303999
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1179,6 +1201,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 1
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -1333,7 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.99999976, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.9999998, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2000,7 +2023,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2538,7 +2561,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2736,7 +2759,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2889,6 +2912,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 0
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -3245,7 +3269,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3398,6 +3422,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 0
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -3681,7 +3706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20624185, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.2062418, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4059,6 +4084,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 1
   isSelected: 1
   onHover:
     m_PersistentCalls:
@@ -4208,7 +4234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.5088804, b: 0.21226418, a: 1}
+  m_Color: {r: 1, g: 0.5088804, b: 0.2122642, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4433,7 +4459,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4821,7 +4847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.042452812, b: 0.09982569, a: 1}
+  m_Color: {r: 1, g: 0.04245281, b: 0.09982569, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5065,6 +5091,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 0
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -5385,6 +5412,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 1
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -5852,6 +5880,7 @@ MonoBehaviour:
   hoverImage: {fileID: 0}
   clickImage: {fileID: 0}
   selectImage: {fileID: 0}
+  playDefaultClickSound: 0
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -6101,6 +6130,7 @@ MonoBehaviour:
   hoverImage: {fileID: 0}
   clickImage: {fileID: 0}
   selectImage: {fileID: 0}
+  playDefaultClickSound: 0
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -6457,7 +6487,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4194303999
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6610,6 +6640,7 @@ MonoBehaviour:
   hoverImage: {fileID: 21300000, guid: d1de10b0f32e73848bc09bad7ee9234f, type: 3}
   clickImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: 13238564df9ef634d95aeb231e957529, type: 3}
+  playDefaultClickSound: 1
   isSelected: 0
   onHover:
     m_PersistentCalls:
@@ -6850,7 +6881,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7118,7 +7149,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7252,7 +7283,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7520,7 +7551,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7654,7 +7685,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7929,7 +7960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9843137, g: 0.38039216, b: 1, a: 1}
+  m_Color: {r: 0.9843137, g: 0.3803922, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
