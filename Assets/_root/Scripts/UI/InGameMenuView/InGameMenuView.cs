@@ -4,6 +4,7 @@ using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
+using _root.Scripts.Managers.UI;
 using _root.Scripts.Utils;
 using DG.Tweening;
 using TMPro;
@@ -38,6 +39,7 @@ namespace _root.Scripts.UI.InGameMenuView
         [SerializeField] private Sprite[] enableSprites;
         [SerializeField] private Sprite[] disableSprites;
         [SerializeField] private Sprite previewSprite;
+        [SerializeField] private UIImage closeButton;
 
         [SerializeField] private UIImage graphButton;
         [SerializeField] private InGameMenuGraph graphType;
@@ -151,6 +153,7 @@ namespace _root.Scripts.UI.InGameMenuView
             }
 
             clickerBackground.onClickDown.AddListener(_closer);
+            closeButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.InGame));
 
             _graphButtonText = graphButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             graphButton.onClickDown.AddListener(_ => graphType = (InGameMenuGraph)(((int)graphType + 1) % 3));

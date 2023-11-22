@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using _root.Scripts.Game;
 using TMPro;
 using UnityEngine;
@@ -15,34 +15,33 @@ namespace _root.Scripts.UI.InGameView
         [SerializeField] private TextMeshProUGUI healthyText;
         [SerializeField] private TextMeshProUGUI infectText;
         [SerializeField] private TextMeshProUGUI deadText;
+        [SerializeField] private Image vaccineGageImage;
+        [SerializeField] private Image vaccineBackground;
+        [SerializeField] private TextMeshProUGUI vaccinePercentText;
 
-        private Coroutine _coroutine;
-
-        protected override void OnEnable()
+        public override void OnTimeChanged(DateTime dateTime)
         {
-            base.OnEnable();
-            _coroutine = StartCoroutine(TextUpdate());
-        }
+            base.OnTimeChanged(dateTime);
+            banbalText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.banbal * 100):n0}%";
+            banbalImage.fillAmount = 1 - ValueManager.Instance.banbal;
 
-        private void OnDisable()
-        {
-            if (_coroutine != null) StopCoroutine(_coroutine);
-        }
+            authorityText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.authority * 100):n0}%";
+            authorityImage.fillAmount = 1 - ValueManager.Instance.authority;
 
-        private IEnumerator TextUpdate()
-        {
-            while (true)
+            healthyText.text = $"{ValueManager.Instance.person.healthyPerson}";
+            infectText.text = $"{ValueManager.Instance.person.infectedPerson}";
+            deadText.text = $"{ValueManager.Instance.person.deathPerson}";
+            if (ValueManager.Instance.vaccineResearch)
             {
-                banbalText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.banbal * 100):n0}%";
-                banbalImage.fillAmount = 1 - ValueManager.Instance.banbal;
-
-                authorityText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.authority * 100):n0}%";
-                authorityImage.fillAmount = 1 - ValueManager.Instance.authority;
-
-                healthyText.text = $"{ValueManager.Instance.person.healthyPerson}";
-                infectText.text = $"{ValueManager.Instance.person.infectedPerson}";
-                deadText.text = $"{ValueManager.Instance.person.deathPerson}";
-                yield return new WaitForSeconds(1);
+                vaccineBackground.gameObject.SetActive(true);
+                var vaccinePercent = vaccineGageImage.fillAmount = (float)TimeManager.Instance.GetVaccinePercent();
+                vaccinePercentText.text = $"{vaccinePercent * 100:n0}%";
+            }
+            else
+            {
+                vaccineBackground.gameObject.SetActive(false);
+                vaccineGageImage.fillAmount = 0;
+                vaccinePercentText.text = "";
             }
         }
     }

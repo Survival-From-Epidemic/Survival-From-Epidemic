@@ -38,17 +38,14 @@ namespace _root.Scripts.Game
 
             _newsLeft = LinqUtility.ToHashSet(newsList);
             _importantNewsLeft = LinqUtility.ToHashSet(importantNewsList.Select(v => v.id));
+
             _newsSequence = DOTween.Sequence()
+                .AppendCallback(() => newsChatText.rectTransform.anchoredPosition = new Vector2(680, 0))
+                .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
+                .OnStepComplete(ShowRandomNews)
                 .SetAutoKill(false)
                 .SetLoops(-1)
-                .Pause()
-                .OnStart(() =>
-                {
-                    Debugger.Log("News Anim");
-                    newsChatText.rectTransform.DOAnchorPosX(680, 0);
-                })
-                .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
-                .OnStepComplete(() => { Debugger.Log("Anim Step"); });
+                .Pause();
         }
 
         public bool IsNotShowed(int id) => _importantNewsLeft.Contains(id);
@@ -65,7 +62,7 @@ namespace _root.Scripts.Game
             NewsObject.Instance.image.DOFade(1f, 0.2f);
             newsTitleText.DOFade(1f, 0.2f);
             newsDescriptionText.DOFade(1f, 0.2f);
-
+            Debugger.Log($"Show Main News: {first.title}");
             _newsSequence.Restart();
         }
 
@@ -75,6 +72,7 @@ namespace _root.Scripts.Game
             var str = _newsLeft.ToArray()[Random.Range(0, _newsLeft.Count)];
             _newsLeft.Remove(str);
             newsChatText.text = str;
+            Debugger.Log($"Show Random News: {str}");
             _newsSequence.Restart();
         }
 
