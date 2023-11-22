@@ -15,6 +15,8 @@
         PanelOpen,
         PanelClose,
         InfoOpen,
-        InfoClose
+        InfoClose,
+        CoinUpload1,
+        CoinUpload2
     }
 }

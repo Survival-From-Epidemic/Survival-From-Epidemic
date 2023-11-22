@@ -17,6 +17,11 @@ namespace _root.Scripts.Game
             if (Instance.debug) Debug.unityLogger.Log(msg);
         }
 
+        public static void Error(string tag, object msg)
+        {
+            if (Instance.debug) Debug.unityLogger.LogError(tag, msg);
+        }
+
         public static bool IsDebug() => Instance.debug;
     }
 }

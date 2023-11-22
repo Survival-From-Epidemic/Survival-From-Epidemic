@@ -52,7 +52,6 @@ namespace _root.Scripts.Game
             today = startDate = DateTime.Today;
             gameEndDate = DateTime.MaxValue;
 
-            MoneyManager.Instance.AddMoney(1000000);
             lastMoneyMonth = today.Month;
             infectGlobalDateSerialized = (infectGlobalDate = startDate.AddDays(Random.Range(7, 15))).ToShortDateString();
             infectDateSerialized = (infectDate = infectGlobalDate.AddDays(Random.Range(7, 15))).ToShortDateString();
@@ -67,6 +66,7 @@ namespace _root.Scripts.Game
             SoundManager.Instance.PlaySound(SoundKey.GameBackground);
 
             StartCoroutine(DayCycle());
+            MoneyManager.Instance.AddMoneyNotify(1000000);
         }
 
         public static void SpeedCycle(int idx)
@@ -138,9 +138,9 @@ namespace _root.Scripts.Game
                 UIManager.Instance.UpdateTime(today);
                 if (lastMoneyMonth != today.Month)
                 {
-                    var money = 600000;
-                    if (ValueManager.Instance.authorityGoodDate >= 30) money += 300000;
-                    MoneyManager.Instance.AddMoney(money);
+                    var money = 500000;
+                    if (ValueManager.Instance.authorityGoodDate >= 30) money += 200000;
+                    MoneyManager.Instance.AddMoneyNotify(money);
                     lastMoneyMonth = today.Month;
                 }
 
