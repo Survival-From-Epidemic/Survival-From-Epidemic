@@ -54,6 +54,12 @@ namespace _root.Scripts.UI.GameResultView
                 UpdateUI();
             });
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
+        }
+
+        private void OnEnable()
+        {
+            UpdateUI();
+            SoundManager.Instance.StopAllLoopSound();
 
             switch (GameManager.Instance.gameEndType)
             {
@@ -68,11 +74,6 @@ namespace _root.Scripts.UI.GameResultView
                     SoundManager.Instance.PlaySound(SoundKey.LoseBackground);
                     break;
             }
-        }
-
-        private void OnEnable()
-        {
-            UpdateUI();
         }
 
         private IEnumerator Run()

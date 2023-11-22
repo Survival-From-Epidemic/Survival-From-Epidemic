@@ -69,7 +69,15 @@ namespace _root.Scripts.Game
             var gridAuthority = localGridData.gridAuthority;
             currentBanbal = gridAuthority.concentration + gridAuthority.mask + gridAuthority.annoy + gridAuthority.study;
             if (gridAuthority.concentration >= 10) NewsManager.Instance.ShowNews(28);
-            if (currentBanbal >= 80)
+
+            if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
+
+            currentAuthority = (person.deathPerson * 6 + person.infectedPerson / 2.5f) / person.totalPerson;
+
+            banbal = Mathf.Lerp(banbal, currentBanbal * 0.01f, 0.08f);
+            authority = Mathf.Lerp(authority, currentAuthority, 0.08f);
+
+            if (banbal >= 80)
             {
                 if (banbalDate >= 3) NewsManager.Instance.ShowNews(27);
                 if (banbalDate >= 7)
@@ -84,33 +92,28 @@ namespace _root.Scripts.Game
                 banbalDate = 0;
             }
 
-            if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
+            switch (authority)
+            {
+                case >= 1:
+                    authorityGoodDate = 0;
+                    GameManager.Instance.GameEnd(GameEndType.Authority);
+                    break;
+                case >= 0.75f:
+                    authorityGoodDate = 0;
+                    NewsManager.Instance.ShowNews(26);
+                    break;
+                case <= 0.2f:
+                    if (TimeManager.Instance.today >= TimeManager.Instance.vaccineStartDate)
+                    {
+                        authorityGoodDate++;
+                        if (authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
+                    }
 
-            currentAuthority = (person.deathPerson * 4 + person.infectedPerson / 1.33f) / person.totalPerson;
-                switch (currentAuthority)
-                {
-                    case >= 1:
-                        authorityGoodDate = 0;
-                        GameManager.Instance.GameEnd(GameEndType.Authority);
-                        break;
-                    case >= 0.75f:
-                        authorityGoodDate = 0;
-                        NewsManager.Instance.ShowNews(26);
-                        break;
-                    case <= 0.2f:
-                        if (TimeManager.Instance.today >= TimeManager.Instance.vaccineStartDate)
-                        {
-                            authorityGoodDate++;
-                            if(authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
-                        }
-                        break;
-                    default:
-                        authorityGoodDate = 0;
-                        break;
-                }
-
-            banbal = Mathf.Lerp(banbal, currentBanbal / 80f, 0.1f);
-            authority = Mathf.Lerp(authority, currentAuthority, 0.1f);
+                    break;
+                default:
+                    authorityGoodDate = 0;
+                    break;
+            }
 
             disease.infectPower = GetInfectPower();
             if (diseaseEnabled)

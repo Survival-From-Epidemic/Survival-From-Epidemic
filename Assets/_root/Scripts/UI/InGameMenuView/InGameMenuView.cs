@@ -163,6 +163,20 @@ namespace _root.Scripts.UI.InGameMenuView
         protected override void Update()
         {
             base.Update();
+
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.F))
+            {
+                if (clickerBackground.isActiveAndEnabled)
+                {
+                    _closer.Invoke(null);
+                }
+                else
+                {
+                    UIManager.Instance.EnableUI(UIElements.InGame);
+                    SoundManager.Instance.PlaySound(SoundKey.PanelClose);
+                }
+            }
+
             if (clickerCost.isActiveAndEnabled)
             {
                 clickerCost.color = MoneyManager.Instance.HasMoney(_currentCost) ? Color.white : Color.red;
@@ -413,7 +427,7 @@ namespace _root.Scripts.UI.InGameMenuView
                         {
                             if (!MoneyManager.Instance.RemoveMoney(_currentCost)) return;
                             LocalDataManager.Instance.Buy(_currentGridData.name);
-                            clickerPreObjectIcon.sprite = enableSprites[(int)inGameMenuPage];
+                            clickerPreObjectImage.image.sprite = enableSprites[(int)inGameMenuPage];
                         }
 
                         _closer.Invoke(null);

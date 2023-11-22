@@ -41,7 +41,7 @@ namespace _root.Scripts.Game
 
             _newsSequence = DOTween.Sequence()
                 .AppendCallback(() => newsChatText.rectTransform.anchoredPosition = new Vector2(680, 0))
-                .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 14f))
+                .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 12f))
                 .OnStepComplete(ShowRandomNews)
                 .SetAutoKill(false)
                 .SetLoops(-1)

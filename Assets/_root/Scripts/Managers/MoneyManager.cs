@@ -12,16 +12,18 @@ namespace _root.Scripts.Managers
 
         public int GetMoney() => money;
 
-        public void AddMoney(int value)
+        public void AddMoney(int value, bool data = false)
         {
             money += Math.Max(0, value);
             ServerDataManager.Instance.money[0] += value;
+            if (data) ServerDataManager.Instance.money[1] -= value;
         }
 
-        public bool RemoveMoney(int value)
+        public bool RemoveMoney(int value, bool data = false)
         {
             if (!value.IsNatural() || !HasMoney(value)) return false;
             ServerDataManager.Instance.money[1] += value;
+            if (data) ServerDataManager.Instance.money[0] -= value;
             money -= value;
             return true;
         }

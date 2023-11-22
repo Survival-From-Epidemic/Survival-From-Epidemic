@@ -22,8 +22,8 @@ namespace _root.Scripts.UI.InGameView
         public override void OnTimeChanged(DateTime dateTime)
         {
             base.OnTimeChanged(dateTime);
-            banbalText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.banbal * 100):n0}%";
-            banbalImage.fillAmount = 1 - ValueManager.Instance.banbal;
+            banbalText.text = $"{Mathf.FloorToInt(ValueManager.Instance.banbal * 100):n0}%";
+            banbalImage.fillAmount = ValueManager.Instance.banbal;
 
             authorityText.text = $"{100 - Mathf.FloorToInt(ValueManager.Instance.authority * 100):n0}%";
             authorityImage.fillAmount = 1 - ValueManager.Instance.authority;

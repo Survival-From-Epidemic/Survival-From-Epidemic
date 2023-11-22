@@ -20,15 +20,7 @@ namespace _root.Scripts.Managers
 
         private void Update()
         {
-            if (UIManager.Instance.GetKey() is UIElements.InGameMenu)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.F))
-                {
-                    UIManager.Instance.EnableUI(UIElements.InGame);
-                    SoundManager.Instance.PlaySound(SoundKey.PanelClose);
-                }
-            }
-            else
+            if (UIManager.Instance.GetKey() is not UIElements.InGameMenu)
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {

@@ -29,6 +29,8 @@ namespace _root.Scripts.Game
         [ReadOnly] [SerializeField] private string vaccineEndDateSerialized;
         [ReadOnly] [SerializeField] private string vaccineStartDateSerialized;
 
+        [SerializeField] private int lastMoneyMonth;
+
         private bool _globalInfected;
         private double _vaccineTotalDays;
         public DateTime gameEndDate;
@@ -50,6 +52,8 @@ namespace _root.Scripts.Game
             today = startDate = DateTime.Today;
             gameEndDate = DateTime.MaxValue;
 
+            MoneyManager.Instance.AddMoney(1000000);
+            lastMoneyMonth = today.Month;
             infectGlobalDateSerialized = (infectGlobalDate = startDate.AddDays(Random.Range(7, 15))).ToShortDateString();
             infectDateSerialized = (infectDate = infectGlobalDate.AddDays(Random.Range(7, 15))).ToShortDateString();
             pcrDateSerialized = (pcrDate = infectGlobalDate.AddDays(Random.Range(14, 21))).ToShortDateString();
@@ -132,6 +136,13 @@ namespace _root.Scripts.Game
                 // Debug.unityLogger.Log($"dayCycle: {today.ToShortDateString()}");
                 ValueManager.Instance.Cycle();
                 UIManager.Instance.UpdateTime(today);
+                if (lastMoneyMonth != today.Month)
+                {
+                    var money = 600000;
+                    if (ValueManager.Instance.authorityGoodDate >= 30) money += 300000;
+                    MoneyManager.Instance.AddMoney(money);
+                    lastMoneyMonth = today.Month;
+                }
 
                 NewsCycle();
 
