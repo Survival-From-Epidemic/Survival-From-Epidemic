@@ -38,25 +38,28 @@ namespace _root.Scripts.Managers
             //     : CursorLockMode.Locked;
 
             if (UIManager.Instance.GetKey() is not UIElements.InGame) return;
-            if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.Tilde))
+            if (!NewsObject.Instance.isActiveAndEnabled)
             {
-                TimeManager.SpeedCycle(0);
-                SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                TimeManager.SpeedCycle(1);
-                SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                TimeManager.SpeedCycle(2);
-                SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                TimeManager.SpeedCycle(3);
-                SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.Tilde))
+                {
+                    TimeManager.SpeedCycle(0);
+                    SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    TimeManager.SpeedCycle(1);
+                    SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    TimeManager.SpeedCycle(2);
+                    SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    TimeManager.SpeedCycle(3);
+                    SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+                }
             }
 
             var velocity = Vector3.zero;
