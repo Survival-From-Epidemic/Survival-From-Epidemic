@@ -31,8 +31,8 @@ namespace _root.Scripts.Managers.UI
         {
             return type switch
             {
-                UIScenes.MainScene => "World",
-                UIScenes.GameScene => "Game",
+                UIScenes.MainScene => "Home",
+                UIScenes.GameScene => "World",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
