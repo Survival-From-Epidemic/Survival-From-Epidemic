@@ -1,3 +1,4 @@
+using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.Network;
@@ -30,7 +31,11 @@ namespace _root.Scripts.UI.SignInView
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
-                        .OnResponse(_ => UIManager.Instance.EnableUI(UIElements.GameStart))
+                        .OnResponse(data =>
+                        {
+                            Debugger.Log(data);
+                            UIManager.Instance.EnableUI(UIElements.GameStart);
+                        })
                         .Build();
             if (Input.GetKeyDown(KeyCode.Tab))
             {
