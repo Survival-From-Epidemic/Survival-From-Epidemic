@@ -7,6 +7,11 @@ namespace _root.Scripts.Game
     {
         [SerializeField] private bool debug = true;
 
+        private void Start()
+        {
+            Application.runInBackground = true;
+        }
+
         public static void Log(object msg)
         {
             if (Instance.debug) Debug.unityLogger.Log(msg);
