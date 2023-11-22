@@ -34,9 +34,9 @@ namespace _root.Scripts.Managers
                 NewsObject.Instance.gameObject.SetActive(false);
             }
 
-            Cursor.lockState = UIManager.Instance.GetKey() is not UIElements.InGame || Input.GetKey(KeyCode.LeftAlt) || NewsObject.Instance.isActiveAndEnabled
-                ? CursorLockMode.None
-                : CursorLockMode.Locked;
+            // Cursor.lockState = UIManager.Instance.GetKey() is not UIElements.InGame || Input.GetKey(KeyCode.LeftAlt) || NewsObject.Instance.isActiveAndEnabled
+            //     ? CursorLockMode.None
+            //     : CursorLockMode.Locked;
 
             if (UIManager.Instance.GetKey() is not UIElements.InGame) return;
             if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.Tilde))
