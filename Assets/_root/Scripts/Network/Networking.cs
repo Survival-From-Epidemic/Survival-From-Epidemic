@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
+using _root.Scripts.Game;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -73,7 +74,7 @@ namespace _root.Scripts.Network
 
             private IEnumerator _Request(string url)
             {
-                Debug.unityLogger.Log($"Sending Request to {url}");
+                Debugger.Log($"Sending Request to {url}");
                 using var webRequest = WebRequest(url);
                 webRequest.timeout = _timeOut;
                 foreach (var (key, value) in _headers)
@@ -121,7 +122,7 @@ namespace _root.Scripts.Network
             public Post(string path, object body) : base(path)
             {
                 _body = JsonUtility.ToJson(body);
-                Debug.unityLogger.Log($"Added to body: {_body}");
+                Debugger.Log($"Added to body: {_body}");
             }
 
             protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Post(url, _body, "application/json");
@@ -134,7 +135,7 @@ namespace _root.Scripts.Network
             public Put(string path, object body) : base(path)
             {
                 _body = JsonUtility.ToJson(body);
-                Debug.unityLogger.Log($"Added to body: {_body}");
+                Debugger.Log($"Added to body: {_body}");
             }
 
             protected override UnityWebRequest WebRequest(string url) => UnityWebRequest.Put(url, _body);

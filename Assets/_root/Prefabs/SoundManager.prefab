@@ -47,26 +47,22 @@ MonoBehaviour:
   canBeDestroy: 0
   sounds:
   - key: 0
-    audio: {fileID: 8300000, guid: 3b6baf148bdc34d33952b82e988b7190, type: 3}
-    volume: 0.492
-    pitch: 0.11
-  - key: 1
-    audio: {fileID: 8300000, guid: 654beb3c4a4fb4730adb9fe6ad345b1e, type: 3}
-    volume: 0.492
-    pitch: 0.11
+    audio: {fileID: 8300000, guid: 6c96f17621974ab469d71b6645c210ae, type: 3}
+    volume: 1
+    pitch: 3
   - key: 2
-    audio: {fileID: 8300000, guid: a66e54c12ea644ecd8be5540f9d207a1, type: 3}
-    volume: 0.492
-    pitch: 0.11
+    audio: {fileID: 8300000, guid: 9f14072541b8f2e4faad2dfd29ec4708, type: 3}
+    volume: 1
+    pitch: 1
   - key: 3
-    audio: {fileID: 8300000, guid: 2056bacce81134ebb88161a2e2490819, type: 3}
-    volume: 0.492
-    pitch: 0.11
+    audio: {fileID: 8300000, guid: 6c96f17621974ab469d71b6645c210ae, type: 3}
+    volume: 1
+    pitch: 1
   - key: 4
-    audio: {fileID: 8300000, guid: ae27ae0b55fb74e10a05be362d7357d9, type: 3}
-    volume: 0.492
-    pitch: 0.11
+    audio: {fileID: 8300000, guid: d9426922ec9d0104195dddd6ba1e4408, type: 3}
+    volume: 1
+    pitch: 1
   - key: 5
-    audio: {fileID: 8300000, guid: d8a942bc4cd7d4848b12c57fd18f6316, type: 3}
-    volume: 0.492
-    pitch: 0.11
+    audio: {fileID: 8300000, guid: 9d6838403076aa04189059c6bb64b504, type: 3}
+    volume: 1
+    pitch: 1

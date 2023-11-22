@@ -13,8 +13,9 @@ namespace _root.Scripts.Game
         [ReadOnly] public int[] money;
         private List<TimeLeap> _timeLeapData;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             nodeBuy = new int[3];
             nodeSell = new int[3];
             money = new int[2];
@@ -53,6 +54,10 @@ namespace _root.Scripts.Game
                 }
             });
         }
+
+        public TimeLeap GetTimeLeap(int time) => _timeLeapData[time];
+
+        public int TimeLeapLength() => _timeLeapData.Count;
 
         public void ForEachTimeLeap(Action<TimeLeap, DateTime> action)
         {

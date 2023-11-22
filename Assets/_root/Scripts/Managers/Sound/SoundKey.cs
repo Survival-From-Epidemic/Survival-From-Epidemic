@@ -2,11 +2,21 @@
 {
     public enum SoundKey
     {
-        MoneySound,
         ClickSound,
-        PageTurnSound,
-        SpinJumpSound,
-        ClockSingleSound,
-        ShootArrowSound
+        BuySound,
+        BuyUpSound,
+        SellSound,
+        WinSound,
+        WinBackground,
+        LoseSound,
+        LoseBackground,
+        GameBackground,
+        MainBackground,
+        PanelOpen,
+        PanelClose,
+        InfoOpen,
+        InfoClose,
+        CoinUpload1,
+        CoinUpload2
     }
 }

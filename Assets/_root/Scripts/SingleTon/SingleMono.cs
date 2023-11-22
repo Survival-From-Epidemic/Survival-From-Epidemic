@@ -12,6 +12,12 @@ namespace _root.Scripts.SingleTon
 
         protected virtual void Awake()
         {
+            if (_instance && !canBeDestroy)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _instance = this as T;
             if (!canBeDestroy) DontDestroyOnLoad(gameObject);
         }

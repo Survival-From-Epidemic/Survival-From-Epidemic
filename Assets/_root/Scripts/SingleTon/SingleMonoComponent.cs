@@ -16,6 +16,12 @@ namespace _root.Scripts.SingleTon
 
         private void Awake()
         {
+            if (_instance && _component && !canBeDestroy)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _instance = this as T;
             _component = GetComponent<T2>();
             if (!canBeDestroy) DontDestroyOnLoad(gameObject);

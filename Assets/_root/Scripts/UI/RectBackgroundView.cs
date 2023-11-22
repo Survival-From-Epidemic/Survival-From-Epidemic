@@ -7,7 +7,7 @@ namespace _root.Scripts.UI
         [SerializeField] private RectTransform background;
         [SerializeField] private RectTransform backgroundAnchor;
 
-        protected void UpdateBackground()
+        protected virtual void Update()
         {
             backgroundAnchor.anchoredPosition3D = Utils.Utils.CenterAnchorPosition();
             background.anchoredPosition3D = Vector3.Lerp(background.anchoredPosition3D, backgroundAnchor.anchoredPosition3D, Time.deltaTime * 2);

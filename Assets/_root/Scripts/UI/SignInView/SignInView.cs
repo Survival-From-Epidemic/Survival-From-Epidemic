@@ -15,10 +15,14 @@ namespace _root.Scripts.UI.SignInView
         [SerializeField] private Button findPwButton;
         [SerializeField] private Button signUpButton;
 
-        private void Update()
+        private void Start()
         {
-            UpdateBackground();
+            signUpButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignUp));
+        }
 
+        protected override void Update()
+        {
+            base.Update();
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
                     new Networking.Post<string>("/auth/tokens", new SignInRequest
@@ -35,8 +39,6 @@ namespace _root.Scripts.UI.SignInView
                     passwordInputField.Select();
                 }
             }
-
-            signUpButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignUp));
         }
 
         private void OnEnable()

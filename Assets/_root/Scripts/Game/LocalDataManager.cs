@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -37,6 +39,20 @@ namespace _root.Scripts.Game
         {
             ServerDataManager.Instance.nodeBuy[_gridIdxDictionary[key]]++;
             _buyDictionary.Add(key, TimeManager.Instance.today);
+            switch (key)
+            {
+                case "연구 지원 1":
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 20));
+                    break;
+                case "연구 지원 2":
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 40));
+                    break;
+                case "연구 지원 3":
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
+                    break;
+            }
+
+            SoundManager.Instance.PlayEffectSound(SoundKey.BuySound);
             UpdateDisease();
         }
 
@@ -44,6 +60,7 @@ namespace _root.Scripts.Game
         {
             ServerDataManager.Instance.nodeSell[_gridIdxDictionary[key]]++;
             _buyDictionary.Remove(key);
+            SoundManager.Instance.PlayEffectSound(SoundKey.SellSound);
             UpdateDisease();
         }
 
