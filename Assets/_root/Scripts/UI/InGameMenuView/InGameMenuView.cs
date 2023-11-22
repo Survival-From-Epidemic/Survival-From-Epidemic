@@ -153,6 +153,7 @@ namespace _root.Scripts.UI.InGameMenuView
             }
 
             clickerBackground.onClickDown.AddListener(_closer);
+            clickerBackground.gameObject.SetActive(false);
             closeButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.InGame));
 
             _graphButtonText = graphButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -412,6 +413,7 @@ namespace _root.Scripts.UI.InGameMenuView
                         {
                             if (!MoneyManager.Instance.RemoveMoney(_currentCost)) return;
                             LocalDataManager.Instance.Buy(_currentGridData.name);
+                            clickerPreObjectIcon.sprite = enableSprites[(int)inGameMenuPage];
                         }
 
                         _closer.Invoke(null);
