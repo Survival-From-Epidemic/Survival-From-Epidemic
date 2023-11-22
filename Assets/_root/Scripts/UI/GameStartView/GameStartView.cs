@@ -13,9 +13,8 @@ namespace _root.Scripts.UI.GameStartView
         [SerializeField] private Button rankButton;
         [SerializeField] private Button quitButton;
 
-        private void Update()
+        private void Start()
         {
-            UpdateBackground();
             gameStartButton.onClick.AddListener(() => { UIManager.Instance.EnableUI(UIElements.InGame); });
             quitButton.onClick.AddListener(() =>
             {

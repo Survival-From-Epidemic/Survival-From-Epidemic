@@ -15,9 +15,14 @@ namespace _root.Scripts.UI.SignUpView
 
         [SerializeField] private Button signInButton;
 
-        private void Update()
+        private void Start()
         {
-            UpdateBackground();
+            signInButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignIn));
+        }
+
+        protected override void Update()
+        {
+            base.Update();
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
                     new Networking.Post<string>("/users/signup", new SignUpRequest
@@ -38,8 +43,6 @@ namespace _root.Scripts.UI.SignUpView
                     passwordInputField.Select();
                 }
             }
-
-            signInButton.onClick.AddListener(() => UIManager.Instance.EnableUI(UIElements.SignIn));
         }
 
         private void OnEnable()
