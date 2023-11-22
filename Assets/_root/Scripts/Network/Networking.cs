@@ -83,17 +83,21 @@ namespace _root.Scripts.Network
 
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
-                    var text = webRequest.downloadHandler.text;
-                    if (typeof(T) == typeof(string))
+                    if (webRequest.responseCode is >= 200 and <= 299)
                     {
-                        _responseAction?.Invoke(text as T);
-                    }
-                    else
-                    {
-                        _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
-                    }
+                        Debugger.Log($"Response for {url}: {webRequest.responseCode}");
+                        var text = webRequest.downloadHandler.text;
+                        if (typeof(T) == typeof(string))
+                        {
+                            _responseAction?.Invoke(text as T);
+                        }
+                        else
+                        {
+                            _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
+                        }
 
-                    yield break;
+                        yield break;
+                    }
                 }
 
                 _errorAction?.Invoke();
