@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215f9ac3bb064bd686ed0454f5ee8315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 1
+  canBeDestroy: 0
   diseaseEnabled: 0
   pcrEnabled: 0
   kitEnabled: 0
@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a200adf0a4fb1b012d07bc1c49abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 1
+  canBeDestroy: 0
   speedIdx: 0
   timeScale: 2
   date: 0
@@ -2010,7 +2010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b79c07c8b34d6685c7e47c0fd0e146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 1
+  canBeDestroy: 0
   elements:
   - key: 0
     scene: 0
@@ -2028,7 +2028,7 @@ MonoBehaviour:
     scene: 1
     targetUI: {fileID: 1751957923}
   - key: 3
-    scene: 0
+    scene: 1
     targetUI: {fileID: 450490554}
   startUIKey: 5
 --- !u!4 &1484713618
@@ -2393,7 +2393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58381a92c6284081b352ddddbe3c841b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 1
+  canBeDestroy: 0
   nodeBuy: 
   nodeSell: 
   money: 

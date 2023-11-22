@@ -33,6 +33,26 @@ namespace _root.Scripts.Game
             New();
         }
 
+        private void Update()
+        {
+            if (!GameManager.Instance.gameEnd) return;
+            if (_newsSequence == null && !_newsSequence.IsActive()) return;
+            _newsSequence.Pause();
+            _newsSequence.Kill();
+        }
+
+        private void OnDisable()
+        {
+            _newsSequence.Pause();
+            _newsSequence.Kill();
+        }
+
+        private void OnDestroy()
+        {
+            _newsSequence.Pause();
+            _newsSequence.Kill();
+        }
+
         private void New()
         {
             var news = Resources.Load<TextAsset>("Data/news_data");

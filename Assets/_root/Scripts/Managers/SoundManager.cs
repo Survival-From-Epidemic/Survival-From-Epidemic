@@ -15,6 +15,8 @@ namespace _root.Scripts.Managers
         protected override void Awake()
         {
             base.Awake();
+            if (GameObject.Find("@Sounds") != null) return;
+
             _soundDictionary = new Dictionary<SoundKey, AudioSource>();
             var root = new GameObject("@Sounds");
             DontDestroyOnLoad(root);
