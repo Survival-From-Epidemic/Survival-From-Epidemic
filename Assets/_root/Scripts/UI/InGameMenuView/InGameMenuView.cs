@@ -78,6 +78,7 @@ namespace _root.Scripts.UI.InGameMenuView
             base.Start();
             policyImage.onClickDown.AddListener(_ =>
             {
+                if (!TimeManager.Instance.globalInfected) return;
                 policyImage.isSelected = true;
                 adminImage.isSelected = false;
                 serviceImage.isSelected = false;
@@ -92,6 +93,7 @@ namespace _root.Scripts.UI.InGameMenuView
             });
             adminImage.onClickDown.AddListener(_ =>
             {
+                if (!TimeManager.Instance.globalInfected) return;
                 policyImage.isSelected = false;
                 adminImage.isSelected = true;
                 serviceImage.isSelected = false;
@@ -106,6 +108,7 @@ namespace _root.Scripts.UI.InGameMenuView
             });
             serviceImage.onClickDown.AddListener(_ =>
             {
+                if (!TimeManager.Instance.globalInfected) return;
                 policyImage.isSelected = false;
                 adminImage.isSelected = false;
                 serviceImage.isSelected = true;
