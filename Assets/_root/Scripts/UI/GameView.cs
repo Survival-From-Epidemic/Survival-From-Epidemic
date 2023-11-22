@@ -9,7 +9,7 @@ namespace _root.Scripts.UI
 {
     public class GameView : View
     {
-        [SerializeField] private DefaultUI defaultUI;
+        [SerializeField] protected DefaultUI defaultUI;
 
         protected virtual void Start()
         {

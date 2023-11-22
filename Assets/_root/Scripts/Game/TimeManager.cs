@@ -31,7 +31,9 @@ namespace _root.Scripts.Game
 
         [SerializeField] private int lastMoneyMonth;
 
-        private bool _globalInfected;
+        [SerializeField] private bool started;
+
+        public bool globalInfected;
         private double _vaccineTotalDays;
         public DateTime gameEndDate;
         public DateTime infectDate;
@@ -49,6 +51,7 @@ namespace _root.Scripts.Game
         {
             speedIdx = 1;
             modificationCount = 0;
+            date = 0;
             today = startDate = DateTime.Today;
             gameEndDate = DateTime.MaxValue;
 
@@ -62,11 +65,10 @@ namespace _root.Scripts.Game
             _vaccineTotalDays = (vaccineEndDate - vaccineStartDate).TotalDays;
             nextNews = Random.Range(14, 44);
 
-            NewsManager.Instance.ShowNews(1);
+            NewsManager.Instance.ShowNews(0);
             SoundManager.Instance.PlaySound(SoundKey.GameBackground);
 
             StartCoroutine(DayCycle());
-            MoneyManager.Instance.AddMoneyNotify(1000000);
         }
 
         public static void SpeedCycle(int idx)
@@ -138,10 +140,19 @@ namespace _root.Scripts.Game
                 UIManager.Instance.UpdateTime(today);
                 if (lastMoneyMonth != today.Month)
                 {
-                    var money = 500000;
-                    if (ValueManager.Instance.authorityGoodDate >= 30) money += 200000;
-                    MoneyManager.Instance.AddMoneyNotify(money);
                     lastMoneyMonth = today.Month;
+                    if (globalInfected)
+                    {
+                        var money = 120000;
+                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 50000;
+                        MoneyManager.Instance.AddMoneyNotify(money);
+                    }
+                }
+
+                if (!started && today >= startDate.AddDays(1))
+                {
+                    started = true;
+                    NewsManager.Instance.ShowNews(1);
                 }
 
                 NewsCycle();
@@ -151,11 +162,12 @@ namespace _root.Scripts.Game
                     UIManager.Instance.EnableUI(UIElements.GameResult);
                 }
 
-                if (!_globalInfected && today >= infectGlobalDate)
+                if (!globalInfected && today >= infectGlobalDate)
                 {
                     NewsManager.Instance.ShowNews(2);
+                    MoneyManager.Instance.AddMoneyNotify(500000);
                     Debugger.Log("First Infected");
-                    _globalInfected = true;
+                    globalInfected = true;
                 }
 
                 if (!ValueManager.Instance.diseaseEnabled && today >= infectDate)
@@ -249,6 +261,11 @@ namespace _root.Scripts.Game
                         NewsManager.Instance.ShowNews(23);
                         Debugger.Log("Vaccine Completion");
                         ValueManager.Instance.vaccineEnded = true;
+
+                        if (today >= vaccineEndDate.AddDays(7))
+                        {
+                            GameManager.Instance.GameEnd(GameEndType.Win);
+                        }
                     }
                 }
 
@@ -264,6 +281,8 @@ namespace _root.Scripts.Game
                 ServerDataManager.Instance.RecordTime();
 
                 yield return new WaitForSeconds(timeScale);
+
+                GameManager.Instance.gameEnd = false;
             }
         }
 

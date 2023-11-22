@@ -19,7 +19,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 1
+      "annoy": 4
     }
   },
   "단축2": {
@@ -44,7 +44,7 @@
       "study": 15,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": 2
     }
   },
   "단축3": {
@@ -68,7 +68,7 @@
       "study": 40,
       "concentration": 5,
       "mask": 0,
-      "annoy": 0
+      "annoy": -5
     }
   },
   "온라인1": {
@@ -92,7 +92,7 @@
       "study": -10,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": 5
     }
   },
   "온라인2": {
@@ -117,7 +117,7 @@
       "study": -25,
       "concentration": 5,
       "mask": 0,
-      "annoy": 0
+      "annoy": 5
     }
   },
   "온라인3": {
@@ -140,7 +140,7 @@
       "study": -65,
       "concentration": 10,
       "mask": 0,
-      "annoy": 0
+      "annoy": 5
     }
   },
   "모니터링": {
@@ -163,7 +163,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": 5
     }
   },
   "출입1": {
@@ -187,7 +187,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 1
+      "annoy": 4
     }
   },
   "출입2": {
@@ -209,7 +209,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 5
+      "annoy": 10
     }
   },
   "차량출입": {
@@ -231,7 +231,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 5
+      "annoy": 6
     }
   },
   "출입증": {
@@ -254,7 +254,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 2
+      "annoy": 12
     }
   },
   "격리1": {
@@ -275,7 +275,7 @@
       "modificationDecrease": 0
     },
     "authority": {
-      "study": 5,
+      "study": 10,
       "concentration": 0,
       "mask": 0,
       "annoy": 0
@@ -325,7 +325,7 @@
       "study": 5,
       "concentration": 0,
       "mask": 0,
-      "annoy": 1
+      "annoy": 5
     }
   },
   "접촉2": {
@@ -348,7 +348,7 @@
       "study": 15,
       "concentration": 0,
       "mask": 0,
-      "annoy": 1
+      "annoy": 8
     }
   },
   "실내 마스크1": {
@@ -372,7 +372,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 10,
-      "annoy": 0
+      "annoy": 8
     }
   },
   "실내 마스크2": {
@@ -396,7 +396,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 15,
-      "annoy": 5
+      "annoy": 8
     }
   },
   "실내 마스크3": {
@@ -420,7 +420,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 25,
-      "annoy": 5
+      "annoy": 10
     }
   },
   "실외 마스크": {
@@ -468,7 +468,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 50,
-      "annoy": 15
+      "annoy": 20
     }
   },
   "손 1": {
@@ -493,7 +493,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": 5
     }
   },
   "손 2": {
@@ -516,7 +516,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 5
+      "annoy": 15
     }
   },
   "소독 1": {
@@ -891,7 +891,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": -15
+      "annoy": -25
     }
   },
   "손소독제 2": {
@@ -914,7 +914,7 @@
       "study": -5,
       "concentration": -5,
       "mask": 0,
-      "annoy": -25
+      "annoy": -35
     }
   },
   "소독티슈": {
@@ -936,7 +936,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": -10
+      "annoy": -20
     }
   },
   "마스크 1": {
@@ -1006,7 +1006,7 @@
       "study": 0,
       "concentration": 0,
       "mask": -85,
-      "annoy": -25
+      "annoy": -15
     }
   },
   "연구 1": {
@@ -1195,7 +1195,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": -5
     }
   },
   "키트2": {
@@ -1218,7 +1218,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 0
+      "annoy": -10
     }
   },
   "칸막이": {
@@ -1237,10 +1237,10 @@
       "modificationDecrease": 2
     },
     "authority": {
-      "study": 0,
-      "concentration": 0,
-      "mask": 0,
-      "annoy": 0
+      "study": -3,
+      "concentration": -3,
+      "mask": -3,
+      "annoy": 6
     }
   }
 }

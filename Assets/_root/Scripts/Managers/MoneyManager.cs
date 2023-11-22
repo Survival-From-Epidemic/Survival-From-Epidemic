@@ -1,5 +1,6 @@
 using System;
 using _root.Scripts.Game;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
 using DG.Tweening;
@@ -28,6 +29,17 @@ namespace _root.Scripts.Managers
             coinText.color = coinTextColor;
         }
 
+        private void Start()
+        {
+            money = 0;
+        }
+
+        private void OnEnable()
+        {
+            if (!GameManager.Instance.gameEnd) return;
+            Start();
+        }
+
         public int GetMoney() => money;
 
         public void AddMoney(int value, bool data = false)
@@ -41,6 +53,8 @@ namespace _root.Scripts.Managers
         {
             money += Math.Max(0, value);
             ServerDataManager.Instance.money[0] += value;
+            SoundManager.Instance.PlayEffectSound(SoundKey.CoinUpload1);
+            SoundManager.Instance.PlayEffectSound(SoundKey.CoinUpload2);
 
             coinAnchor.gameObject.SetActive(true);
             coinText.text = $"+{value:n0}￦";

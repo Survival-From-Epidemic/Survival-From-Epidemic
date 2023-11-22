@@ -40,6 +40,7 @@ namespace _root.Scripts.UI.InGameMenuView
         [SerializeField] private Sprite[] disableSprites;
         [SerializeField] private Sprite previewSprite;
         [SerializeField] private UIImage closeButton;
+        [SerializeField] private TextMeshProUGUI panelNoText;
 
         [SerializeField] private UIImage graphButton;
         [SerializeField] private InGameMenuGraph graphType;
@@ -173,7 +174,6 @@ namespace _root.Scripts.UI.InGameMenuView
                 else
                 {
                     UIManager.Instance.EnableUI(UIElements.InGame);
-                    SoundManager.Instance.PlaySound(SoundKey.PanelClose);
                 }
             }
 
@@ -242,14 +242,20 @@ namespace _root.Scripts.UI.InGameMenuView
         protected override void OnEnable()
         {
             base.OnEnable();
+            SoundManager.Instance.PlayEffectSound(SoundKey.PanelOpen);
+            defaultUI.dateText.text = TimeManager.Instance.today.ToShortDateString();
             _preRealGameTimeScale = Time.timeScale;
             _preTimeScale = TimeManager.Instance.timeScale;
             Time.timeScale = 0;
+
+            if (!policyGrid.gameObject.activeSelf && !adminGrid.gameObject.activeSelf && !serviceGrid.gameObject.activeSelf)
+                policyGrid.gameObject.SetActive(true);
             Rerender();
         }
 
         private void OnDisable()
         {
+            SoundManager.Instance.PlayEffectSound(SoundKey.PanelClose);
             Time.timeScale = _preRealGameTimeScale;
             TimeManager.Instance.timeScale = _preTimeScale;
         }
@@ -260,13 +266,21 @@ namespace _root.Scripts.UI.InGameMenuView
         {
             var today = TimeManager.Instance.today;
             Debugger.Log($"today: {today} / buy: {date}");
-            if (date.AddDays(14) >= today) return 2500;
-            if (date.AddDays(30) >= today) return 6000;
-            return 20000;
+            if (date.AddDays(14) >= today) return 3750;
+            if (date.AddDays(30) >= today) return 10000;
+            return 30000;
         }
 
         private void Rerender()
         {
+            if (!TimeManager.Instance.globalInfected)
+            {
+                panelNoText.gameObject.SetActive(true);
+                policyGrid.gameObject.SetActive(false);
+                return;
+            }
+
+            panelNoText.gameObject.SetActive(false);
             var localDataManager = LocalDataManager.Instance;
             var bought = new HashSet<string>();
             var enable = new HashSet<string>();

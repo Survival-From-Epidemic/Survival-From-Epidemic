@@ -3805,6 +3805,7 @@ GameObject:
   - component: {fileID: 8727389112356638271}
   - component: {fileID: 5756113941062060155}
   - component: {fileID: 4717366730586675947}
+  - component: {fileID: 2531236618217879673}
   m_Layer: 5
   m_Name: NewsHover
   m_TagString: Untagged
@@ -3873,6 +3874,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.8
+--- !u!114 &2531236618217879673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569019236688168480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c7fbb9a2e7430a9e09930f3285b58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeDestroy: 0
+  close: {fileID: 3114795389788412383}
+  image: {fileID: 4717366730586675947}
 --- !u!1 &7999662581019951701
 GameObject:
   m_ObjectHideFlags: 0

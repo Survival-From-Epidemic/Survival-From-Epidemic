@@ -16,6 +16,11 @@ namespace _root.Scripts.Game
         protected override void Awake()
         {
             base.Awake();
+            New();
+        }
+
+        private void New()
+        {
             nodeBuy = new int[3];
             nodeSell = new int[3];
             money = new int[2];

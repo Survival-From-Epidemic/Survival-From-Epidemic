@@ -30,6 +30,11 @@ namespace _root.Scripts.Game
         protected override void Awake()
         {
             base.Awake();
+            New();
+        }
+
+        private void New()
+        {
             var news = Resources.Load<TextAsset>("Data/news_data");
             newsList = JsonConvert.DeserializeObject<List<string>>(news.text);
 

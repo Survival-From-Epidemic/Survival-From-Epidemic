@@ -38,27 +38,47 @@ namespace _root.Scripts.UI.GameResultView
             pauseButton.UpdateImage();
             playButton.UpdateImage();
 
-            resetButton.onClickDown.AddListener(_ =>
-            {
-                time = 0;
-                UpdateUI();
-            });
+            resetButton.onClickDown.AddListener(_ => { time = 0; });
             pauseButton.onClickDown.AddListener(_ =>
             {
                 if (_coroutine != null) StopCoroutine(_coroutine);
             });
-            playButton.onClickDown.AddListener(_ => _coroutine = StartCoroutine(Run()));
-            skipButton.onClickDown.AddListener(_ =>
+            playButton.onClickDown.AddListener(_ =>
             {
-                time = ServerDataManager.Instance.TimeLeapLength() - 1;
-                UpdateUI();
+                if (_coroutine != null) StopCoroutine(_coroutine);
+                _coroutine = StartCoroutine(Run());
             });
+            skipButton.onClickDown.AddListener(_ => { time = ServerDataManager.Instance.TimeLeapLength() - 1; });
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
+        }
+
+        private void Update()
+        {
+            var serverDataManager = ServerDataManager.Instance;
+            var timeLeap = serverDataManager.GetTimeLeap(time);
+
+            for (var i = 0; i < nodeTexts.Length; i++)
+            {
+                nodeTexts[i].text = $"구매 {timeLeap.nodeBuy[i]:n0}회 / 판매 {timeLeap.nodeSell[i]:n0}회";
+            }
+
+            for (var i = 0; i < moneyTexts.Length; i++)
+            {
+                moneyTexts[i].text = $"{timeLeap.money[i]:n0}￦";
+            }
+
+            for (var i = 0; i < authorityBars.Length; i++)
+            {
+                authorityBars[i].fillAmount = timeLeap.authority[i];
+                authorityBarTexts[i].text = $"{timeLeap.authority[i] * 100:n0}%";
+            }
+
+            dateText.text = TimeManager.Instance.startDate.AddDays(timeLeap.date).ToShortDateString();
+            dateCountText.text = $"{timeLeap.date:n0} DAY";
         }
 
         private void OnEnable()
         {
-            UpdateUI();
             SoundManager.Instance.StopAllLoopSound();
 
             switch (GameManager.Instance.gameEndType)
@@ -74,6 +94,14 @@ namespace _root.Scripts.UI.GameResultView
                     SoundManager.Instance.PlaySound(SoundKey.LoseBackground);
                     break;
             }
+
+            title.text = GameManager.Instance.gameEndType switch
+            {
+                GameEndType.Win => "바이러스로부터 살아남았습니다. 당신의 판단 덕분에 학교를 지켜낼 수 있었습니다.",
+                GameEndType.Banbal => "당신의 판단으로 학생과 학부모의 불만과 반발이 극심해져 더 이상 활동이 불가합니다.",
+                GameEndType.Authority => "당신의 판단으로 인해 많은 사상자가 발생했습니다. 방역에 도움이 되지 않아 권위를 실추당했습니다.",
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private IEnumerator Run()
@@ -82,40 +110,7 @@ namespace _root.Scripts.UI.GameResultView
             {
                 yield return new WaitForSeconds(0.05f);
                 time++;
-                UpdateUI();
             }
-        }
-
-        private void UpdateUI()
-        {
-            title.text = GameManager.Instance.gameEndType switch
-            {
-                GameEndType.Win => "바이러스로부터 살아남았습니다. 당신의 판단 덕분에 학교를 지켜낼 수 있었습니다.",
-                GameEndType.Banbal => "당신의 판단으로 학생과 학부모의 불만과 반발이 극심해져 더 이상 활동이 불가합니다.",
-                GameEndType.Authority => "당신의 판단으로 인해 많은 사상자가 발생했습니다. 방역에 도움이 되지 않아 권위를 실추당했습니다.",
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            var serverDataManager = ServerDataManager.Instance;
-            var timeLeap = serverDataManager.GetTimeLeap(time);
-
-            for (var i = 0; i < nodeTexts.Length; i++)
-            {
-                nodeTexts[i].text = $"구매 {serverDataManager.nodeBuy[i]:n0}회 / 판매 {serverDataManager.nodeSell[i]:n0}회";
-            }
-
-            for (var i = 0; i < moneyTexts.Length; i++)
-            {
-                moneyTexts[i].text = $"{serverDataManager.money[i]:n0}￦";
-            }
-
-            for (var i = 0; i < authorityBars.Length; i++)
-            {
-                authorityBars[i].fillAmount = timeLeap.authority[i];
-                authorityBarTexts[i].text = $"{timeLeap.authority[i] * 100:n0}%";
-            }
-
-            dateText.text = TimeManager.Instance.startDate.AddDays(timeLeap.date).ToShortDateString();
-            dateCountText.text = $"{timeLeap.date:n0} DAY";
         }
     }
 }
