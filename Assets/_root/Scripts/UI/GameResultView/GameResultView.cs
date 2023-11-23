@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
@@ -25,11 +26,16 @@ namespace _root.Scripts.UI.GameResultView
         [SerializeField] private TextMeshProUGUI dateText;
         [SerializeField] private TextMeshProUGUI dateCountText;
         [SerializeField] private UIImage mainButton;
+        [SerializeField] private GameObject[] graphs;
 
         [SerializeField] private int time;
         [SerializeField] private bool isPlay;
 
         private Coroutine _coroutine;
+
+        private TextMeshProUGUI _graphButtonText;
+        private List<Image>[] _graphImages;
+        private List<TextMeshProUGUI>[] _graphTexts;
 
         private void Start()
         {
@@ -50,6 +56,20 @@ namespace _root.Scripts.UI.GameResultView
             });
             skipButton.onClickDown.AddListener(_ => { time = ServerDataManager.Instance.TimeLeapLength() - 1; });
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
+
+            _graphImages = new[] { new List<Image>(), new(), new() };
+            _graphTexts = new[] { new List<TextMeshProUGUI>(), new(), new() };
+            for (var i = 0; i < graphs.Length; i++)
+            {
+                var trans = graphs[i].transform;
+                var childCount = graphs[i].transform.childCount;
+                for (var j = 0; j < childCount; j++)
+                {
+                    var child = trans.GetChild(j);
+                    _graphImages[i].Add(child.GetComponent<Image>());
+                    _graphTexts[i].Add(child.GetChild(1).GetComponent<TextMeshProUGUI>());
+                }
+            }
         }
 
         private void Update()
@@ -57,20 +77,42 @@ namespace _root.Scripts.UI.GameResultView
             var serverDataManager = ServerDataManager.Instance;
             var timeLeap = serverDataManager.GetTimeLeap(time);
 
-            for (var i = 0; i < nodeTexts.Length; i++)
-            {
-                nodeTexts[i].text = $"구매 {timeLeap.nodeBuy[i]:n0}회 / 판매 {timeLeap.nodeSell[i]:n0}회";
-            }
+            for (var i = 0; i < nodeTexts.Length; i++) nodeTexts[i].text = $"구매 {timeLeap.nodeBuy[i]:n0}회 / 판매 {timeLeap.nodeSell[i]:n0}회";
 
-            for (var i = 0; i < moneyTexts.Length; i++)
-            {
-                moneyTexts[i].text = $"{timeLeap.money[i]:n0}￦";
-            }
+            for (var i = 0; i < moneyTexts.Length; i++) moneyTexts[i].text = $"{timeLeap.money[i]:n0}￦";
 
             for (var i = 0; i < authorityBars.Length; i++)
             {
                 authorityBars[i].fillAmount = timeLeap.authority[i];
                 authorityBarTexts[i].text = $"{timeLeap.authority[i] * 100:n0}%";
+            }
+
+            for (var i = 0; i < _graphImages.Length; i++)
+            {
+                var images = _graphImages[i];
+                var texts = _graphTexts[i];
+
+                switch (i)
+                {
+                    case 0:
+                        images[0].fillAmount = (float)timeLeap.person.healthyPerson / timeLeap.person.totalPerson;
+                        images[1].fillAmount = (float)timeLeap.person.infectedPerson / timeLeap.person.totalPerson;
+                        images[2].fillAmount = (float)timeLeap.person.deathPerson / timeLeap.person.totalPerson;
+
+                        texts[0].text = $"{timeLeap.person.healthyPerson}명";
+                        texts[1].text = $"{timeLeap.person.infectedPerson}명";
+                        texts[2].text = $"{timeLeap.person.deathPerson}명";
+                        break;
+                    case 1:
+                        for (var j = 0; j < timeLeap.personGraph.Length; j++) images[j].fillAmount = (float)timeLeap.personGraph[j] / timeLeap.person.totalPerson;
+                        for (var j = 0; j < timeLeap.personGraph.Length; j++) texts[j].text = $"{timeLeap.personGraph[j]}명";
+                        break;
+                    case 2:
+                        for (var j = 0; j < timeLeap.diseaseGraph.Length; j++) images[j].fillAmount = timeLeap.diseaseGraph[j];
+                        break;
+                }
+
+                for (var j = 0; j < 4; j++) texts[j].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[j].fillAmount));
             }
 
             dateText.text = TimeManager.Instance.startDate.AddDays(timeLeap.date).ToShortDateString();
@@ -104,11 +146,13 @@ namespace _root.Scripts.UI.GameResultView
             };
         }
 
+        private static float GetGraphYPos(float value) => 32 - 332 * (1 - value);
+
         private IEnumerator Run()
         {
             while (true)
             {
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSecondsRealtime(0.025f);
                 time++;
             }
         }
