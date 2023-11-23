@@ -34,11 +34,11 @@ namespace _root.Scripts.Managers
             money = 0;
         }
 
-        private void OnEnable()
-        {
-            if (!GameManager.Instance.gameEnd) return;
-            Start();
-        }
+        // private void OnEnable()
+        // {
+        //     if (!GameManager.Instance.gameEnd) return;
+        //     Start();
+        // }
 
         public int GetMoney() => money;
 
