@@ -10,6 +10,11 @@ namespace _root.Scripts.Game
         [SerializeField] public bool gameEnd;
         [SerializeField] public GameEndType gameEndType;
 
+        private void Start()
+        {
+            gameEnd = false;
+        }
+
         public void GameEnd(GameEndType type)
         {
             gameEnd = true;
