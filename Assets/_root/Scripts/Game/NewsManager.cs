@@ -87,7 +87,7 @@ namespace _root.Scripts.Game
             NewsObject.Instance.image.DOFade(1f, 0.2f);
             newsTitleText.DOFade(1f, 0.2f);
             newsDescriptionText.DOFade(1f, 0.2f);
-            Debugger.Log($"Show Main News: {first.title}");
+            // Debugger.Log($"Show Main News: {first.title}");
             _newsSequence.Restart();
         }
 
@@ -97,7 +97,7 @@ namespace _root.Scripts.Game
             var str = _newsLeft.ToArray()[Random.Range(0, _newsLeft.Count)];
             _newsLeft.Remove(str);
             newsChatText.text = str;
-            Debugger.Log($"Show Random News: {str}");
+            // Debugger.Log($"Show Random News: {str}");
             _newsSequence.Restart();
         }
 
