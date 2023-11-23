@@ -134,6 +134,12 @@ namespace _root.Scripts.Game
         {
             while (true)
             {
+                if (GameManager.Instance.gameEnd)
+                {
+                    Debugger.Log("Game ENDED");
+                    yield break;
+                }
+
                 today = startDate.AddDays(date);
                 // Debug.unityLogger.Log($"dayCycle: {today.ToShortDateString()}");
                 ValueManager.Instance.Cycle();
@@ -281,8 +287,6 @@ namespace _root.Scripts.Game
                 ServerDataManager.Instance.RecordTime();
 
                 yield return new WaitForSeconds(timeScale);
-
-                GameManager.Instance.gameEnd = false;
             }
         }
 
