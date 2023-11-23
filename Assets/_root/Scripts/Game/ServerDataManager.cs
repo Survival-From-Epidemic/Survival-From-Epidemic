@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
 using _root.Scripts.SingleTon;
+using UnityEngine;
 
 namespace _root.Scripts.Game
 {
@@ -43,7 +44,7 @@ namespace _root.Scripts.Game
                 nodeBuy = nodeBuy,
                 nodeSell = nodeSell,
                 money = money,
-                authority = new[] { 1 - ValueManager.Instance.banbal, 1 - ValueManager.Instance.authority },
+                authority = new[] { Mathf.Clamp(ValueManager.Instance.banbal, 0, 1), Mathf.Clamp(1 - ValueManager.Instance.authority, 0, 1) },
                 person = ValueManager.Instance.person,
                 diseaseGraph = new[]
                 {
