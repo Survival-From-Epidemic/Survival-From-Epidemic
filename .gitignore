@@ -573,3 +573,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+Assets/AstarPathfindingProject/**
+Assets/AstarPathfindingProject.meta
