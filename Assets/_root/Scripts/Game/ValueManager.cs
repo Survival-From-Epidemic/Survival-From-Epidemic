@@ -72,7 +72,7 @@ namespace _root.Scripts.Game
 
             if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
 
-            currentAuthority = (person.deathPerson * 6 + person.infectedPerson / 2.5f) / person.totalPerson;
+            currentAuthority = (person.deathPerson * 6 + person.infectedPerson / 1.333f) / person.totalPerson;
 
             banbal = Mathf.Lerp(banbal, currentBanbal * 0.01f, 0.08f);
             authority = Mathf.Lerp(authority, currentAuthority, 0.08f);
