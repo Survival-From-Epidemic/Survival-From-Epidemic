@@ -13,10 +13,11 @@ namespace _root.Scripts.UI
 {
     public class GameView : View
     {
+        private static InGameMenuGraph _graphType = InGameMenuGraph.Disease;
+
         [SerializeField] protected DefaultUI defaultUI;
 
         [SerializeField] private UIImage graphButton;
-        [SerializeField] private InGameMenuGraph graphType;
         [SerializeField] private GameObject[] graphs;
 
         private TextMeshProUGUI _graphButtonText;
@@ -75,12 +76,12 @@ namespace _root.Scripts.UI
             }
 
             _graphButtonText = graphButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            graphButton.onClickDown.AddListener(_ => graphType = (InGameMenuGraph)(((int)graphType + 1) % 3));
+            graphButton.onClickDown.AddListener(_ => _graphType = (InGameMenuGraph)(((int)_graphType + 1) % 3));
         }
 
         private void UpdateGraph()
         {
-            for (var i = 0; i < 3; i++) graphs[i].SetActive(i == (int)graphType);
+            for (var i = 0; i < 3; i++) graphs[i].SetActive(i == (int)_graphType);
 
             var mad1 = LocalDataManager.Instance.IsBought("의료 지원 1");
             var mad2 = LocalDataManager.Instance.IsBought("의료 지원 2");
@@ -89,10 +90,10 @@ namespace _root.Scripts.UI
 
             var deathValue = mad4 ? 0.06f : mad3 ? 0.2f : mad2 ? 0.45f : mad1 ? 0.75f : 1;
 
-            var images = _graphImages[(int)graphType];
-            var texts = _graphTexts[(int)graphType];
+            var images = _graphImages[(int)_graphType];
+            var texts = _graphTexts[(int)_graphType];
             var valueManager = ValueManager.Instance;
-            switch (graphType)
+            switch (_graphType)
             {
                 case InGameMenuGraph.Person:
                     images[0].fillAmount = (float)valueManager.person.healthyPerson / valueManager.person.totalPerson;
@@ -132,7 +133,7 @@ namespace _root.Scripts.UI
                     throw new ArgumentOutOfRangeException();
             }
 
-            _graphButtonText.text = graphType.GetGraphName();
+            _graphButtonText.text = _graphType.GetGraphName();
         }
 
         private static float GetGraphYPos(float value) => 32 - 332 * (1 - value);

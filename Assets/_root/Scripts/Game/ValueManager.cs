@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
+using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
@@ -12,7 +13,7 @@ using Random = UnityEngine.Random;
 
 namespace _root.Scripts.Game
 {
-    public class ValueManager : SingleMono<ValueManager>
+    public class ValueManager : SingleMono<ValueManager>, IDataUpdateable
     {
         [SerializeField] public bool diseaseEnabled;
         [SerializeField] public bool pcrEnabled;
@@ -41,9 +42,31 @@ namespace _root.Scripts.Game
         [SerializeField] public float currentAuthority;
         public HashSet<PersonData> personsSet;
 
-        private void Start()
+        protected void Start()
         {
             personsSet = new HashSet<PersonData>();
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            diseaseEnabled = kGlobalData.kValueManager.diseaseEnabled;
+            pcrEnabled = kGlobalData.kValueManager.pcrEnabled;
+            kitEnabled = kGlobalData.kValueManager.kitEnabled;
+            kitChance = kGlobalData.kValueManager.kitChance;
+            vaccineResearch = kGlobalData.kValueManager.vaccineResearch;
+            vaccineEnded = kGlobalData.kValueManager.vaccineEnded;
+            localGridData = kGlobalData.kValueManager.localGridData;
+            preDisease = kGlobalData.kValueManager.preDisease;
+            disease = kGlobalData.kValueManager.disease;
+            person = kGlobalData.kValueManager.person;
+            persons = kGlobalData.kValueManager.persons;
+            banbal = kGlobalData.kValueManager.banbal;
+            authority = kGlobalData.kValueManager.authority;
+            currentBanbal = kGlobalData.kValueManager.currentBanbal;
+            banbalDate = kGlobalData.kValueManager.banbalDate;
+            authorityDate = kGlobalData.kValueManager.authorityDate;
+            authorityGoodDate = kGlobalData.kValueManager.authorityGoodDate;
+            currentAuthority = kGlobalData.kValueManager.currentAuthority;
         }
 
         private static SymptomType GenerateSymptomType()
@@ -60,6 +83,7 @@ namespace _root.Scripts.Game
 
         private float GetInfectPower()
         {
+            if (personsSet == null) return 1;
             var rate = (float)personsSet.Count / person.healthyPerson;
             return 1 + rate * rate * 5;
         }
@@ -165,13 +189,15 @@ namespace _root.Scripts.Game
                     if (!mad2 && mad1) mad1 = MoneyManager.Instance.RemoveMoney(infected.Count(v => v.symptomType is Emergency) * 20);
                 }
 
+                var localKitChance = kitChance + (LocalDataManager.Instance.IsBought("자가 진단 키트 지원 1") ? 10 : 0) + (LocalDataManager.Instance.IsBought("자가 진단 키트 지원 2") ? 10 : 0);
+
                 foreach (var p in personsSet)
                 {
                     if (pcrEnabled)
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
                             p.isInfected = true;
 
-                    if (kitEnabled && kitChance.Chance())
+                    if (kitEnabled && localKitChance.Chance())
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
                             p.isInfected = true;
 

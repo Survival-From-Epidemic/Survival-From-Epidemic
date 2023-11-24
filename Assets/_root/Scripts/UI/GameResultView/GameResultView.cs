@@ -29,7 +29,6 @@ namespace _root.Scripts.UI.GameResultView
         [SerializeField] private GameObject[] graphs;
 
         [SerializeField] private int time;
-        [SerializeField] private bool isPlay;
 
         private Coroutine _coroutine;
 
@@ -39,22 +38,30 @@ namespace _root.Scripts.UI.GameResultView
 
         private void Start()
         {
-            pauseButton.isSelected = !isPlay;
-            playButton.isSelected = isPlay;
+            pauseButton.isSelected = false;
+            playButton.isSelected = true;
             pauseButton.UpdateImage();
             playButton.UpdateImage();
 
-            resetButton.onClickDown.AddListener(_ => { time = 0; });
+            resetButton.onClickDown.AddListener(_ => time = 0);
             pauseButton.onClickDown.AddListener(_ =>
             {
                 if (_coroutine != null) StopCoroutine(_coroutine);
+                pauseButton.isSelected = true;
+                playButton.isSelected = false;
+                pauseButton.UpdateImage();
+                playButton.UpdateImage();
             });
             playButton.onClickDown.AddListener(_ =>
             {
                 if (_coroutine != null) StopCoroutine(_coroutine);
                 _coroutine = StartCoroutine(Run());
+                pauseButton.isSelected = false;
+                playButton.isSelected = true;
+                pauseButton.UpdateImage();
+                playButton.UpdateImage();
             });
-            skipButton.onClickDown.AddListener(_ => { time = ServerDataManager.Instance.TimeLeapLength() - 1; });
+            skipButton.onClickDown.AddListener(_ => time = ServerDataManager.Instance.TimeLeapLength() - 1);
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
 
             _graphImages = new[] { new List<Image>(), new(), new() };
@@ -70,9 +77,39 @@ namespace _root.Scripts.UI.GameResultView
                     _graphTexts[i].Add(child.GetChild(1).GetComponent<TextMeshProUGUI>());
                 }
             }
+
+            _coroutine = StartCoroutine(Run());
+            GraphUpdate();
         }
 
-        private void Update()
+        private void OnEnable()
+        {
+            SoundManager.Instance.StopAllLoopSound();
+
+            switch (GameManager.Instance.gameEndType)
+            {
+                case GameEndType.Win:
+                    SoundManager.Instance.PlayEffectSound(SoundKey.WinSound);
+                    SoundManager.Instance.PlaySound(SoundKey.WinBackground);
+                    break;
+                case GameEndType.Banbal:
+                case GameEndType.Authority:
+                default:
+                    SoundManager.Instance.PlayEffectSound(SoundKey.LoseSound);
+                    SoundManager.Instance.PlaySound(SoundKey.LoseBackground);
+                    break;
+            }
+
+            title.text = GameManager.Instance.gameEndType switch
+            {
+                GameEndType.Win => "바이러스로부터 살아남았습니다. 당신의 판단 덕분에 학교를 지켜낼 수 있었습니다.",
+                GameEndType.Banbal => "당신의 판단으로 학생과 학부모의 불만과 반발이 극심해져 더 이상 활동이 불가합니다.",
+                GameEndType.Authority => "당신의 판단으로 인해 많은 사상자가 발생했습니다. 방역에 도움이 되지 않아 권위를 실추당했습니다.",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        private void GraphUpdate()
         {
             var serverDataManager = ServerDataManager.Instance;
             var timeLeap = serverDataManager.GetTimeLeap(time);
@@ -119,41 +156,15 @@ namespace _root.Scripts.UI.GameResultView
             dateCountText.text = $"{timeLeap.date:n0} DAY";
         }
 
-        private void OnEnable()
-        {
-            SoundManager.Instance.StopAllLoopSound();
-
-            switch (GameManager.Instance.gameEndType)
-            {
-                case GameEndType.Win:
-                    SoundManager.Instance.PlayEffectSound(SoundKey.WinSound);
-                    SoundManager.Instance.PlaySound(SoundKey.WinBackground);
-                    break;
-                case GameEndType.Banbal:
-                case GameEndType.Authority:
-                default:
-                    SoundManager.Instance.PlayEffectSound(SoundKey.LoseSound);
-                    SoundManager.Instance.PlaySound(SoundKey.LoseBackground);
-                    break;
-            }
-
-            title.text = GameManager.Instance.gameEndType switch
-            {
-                GameEndType.Win => "바이러스로부터 살아남았습니다. 당신의 판단 덕분에 학교를 지켜낼 수 있었습니다.",
-                GameEndType.Banbal => "당신의 판단으로 학생과 학부모의 불만과 반발이 극심해져 더 이상 활동이 불가합니다.",
-                GameEndType.Authority => "당신의 판단으로 인해 많은 사상자가 발생했습니다. 방역에 도움이 되지 않아 권위를 실추당했습니다.",
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
         private static float GetGraphYPos(float value) => 32 - 332 * (1 - value);
 
         private IEnumerator Run()
         {
             while (true)
             {
-                yield return new WaitForSecondsRealtime(0.025f);
-                time++;
+                yield return new WaitForSecondsRealtime(0.02f);
+                if (++time >= ServerDataManager.Instance.TimeLeapLength()) yield break;
+                GraphUpdate();
             }
         }
     }

@@ -206,6 +206,7 @@ namespace _root.Scripts.UI.InGameMenuView
             var enable = new HashSet<string>();
             foreach (var (key, _) in _images)
             {
+                if (!ValueManager.Instance.kitEnabled && key is "자가 진단 키트 지원 1" or "자가 진단 키트 지원 2") continue;
                 var data = localDataManager.GetGridData(localDataManager.GetKey(key));
                 if (localDataManager.IsBought(key)) bought.Add(key);
                 else if (data.parent.Count <= 0 || data.parent.TrueForAll(v => localDataManager.IsBought(v))) enable.Add(key);

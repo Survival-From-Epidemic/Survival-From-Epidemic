@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using _root.Scripts.Attribute;
+using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
@@ -10,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace _root.Scripts.Game
 {
-    public class TimeManager : SingleMono<TimeManager>
+    public class TimeManager : SingleMono<TimeManager>, IDataUpdateable
     {
         [SerializeField] public int speedIdx;
         [Range(0.01f, 4f)] [SerializeField] public float timeScale = 2f;
@@ -69,6 +70,27 @@ namespace _root.Scripts.Game
             SoundManager.Instance.PlaySound(SoundKey.GameBackground);
 
             StartCoroutine(DayCycle());
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            speedIdx = kGlobalData.kTimeManager.speedIdx;
+            timeScale = kGlobalData.kTimeManager.timeScale;
+            date = kGlobalData.kTimeManager.date;
+            nextNews = kGlobalData.kTimeManager.nextNews;
+            modificationCount = kGlobalData.kTimeManager.modificationCount;
+            infectDate = Convert.ToDateTime(kGlobalData.kTimeManager.infectDate);
+            kitDate = Convert.ToDateTime(kGlobalData.kTimeManager.kitDate);
+            nextKitUpgradeDate = Convert.ToDateTime(kGlobalData.kTimeManager.nextKitUpgradeDate);
+            nextModificationDate = Convert.ToDateTime(kGlobalData.kTimeManager.nextModificationDate);
+            pcrDate = Convert.ToDateTime(kGlobalData.kTimeManager.pcrDate);
+            startDate = Convert.ToDateTime(kGlobalData.kTimeManager.startDate);
+            today = Convert.ToDateTime(kGlobalData.kTimeManager.today);
+            vaccineEndDate = Convert.ToDateTime(kGlobalData.kTimeManager.vaccineEndDate);
+            vaccineStartDate = Convert.ToDateTime(kGlobalData.kTimeManager.vaccineStartDate);
+            lastMoneyMonth = kGlobalData.kTimeManager.lastMoneyMonth;
+            started = kGlobalData.kTimeManager.started;
+            globalInfected = kGlobalData.kTimeManager.globalInfected;
         }
 
         public static void SpeedCycle(int idx)
@@ -134,23 +156,25 @@ namespace _root.Scripts.Game
         {
             while (true)
             {
+                UIManager.Instance.UpdateTime(today);
+                yield return new WaitForSeconds(timeScale);
+
                 if (GameManager.Instance.gameEnd)
                 {
                     Debugger.Log("Game ENDED");
                     yield break;
                 }
 
+                ValueManager.Instance.Cycle();
                 today = startDate.AddDays(date);
                 // Debug.unityLogger.Log($"dayCycle: {today.ToShortDateString()}");
-                ValueManager.Instance.Cycle();
-                UIManager.Instance.UpdateTime(today);
                 if (lastMoneyMonth != today.Month)
                 {
                     lastMoneyMonth = today.Month;
                     if (globalInfected)
                     {
-                        var money = 120000;
-                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 50000;
+                        var money = 60000;
+                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 30000;
                         MoneyManager.Instance.AddMoneyNotify(money);
                     }
                 }
@@ -285,8 +309,6 @@ namespace _root.Scripts.Game
                 }
 
                 ServerDataManager.Instance.RecordTime();
-
-                yield return new WaitForSeconds(timeScale);
             }
         }
 

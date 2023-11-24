@@ -1496,7 +1496,7 @@ MonoBehaviour:
   - key: 3
     scene: 1
     targetUI: {fileID: 935211213}
-  startUIKey: 0
+  startUIKey: 2
 --- !u!4 &2028640105
 Transform:
   m_ObjectHideFlags: 0
