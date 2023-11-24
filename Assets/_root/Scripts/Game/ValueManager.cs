@@ -96,7 +96,7 @@ namespace _root.Scripts.Game
 
             if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
 
-            currentAuthority = (person.deathPerson * 6 + person.infectedPerson / 1.333f) / person.totalPerson;
+            currentAuthority = (person.deathPerson * 3 + person.infectedPerson / 1.333f) / person.totalPerson;
 
             banbal = Mathf.Lerp(banbal, currentBanbal * 0.01f, 0.08f);
             authority = Mathf.Lerp(authority, currentAuthority, 0.08f);
@@ -127,7 +127,7 @@ namespace _root.Scripts.Game
                     NewsManager.Instance.ShowNews(26);
                     break;
                 case <= 0.2f:
-                    if (TimeManager.Instance.today >= TimeManager.Instance.vaccineStartDate)
+                    if (TimeManager.Instance.today >= TimeManager.Instance.kitDate)
                     {
                         authorityGoodDate++;
                         if (authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
