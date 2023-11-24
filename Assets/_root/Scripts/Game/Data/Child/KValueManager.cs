@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using _root.Scripts.Attribute;
-using UnityEngine;
 
 namespace _root.Scripts.Game.Data.Child
 {
     [Serializable]
     public class KValueManager
     {
-        [SerializeField] public bool diseaseEnabled;
-        [SerializeField] public bool pcrEnabled;
-        [SerializeField] public bool kitEnabled;
-        [SerializeField] public int kitChance;
-        [SerializeField] public bool vaccineResearch;
-        [SerializeField] public bool vaccineEnded;
+        public bool diseaseEnabled;
+        public bool pcrEnabled;
+        public bool kitEnabled;
+        public int kitChance;
+        public bool vaccineResearch;
+        public bool vaccineEnded;
 
-        [Space] public LocalDataManager.LocalGridData localGridData;
+        public LocalDataManager.LocalGridData localGridData;
 
-        [Space] [SerializeField] public Disease preDisease;
-        [SerializeField] public Disease disease;
+        public Disease preDisease;
+        public Disease disease;
 
-        [Space] [SerializeField] public Person person;
+        public Person person;
 
-        [ReadOnly] [SerializeField] private List<PersonData> persons;
+        public List<PersonData> persons;
 
-        [SerializeField] public float banbal;
-        [SerializeField] public float authority;
-        [SerializeField] public int currentBanbal;
-        [SerializeField] public int banbalDate;
-        [SerializeField] public int authorityDate;
+        public float banbal;
+        public float authority;
+        public int currentBanbal;
+        public int banbalDate;
+        public int authorityDate;
 
-        [SerializeField] public int authorityGoodDate;
+        public int authorityGoodDate;
 
-        [SerializeField] public float currentAuthority;
+        public float currentAuthority;
     }
 }

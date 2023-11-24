@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace _root.Scripts.Game
 {
-    public class LocalDataManager : SingleMono<LocalDataManager>
+    public class LocalDataManager : SingleMono<LocalDataManager>, IDataUpdateable
     {
         private Dictionary<string, DateTime> _buyDictionary;
         private float _deathVolume;
@@ -30,6 +31,15 @@ namespace _root.Scripts.Game
             {
                 _keySet.Add(value.name, key);
                 _gridIdxDictionary.Add(value.name, value.nodeIdx);
+            }
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            _buyDictionary = new Dictionary<string, DateTime>();
+            foreach (var kLocalDataPair in kGlobalData.kLocalDataManager.pairs)
+            {
+                _buyDictionary.Add(kLocalDataPair.key, Convert.ToDateTime(kLocalDataPair.date));
             }
         }
 

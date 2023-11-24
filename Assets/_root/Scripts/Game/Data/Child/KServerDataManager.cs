@@ -20,6 +20,24 @@ namespace _root.Scripts.Game.Data.Child
         public KPerson person;
         public List<float> diseaseGraph;
         public List<int> personGraph;
+
+        public ServerDataManager.TimeLeap ToTimeLeap() => new()
+        {
+            date = date,
+            nodeBuy = nodeBuy.ToArray(),
+            nodeSell = nodeSell.ToArray(),
+            money = money.ToArray(),
+            authority = authority.ToArray(),
+            person = new Person
+            {
+                deathPerson = person.deathPerson,
+                healthyPerson = person.healthyPerson,
+                infectedPerson = person.infectedPerson,
+                totalPerson = person.totalPerson
+            },
+            diseaseGraph = diseaseGraph.ToArray(),
+            personGraph = personGraph.ToArray()
+        };
     }
 
     [Serializable]

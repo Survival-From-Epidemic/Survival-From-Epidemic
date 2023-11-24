@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
+using _root.Scripts.Game.Data;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 
 namespace _root.Scripts.Game
 {
-    public class ServerDataManager : SingleMono<ServerDataManager>
+    public class ServerDataManager : SingleMono<ServerDataManager>, IDataUpdateable
     {
         [ReadOnly] public int[] nodeBuy;
         [ReadOnly] public int[] nodeSell;
@@ -18,6 +19,13 @@ namespace _root.Scripts.Game
         {
             base.Awake();
             New();
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            _timeLeapData = kGlobalData.kServerDataManager.timeLeaps
+                .Select(v => v.ToTimeLeap())
+                .ToList();
         }
 
         private void New()

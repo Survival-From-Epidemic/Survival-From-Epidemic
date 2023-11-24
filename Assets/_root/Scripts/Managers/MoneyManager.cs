@@ -1,5 +1,6 @@
 using System;
 using _root.Scripts.Game;
+using _root.Scripts.Game.Data;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 
 namespace _root.Scripts.Managers
 {
-    public class MoneyManager : SingleMono<MoneyManager>
+    public class MoneyManager : SingleMono<MoneyManager>, IDataUpdateable
     {
         [SerializeField] private int money;
         [SerializeField] private RectTransform coinAnchor;
@@ -32,6 +33,11 @@ namespace _root.Scripts.Managers
         private void Start()
         {
             money = 0;
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            money = kGlobalData.kMoneyManager.money;
         }
 
         // private void OnEnable()

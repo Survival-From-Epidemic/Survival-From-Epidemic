@@ -7,6 +7,5 @@ namespace _root.Scripts.Game.Data.Child
     public class KNewsManager
     {
         public List<string> newsKeys;
-        public List<string> importantNewsKeys;
     }
 }

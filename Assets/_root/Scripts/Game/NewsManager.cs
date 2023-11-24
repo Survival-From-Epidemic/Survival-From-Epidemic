@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _root.Scripts.Game.Data;
 using _root.Scripts.SingleTon;
 using _root.Scripts.UI.InGameView;
 using DG.Tweening;
@@ -13,7 +14,7 @@ using Sequence = DG.Tweening.Sequence;
 
 namespace _root.Scripts.Game
 {
-    public class NewsManager : SingleMono<NewsManager>
+    public class NewsManager : SingleMono<NewsManager>, IDataUpdateable
     {
         [SerializeField] private TextMeshProUGUI newsTitleText;
         [SerializeField] private TextMeshProUGUI newsDescriptionText;
@@ -51,6 +52,11 @@ namespace _root.Scripts.Game
         {
             _newsSequence.Pause();
             _newsSequence.Kill();
+        }
+
+        public void RegisterData(KGlobalData kGlobalData)
+        {
+            _newsLeft = Enumerable.ToHashSet(kGlobalData.kNewsManager.newsKeys);
         }
 
         private void New()
