@@ -96,7 +96,7 @@ namespace _root.Scripts.Game
         public static void SpeedCycle(int idx)
         {
             if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
-            Debugger.Log($"SpeedCycle: {idx}");
+            // Debugger.Log($"SpeedCycle: {idx}");
             switch (idx)
             {
                 case 0:
@@ -104,15 +104,15 @@ namespace _root.Scripts.Game
                     break;
                 case 1:
                     Time.timeScale = 1;
-                    Instance.timeScale = 2;
+                    Instance.timeScale = 1.5f;
                     break;
                 case 2:
                     Time.timeScale = 1;
-                    Instance.timeScale = 1.1f;
+                    Instance.timeScale = 0.75f;
                     break;
                 case 3:
                     Time.timeScale = 1;
-                    Instance.timeScale = 0.5f;
+                    Instance.timeScale = 0.35f;
                     break;
             }
         }
@@ -173,8 +173,8 @@ namespace _root.Scripts.Game
                     lastMoneyMonth = today.Month;
                     if (globalInfected)
                     {
-                        var money = 60000;
-                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 30000;
+                        var money = 80000;
+                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 40000;
                         MoneyManager.Instance.AddMoneyNotify(money);
                     }
                 }
