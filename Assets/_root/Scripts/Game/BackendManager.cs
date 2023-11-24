@@ -1,4 +1,5 @@
 ﻿using _root.Scripts.Game.Data;
+using _root.Scripts.Managers;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 
@@ -19,8 +20,15 @@ namespace _root.Scripts.Game
             //TODO: write code
         }
 
-        private void ApplyData()
+        private void RegisterData()
         {
+            GameManager.Instance.RegisterData(kGlobalData);
+            LocalDataManager.Instance.RegisterData(kGlobalData);
+            MoneyManager.Instance.RegisterData(kGlobalData);
+            NewsManager.Instance.RegisterData(kGlobalData);
+            ServerDataManager.Instance.RegisterData(kGlobalData);
+            TimeManager.Instance.RegisterData(kGlobalData);
+            ValueManager.Instance.RegisterData(kGlobalData);
         }
     }
 }
