@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _root.Scripts.Game;
 using _root.Scripts.SingleTon;
 using _root.Scripts.UI.InGameMenuView;
@@ -48,6 +49,17 @@ namespace _root.Scripts.Utils
                 InGameMenuGraph.Disease => "질병 정보",
                 _ => throw new ArgumentOutOfRangeException(nameof(graph), graph, null)
             };
+        }
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = Random.Range(0, n + 1);
+                (list[k], list[n]) = (list[n], list[k]);
+            }
         }
     }
 }

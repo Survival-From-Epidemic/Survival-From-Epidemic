@@ -1,5 +1,4 @@
-﻿using _root.Scripts.Game;
-using _root.Scripts.SingleTon;
+﻿using _root.Scripts.SingleTon;
 using UnityEngine;
 
 namespace _root.Scripts.Player
@@ -8,9 +7,15 @@ namespace _root.Scripts.Player
     {
         [SerializeField] public float speed = 5;
         [SerializeField] private float distance = 25;
+
+        [Space] [SerializeField] private float minScroll = 15;
+
+        [SerializeField] private float maxScroll = 200;
         [SerializeField] private float scrollMultiplier = 10;
-        [SerializeField] private float mouseMultiplier = 10;
-        [SerializeField] private float delta = 10;
+
+        [Space] [SerializeField] private float mouseMultiplier = 10;
+
+        [SerializeField] private float animDelta = 10;
 
         private Camera _camera;
 
@@ -26,9 +31,9 @@ namespace _root.Scripts.Player
             var scrollY = Input.mouseScrollDelta.y;
             if (scrollY > 0) distance -= Time.deltaTime * scrollMultiplier;
             else if (scrollY < 0) distance += Time.deltaTime * scrollMultiplier;
-            distance = Mathf.Clamp(distance, 10, 80);
+            distance = Mathf.Clamp(distance, minScroll, maxScroll);
             UpdatePosition();
-            _camera.transform.position = Vector3.Lerp(_camera.transform.position, transform.rotation * transform.position, Time.deltaTime * delta);
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, transform.rotation * transform.position, Time.deltaTime * animDelta);
         }
 
         private void UpdatePosition()
@@ -41,19 +46,18 @@ namespace _root.Scripts.Player
                 var mouseX = mouseMultiplier * Input.GetAxis("Mouse X");
                 var mouseY = mouseMultiplier * Input.GetAxis("Mouse Y");
                 angle += mouseX * Vector3.up + mouseY * Vector3.right;
-                // angle.x = Mathf.Clamp(angle.x, -90, 0);
+                // if (angle.x + mouseY - 180 <= 0) mouseY = 0;
+                // angle += mouseX * Vector3.up;
+                // if(angle.x <= 0) 
+                // angle.x = Mathf.Clamp(angle.x - 180, 0, 180) + 180;
                 thisTransform.eulerAngles = angle;
-                Debugger.Log($"Mouse: {mouseX} / {mouseY}");
             }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
+            else Cursor.lockState = CursorLockMode.None;
 
-            var par = (-Mathf.Abs(Mathf.Abs(angle.y) + 90) + 90) / 90 + 1;
+            var par = (-Mathf.Abs(Mathf.Abs(angle.y % 180) - 90) + 90) * 1.25f / 90 + 1;
 
-            _camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.LookRotation(-_camera.transform.position), Time.deltaTime * delta);
-            thisTransform.position = distance * Vector3.forward;
+            _camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.LookRotation(-_camera.transform.position), Time.deltaTime * animDelta);
+            thisTransform.position = par * distance * Vector3.forward;
         }
     }
 }
