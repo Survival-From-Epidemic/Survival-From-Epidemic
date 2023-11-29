@@ -9,21 +9,24 @@ namespace _root.Scripts.Player
         [SerializeField] private float distance = 25;
 
         [Space] [SerializeField] private float minScroll = 15;
-
         [SerializeField] private float maxScroll = 200;
         [SerializeField] private float scrollMultiplier = 10;
 
         [Space] [SerializeField] private float mouseMultiplier = 10;
-
         [SerializeField] private float animDelta = 10;
+        [SerializeField] private Camera mainCamera;
 
-        private Camera _camera;
+        [Space] [SerializeField] public Person selectedPerson;
+        [SerializeField] public bool gizmoOn;
+        private Vector3 _beforeEulerAngle;
+
+        private Vector3 _beforePosition;
 
         private void Start()
         {
-            _camera = MainCamera.Component;
+            mainCamera = MainCamera.Component;
             UpdatePosition();
-            _camera.transform.position = transform.position;
+            mainCamera.transform.position = transform.position;
         }
 
         private void Update()
@@ -33,13 +36,30 @@ namespace _root.Scripts.Player
             else if (scrollY < 0) distance += Time.deltaTime * scrollMultiplier;
             distance = Mathf.Clamp(distance, minScroll, maxScroll);
             UpdatePosition();
-            _camera.transform.position = Vector3.Lerp(_camera.transform.position, transform.rotation * transform.position, Time.deltaTime * animDelta);
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, transform.rotation * transform.position, Time.deltaTime * animDelta);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Physics.Raycast(MainCamera.Component.ScreenPointToRay(Input.mousePosition), out var hit))
+                {
+                    selectedPerson = hit.collider.GetComponent<Person>();
+                    _beforePosition = transform.position;
+                    _beforeEulerAngle = transform.eulerAngles;
+                }
+                else
+                {
+                    selectedPerson = null;
+                    transform.position = _beforePosition;
+                    transform.eulerAngles = _beforeEulerAngle;
+                }
+            }
         }
 
         private void UpdatePosition()
         {
             var thisTransform = transform;
             var angle = thisTransform.eulerAngles;
+
             if (Input.GetMouseButton(1))
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -54,10 +74,22 @@ namespace _root.Scripts.Player
             }
             else Cursor.lockState = CursorLockMode.None;
 
-            var par = (-Mathf.Abs(Mathf.Abs(angle.y % 180) - 90) + 90) * 1.25f / 90 + 1;
+            var par = (-Mathf.Abs(Mathf.Abs(angle.y % 180) - 90) + 90) / 90 + 1;
 
-            _camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.LookRotation(-_camera.transform.position), Time.deltaTime * animDelta);
-            thisTransform.position = par * distance * Vector3.forward;
+            var mainCameraTransform = mainCamera.transform;
+            if (selectedPerson)
+            {
+                var personPosition = selectedPerson.transform.position;
+                mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
+                    Quaternion.LookRotation(personPosition - mainCameraTransform.position), Time.deltaTime * animDelta);
+                thisTransform.position = par * distance * 0.05f * Vector3.forward + personPosition;
+            }
+            else
+            {
+                mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
+                    Quaternion.LookRotation(-mainCameraTransform.position), Time.deltaTime * animDelta);
+                thisTransform.position = par * distance * Vector3.forward;
+            }
         }
     }
 }

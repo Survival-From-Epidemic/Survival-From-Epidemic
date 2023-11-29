@@ -1,0 +1,16 @@
+newmtl Wood022
+map_Pm Wood022_2K-PNG_Roughness.png
+bump Wood022_2K-PNG_NormalGL.png
+disp Wood022_2K-PNG_Displacement.png
+map_Kd Wood022_2K-PNG_Color.png
+Kd 1 1 1
+d 1
+
+newmtl Conctrete034
+map_Pm Concrete034_2K-PNG_Roughness.png
+bump Concrete034_2K-PNG_NormalDX.png
+disp Concrete034_2K-PNG_Displacement.png
+map_Kd Concrete034_2K-PNG_Color.png
+Kd 1 1 1
+d 1
+

@@ -17,6 +17,6 @@ namespace _root.Scripts.Player
             Gizmos.DrawWireCube(transform.position, new Vector3(distance.x, 0, distance.y));
         }
 
-        public Vector3 GetPosition() => transform.position + new Vector3(distance.x * (Random.value - 0.5f), 0, distance.y * (Random.value - 0.5f));
+        public Vector3 GetPosition() => transform.position + new Vector3(distance.x * (Random.value - 0.5f), 0.1f, distance.y * (Random.value - 0.5f));
     }
 }
