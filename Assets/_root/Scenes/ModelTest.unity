@@ -26762,7 +26762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeDestroy: 0
   personPrefab: {fileID: 5539601311230615830, guid: a832c919a238f4541aebe21e97c975e2, type: 3}
-  testPersons: 80
+  testPersons: 2000
   backPosition: {x: -19.2, y: 0, z: -22.9}
   backPositionSize: {x: 8.97, y: 0}
 --- !u!1 &1763102085
