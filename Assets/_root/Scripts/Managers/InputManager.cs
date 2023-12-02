@@ -62,16 +62,16 @@ namespace _root.Scripts.Managers
                 }
             }
 
-            var velocity = Vector3.zero;
-
-            if (Input.GetKey(KeyCode.W)) velocity += Vector3.forward;
-            if (Input.GetKey(KeyCode.A)) velocity += Vector3.left;
-            if (Input.GetKey(KeyCode.D)) velocity += Vector3.right;
-            if (Input.GetKey(KeyCode.S)) velocity += Vector3.back;
-            if (Input.GetKey(KeyCode.Space)) velocity += Vector3.up;
-            if (Input.GetKey(KeyCode.LeftShift)) velocity += Vector3.down;
-
-            velocity = velocity.normalized;
+            // var velocity = Vector3.zero;
+            //
+            // if (Input.GetKey(KeyCode.W)) velocity += Vector3.forward;
+            // if (Input.GetKey(KeyCode.A)) velocity += Vector3.left;
+            // if (Input.GetKey(KeyCode.D)) velocity += Vector3.right;
+            // if (Input.GetKey(KeyCode.S)) velocity += Vector3.back;
+            // if (Input.GetKey(KeyCode.Space)) velocity += Vector3.up;
+            // if (Input.GetKey(KeyCode.LeftShift)) velocity += Vector3.down;
+            //
+            // velocity = velocity.normalized;
 
             // _xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime;
             // _yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime;
@@ -83,7 +83,7 @@ namespace _root.Scripts.Managers
             //
             // Player.Player.Instance.transform.eulerAngles = new Vector3(_xRotate, _yRotate, 0);
             //
-            Player.Player.Instance.transform.Translate(Player.Player.Instance.speed * Time.deltaTime * velocity);
+            // Player.Player.Instance.transform.Translate(Player.Player.Instance.speed * Time.deltaTime * velocity);
         }
     }
 }
