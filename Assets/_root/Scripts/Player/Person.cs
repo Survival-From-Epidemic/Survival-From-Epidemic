@@ -56,6 +56,7 @@ namespace _root.Scripts.Player
         public void InfectCheck()
         {
             Debugger.Log("============ Person : InfectCheck");
+            gameObject.SetActive(true);
             StartCoroutine(_NurseOffice());
             // if (LocalDataManager.Instance.IsBought("학생 격리 1")) Isolation();
         }
@@ -76,6 +77,7 @@ namespace _root.Scripts.Player
             Debugger.Log("============ Person : NurseOut");
             inNurse = false;
             meshRenderer.material.color = Color.red;
+            StopAllCoroutines();
             if (LocalDataManager.Instance.IsBought("학생 격리 1"))
             {
                 Isolation();
@@ -89,6 +91,7 @@ namespace _root.Scripts.Player
         public void Isolation()
         {
             Debugger.Log("============ Person : Isolation");
+            StopAllCoroutines();
             gameObject.SetActive(true);
             StartCoroutine(_Isolation());
         }
