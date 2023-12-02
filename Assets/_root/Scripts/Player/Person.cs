@@ -76,6 +76,7 @@ namespace _root.Scripts.Player
         {
             Debugger.Log("============ Person : NurseOut");
             inNurse = false;
+            if (!meshRenderer) return;
             meshRenderer.material.color = Color.red;
             StopAllCoroutines();
             if (LocalDataManager.Instance.IsBought("학생 격리 1"))
