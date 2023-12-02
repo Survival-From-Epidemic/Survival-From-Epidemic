@@ -48,14 +48,15 @@ namespace _root.Scripts.UI
             defaultUI.dateText.text = dateTime.ToShortDateString();
         }
 
-        private Sprite GetPlaySprite()
+        private static Sprite GetPlaySprite()
         {
-            if (Time.timeScale == 0) return Variables.Instance.pauseSprite;
-            return TimeManager.Instance.timeScale switch
+            // if (Time.timeScale == 0) return Variables.Instance.pauseSprite;
+            return Time.timeScale switch
             {
-                <= 0.6f => Variables.Instance.superFastPlaySprite,
-                <= 1.2f => Variables.Instance.fastPlaySprite,
-                _ => Variables.Instance.playSprite
+                <= 0f => Variables.Instance.pauseSprite,
+                <= 1f => Variables.Instance.playSprite,
+                <= 2.1f => Variables.Instance.fastPlaySprite,
+                _ => Variables.Instance.superFastPlaySprite
             };
         }
 

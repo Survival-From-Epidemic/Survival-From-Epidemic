@@ -119,19 +119,18 @@ namespace _root.Scripts.Game
             {
                 case 0:
                     Time.timeScale = 0;
-                    Instance.timeScale = 1.5f;
                     break;
                 case 1:
                     Time.timeScale = 1;
-                    Instance.timeScale = 1.5f;
+                    // Instance.timeScale = 1.5f;
                     break;
                 case 2:
-                    Time.timeScale = 1;
-                    Instance.timeScale = 0.75f;
+                    Time.timeScale = 2.1f;
+                    // Instance.timeScale = 0.75f;
                     break;
                 case 3:
-                    Time.timeScale = 1;
-                    Instance.timeScale = 0.35f;
+                    Time.timeScale = 4.2f;
+                    // Instance.timeScale = 0.35f;
                     break;
             }
 
