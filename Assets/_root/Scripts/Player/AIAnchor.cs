@@ -14,7 +14,7 @@ namespace _root.Scripts.Player
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.cyan;
+            Gizmos.color = noRegister ? Color.yellow : Color.cyan;
             Gizmos.DrawWireCube(transform.position, new Vector3(distance.x, 0, distance.y));
         }
 
