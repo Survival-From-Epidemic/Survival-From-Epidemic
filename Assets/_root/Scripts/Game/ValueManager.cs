@@ -198,17 +198,17 @@ namespace _root.Scripts.Game
 
                 foreach (var p in personsSet)
                 {
-                    if (pcrEnabled)
+                    if (pcrEnabled && !p.isInfected)
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
                         {
-                            p.personObject.NurseOut();
+                            if (p.personObject != null) p.personObject.NurseOut();
                             p.isInfected = true;
                         }
 
-                    if (kitEnabled && localKitChance.Chance())
+                    if (!p.isInfected && kitEnabled && localKitChance.Chance())
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
                         {
-                            p.personObject.NurseOut();
+                            if (p.personObject != null) p.personObject.NurseOut();
                             p.isInfected = true;
                         }
 
@@ -267,10 +267,14 @@ namespace _root.Scripts.Game
 
                 // if (modifyList != null) PathManager.Instance.Modify(modifyList);
 
-                foreach (var p in personsSet.Where(p => p.recoverWeight >= 100)) p.personObject.UnInfected();
+                foreach (var p in personsSet.Where(p => p.recoverWeight >= 100))
+                    if (p.personObject != null)
+                        p.personObject.UnInfected();
                 personsSet.RemoveWhere(p => p.recoverWeight >= 100);
 
-                foreach (var p in personsSet.Where(p => p.deathWeight >= 100)) p.personObject.Death();
+                foreach (var p in personsSet.Where(p => p.deathWeight >= 100))
+                    if (p.personObject != null)
+                        p.personObject.Death();
                 person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
 
                 person.infectedPerson = personsSet.Count(p => p.isInfected);
