@@ -83,8 +83,14 @@ namespace _root.Scripts.Player
         {
             for (var i = _persons.Count - 1; i >= 0; i--)
             {
-                if (_persons[i] == null) _persons.RemoveAt(i);
-                person(_persons[i]);
+                try
+                {
+                    if (_persons[i] == null) _persons.RemoveAt(i);
+                    person(_persons[i]);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
             }
         }
 
@@ -114,8 +120,14 @@ namespace _root.Scripts.Player
             var persons = _persons.Where(func).ToList();
             for (var i = persons.Count - 1; i >= 0; i--)
             {
-                if (persons[i] == null) persons.RemoveAt(i);
-                person(persons[i]);
+                try
+                {
+                    if (persons[i] == null) persons.RemoveAt(i);
+                    person(persons[i]);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
             }
         }
 
@@ -155,8 +167,8 @@ namespace _root.Scripts.Player
             //         .OrderBy(p => (p.transform.position - pos).sqrMagnitude)
             //         .First();
             // }
-            var targetPerson = _persons[Random.Range(0, _persons.Count)];
-
+            var persons = _persons.Where(p => p != null).ToList();
+            var targetPerson = persons[Random.Range(0, persons.Count)];
             personData.personObject = targetPerson;
             targetPerson.PreInfected(personData);
         }
