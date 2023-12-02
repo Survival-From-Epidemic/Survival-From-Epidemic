@@ -268,8 +268,9 @@ namespace _root.Scripts.Game
 
                 person.deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100);
                 person.infectedPerson = personsSet.Count(p => p.isInfected);
-                person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
             }
+
+            person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
         }
     }
 }
