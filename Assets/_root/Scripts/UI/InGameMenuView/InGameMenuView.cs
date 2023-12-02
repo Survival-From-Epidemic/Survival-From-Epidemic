@@ -316,7 +316,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     var isBought = localDataManager.IsBought(_currentGridData.name);
 
                     _currentCost = Mathf.FloorToInt(_currentGridData.weight * (isBought ? SellPricer(localDataManager.GetBuy(_currentGridData.name)) : 30000));
-                    var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
+                    var canBuy = !isBought || MoneyManager.Instance.HasMoney(_currentCost);
                     var uiImagePosition = uiImage.image.rectTransform.position;
                     clicker.gameObject.SetActive(true);
                     clickerText.gameObject.SetActive(true);
