@@ -111,6 +111,7 @@ namespace _root.Scripts.Player
         public void OutDormitory()
         {
             if (outOfControl) return;
+            gameObject.SetActive(true);
             transform.position = PathManager.Instance.GetBackPosition();
             StartNextPath();
         }
