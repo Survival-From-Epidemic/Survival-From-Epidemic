@@ -74,6 +74,11 @@ namespace _root.Scripts.Player
             }
         }
 
+        public void UpdateSpeed()
+        {
+            foreach (var person in _persons.Where(p => p.gameObject.activeSelf)) person.UpdateSpeed();
+        }
+
         public void Clear()
         {
             foreach (var person in _persons.Where(p => p.personData != null)) person.Isolation();

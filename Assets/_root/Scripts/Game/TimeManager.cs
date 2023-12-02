@@ -5,6 +5,7 @@ using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -120,6 +121,8 @@ namespace _root.Scripts.Game
                     Instance.timeScale = 0.35f;
                     break;
             }
+
+            PathManager.Instance.UpdateSpeed();
         }
 
         public void VaccineUpgrade(int days)
