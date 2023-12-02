@@ -5,6 +5,7 @@ using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
 using UnityEngine;
@@ -85,7 +86,9 @@ namespace _root.Scripts.Game
         {
             if (personsSet == null) return 1;
             var rate = (float)personsSet.Count / person.healthyPerson;
-            return 1 + rate * rate * 5;
+            var infectPower = 1 + rate * rate * (LocalDataManager.Instance.IsBought("학생 격리 2") ? 5 : LocalDataManager.Instance.IsBought("학생 격리 2") ? 10 : 35);
+            if (infectPower >= 4) NewsManager.Instance.ShowNews(32);
+            return infectPower;
         }
 
         public void Cycle()
@@ -142,6 +145,7 @@ namespace _root.Scripts.Game
             disease.infectPower = GetInfectPower();
             if (diseaseEnabled)
             {
+                var modifyList = new List<PersonData>();
                 var now = TimeManager.Instance.date;
                 var gridDisease = localGridData.gridDisease;
                 preDisease = new Disease
@@ -161,14 +165,16 @@ namespace _root.Scripts.Game
                         person.healthyPerson -= count;
                         for (var i = 0; i < count; i++)
                         {
-                            personsSet.Add(new PersonData
+                            var personData = new PersonData
                             {
                                 catchDate = now,
                                 deathWeight = 0,
                                 isInfected = false,
                                 recoverWeight = 0,
                                 symptomType = GenerateSymptomType()
-                            });
+                            };
+                            modifyList.Add(personData);
+                            personsSet.Add(personData);
                         }
                     }
                 }
@@ -243,15 +249,24 @@ namespace _root.Scripts.Game
                     // }
                 }
 
-                person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
-                person.infectedPerson = personsSet.Count(p => p.isInfected);
-                personsSet.RemoveWhere(p => p.recoverWeight >= 100);
+                var personUpdate = new Person
+                {
+                    deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100),
+                    infectedPerson = personsSet.Count(p => p.isInfected),
+                    totalPerson = person.totalPerson
+                };
+                personUpdate.healthyPerson = personUpdate.totalPerson - personUpdate.deathPerson - personUpdate.infectedPerson;
 
                 if (Debugger.IsDebug()) persons = personsSet.ToList();
                 else if (persons.Count > 0) persons = new List<PersonData>();
-            }
 
-            person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
+                foreach (var p in personsSet.Where(p => p.recoverWeight >= 100)) p.personObject.UnInfected();
+                personsSet.RemoveWhere(p => p.recoverWeight >= 100);
+
+                PathManager.Instance.Modify(person, personUpdate, modifyList);
+
+                person = personUpdate;
+            }
         }
     }
 }

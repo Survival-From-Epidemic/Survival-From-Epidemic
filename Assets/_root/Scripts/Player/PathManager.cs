@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.SingleTon;
-using DG.Tweening;
 using UnityEngine;
 
 namespace _root.Scripts.Player
@@ -14,6 +13,8 @@ namespace _root.Scripts.Player
         [SerializeField] private int testPersons = 50;
         [SerializeField] private Vector3 backPosition;
         [SerializeField] private Vector2 backPositionSize;
+        [SerializeField] private Vector3 isolationPosition;
+        [SerializeField] private Vector2 isolationPositionSize;
 
         // private List<AIAnchor> _anchors;
         private List<AIAnchor> _anchorPosition;
@@ -25,7 +26,6 @@ namespace _root.Scripts.Player
         protected override void Awake()
         {
             base.Awake();
-            DOTween.SetTweensCapacity(2000, 50);
             // _anchors = new List<AIAnchor>();
             _persons = new List<Person>();
             _anchorPosition = new List<AIAnchor>();
@@ -55,7 +55,7 @@ namespace _root.Scripts.Player
             {
                 if (!_goBack)
                 {
-                    yield return new WaitForSeconds(40);
+                    yield return new WaitForSeconds(45);
                     foreach (var p in _persons)
                         p.GoBack();
                 }
@@ -63,46 +63,80 @@ namespace _root.Scripts.Player
                 {
                     yield return new WaitForSeconds(15);
                     foreach (var p in _persons)
+                    {
+                        yield return new WaitForSeconds(0.02f);
                         p.Show();
+                    }
                 }
 
                 _goBack = !_goBack;
             }
         }
 
-        public void Modify()
+        public void Clear()
         {
-            var person = ValueManager.Instance.person;
-            var personObjectCount = _persons.Count;
-            var infectedObject = _persons.Where(p => p.infected).ToList();
+            foreach(var person in _persons.Where(p => p.infected)) person.Isolation();
+        }
 
-            var delta = (float)person.infectedPerson / person.deathPerson;
-            var need = Mathf.FloorToInt(personObjectCount * delta) - infectedObject.Count;
+        public void Modify(Game.Person before, Game.Person after, List<PersonData> personData)
+        {
+            var changed = after.infectedPerson - before.infectedPerson;
 
-            if (person.infectedPerson <= 0)
-                foreach (var p in infectedObject)
-                    p.UnInfected();
-            else if (need > 0)
+            if (changed > 0)
             {
-                for (var i = 0; i < need; i++)
+                var infectedObject = _persons.Where(p => p.infected).ToList();
+                for (var i = 0; i < changed; i++)
                 {
                     if (infectedObject.Count <= 0)
                     {
-                        _persons[Random.Range(0, _persons.Count)].Infected();
+                        var p = _persons[Random.Range(0, _persons.Count)];
+                        personData[i].personObject = p;
+                        p.Infected(personData[i]);
+                        infectedObject.Add(p);
                         continue;
                     }
 
                     var target = infectedObject[Random.Range(0, infectedObject.Count)];
                     var targetPosition = target.transform.position;
-                    _persons.Where(p => !p.infected)
+                    var targetPerson = _persons.Where(p => !p.infected)
                         .OrderBy(p => (p.transform.position - targetPosition).sqrMagnitude)
-                        .First()
-                        .Infected();
+                        .First();
+                    personData[i].personObject = targetPerson;
+                    targetPerson.Infected(personData[i]);
+                    infectedObject.Add(targetPerson);
                 }
             }
-            else
-                for (var i = Mathf.Abs(need); i > 0; i--)
-                    infectedObject[^1].UnInfected();
+            //
+            // var person = ValueManager.Instance.person;
+            // var personObjectCount = _persons.Count;
+            //
+            // var delta = (float)person.infectedPerson / person.deathPerson;
+            // var need = Mathf.FloorToInt(personObjectCount * delta) - infectedObject.Count;
+            //
+            // if (person.infectedPerson <= 0)
+            //     foreach (var p in infectedObject)
+            //         p.UnInfected();
+            // else if (need > 0)
+            // {
+            //     for (var i = 0; i < need; i++)
+            //     {
+            //         if (infectedObject.Count <= 0)
+            //         {
+            //             _persons[Random.Range(0, _persons.Count)].Infected();
+            //             continue;
+            //         }
+            //
+            //         var target = infectedObject[Random.Range(0, infectedObject.Count)];
+            //         var targetPosition = target.transform.position;
+            //         _persons.Where(p => !p.infected)
+            //             .OrderBy(p => (p.transform.position - targetPosition).sqrMagnitude)
+            //             .First()
+            //             .Infected();
+            //     }
+            // }
+            // else
+            //     for (var i = Mathf.Abs(need); i > 0; i--)
+            //         infectedObject[^1].UnInfected();
         }
 
         public void AddPerson(Person person)
@@ -116,7 +150,11 @@ namespace _root.Scripts.Player
             _anchorPosition.Add(anchor);
         }
 
-        public Vector3 GetBackPosition() => backPosition + new Vector3(backPositionSize.x * (Random.value - 0.5f), 0.1f, backPositionSize.y * (Random.value - 0.5f));
+        public Vector3 GetBackPosition() => backPosition
+                                            + new Vector3(backPositionSize.x * (Random.value - 0.5f), 0.1f, backPositionSize.y * (Random.value - 0.5f));
+
+        public Vector3 GetIsolationPosition() => isolationPosition
+                                                 + new Vector3(isolationPositionSize.x * (Random.value - 0.5f), 0.1f, isolationPositionSize.y * (Random.value - 0.5f));
 
         public Vector3 GetRandomPosition() => _anchorPosition[Random.Range(0, _anchorPosition.Count)].GetPosition();
     }
