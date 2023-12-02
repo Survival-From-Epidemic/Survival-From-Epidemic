@@ -11,16 +11,17 @@ namespace _root.Scripts.Player
     {
         [SerializeField] private GameObject personPrefab;
         [SerializeField] private int testPersons = 50;
+        [SerializeField] private AIAnchor nurseOffice;
         [SerializeField] private Vector3 backPosition;
         [SerializeField] private Vector2 backPositionSize;
         [SerializeField] private Vector3 isolationPosition;
         [SerializeField] private Vector2 isolationPositionSize;
 
+        public bool dormitory;
+
         // private List<AIAnchor> _anchors;
         private List<AIAnchor> _anchorPosition;
         private Coroutine _cycle;
-
-        private bool _goBack;
         private List<Person> _persons;
 
         protected override void Awake()
@@ -53,11 +54,11 @@ namespace _root.Scripts.Player
         {
             while (true)
             {
-                if (!_goBack)
+                if (!dormitory)
                 {
                     yield return new WaitForSeconds(45);
                     foreach (var p in _persons)
-                        p.GoBack();
+                        p.EnterDormitory();
                 }
                 else
                 {
@@ -65,48 +66,72 @@ namespace _root.Scripts.Player
                     foreach (var p in _persons)
                     {
                         yield return new WaitForSeconds(0.02f);
-                        p.Show();
+                        p.OutDormitory();
                     }
                 }
 
-                _goBack = !_goBack;
+                dormitory = !dormitory;
             }
         }
 
         public void Clear()
         {
-            foreach(var person in _persons.Where(p => p.infected)) person.Isolation();
+            foreach (var person in _persons.Where(p => p.personData != null)) person.Isolation();
         }
 
-        public void Modify(Game.Person before, Game.Person after, List<PersonData> personData)
+        public void Modify(List<PersonData> personDataList)
         {
-            var changed = after.infectedPerson - before.infectedPerson;
-
-            if (changed > 0)
+            if (personDataList.Count <= 0) return;
+            var infectedObject = _persons.Where(p => p.personData != null && !p.outOfControl).ToList();
+            foreach (var personData in personDataList)
             {
-                var infectedObject = _persons.Where(p => p.infected).ToList();
-                for (var i = 0; i < changed; i++)
+                Person targetPerson;
+                if (infectedObject.Count <= 0)
                 {
-                    if (infectedObject.Count <= 0)
-                    {
-                        var p = _persons[Random.Range(0, _persons.Count)];
-                        personData[i].personObject = p;
-                        p.Infected(personData[i]);
-                        infectedObject.Add(p);
-                        continue;
-                    }
-
-                    var target = infectedObject[Random.Range(0, infectedObject.Count)];
-                    var targetPosition = target.transform.position;
-                    var targetPerson = _persons.Where(p => !p.infected)
-                        .OrderBy(p => (p.transform.position - targetPosition).sqrMagnitude)
-                        .First();
-                    personData[i].personObject = targetPerson;
-                    targetPerson.Infected(personData[i]);
-                    infectedObject.Add(targetPerson);
+                    targetPerson = _persons[Random.Range(0, _persons.Count)];
                 }
+                else
+                {
+                    var target = infectedObject[Random.Range(0, infectedObject.Count)];
+                    var pos = target.transform.position;
+                    targetPerson = _persons.Where(p => p.personData == null)
+                        .OrderBy(p => (p.transform.position - pos).sqrMagnitude)
+                        .First();
+                }
+
+                personData.personObject = targetPerson;
+                targetPerson.PreInfected(personData);
+                infectedObject.Add(targetPerson);
             }
+
+
+            // var changed = after.infectedPerson - before.infectedPerson;
             //
+            // if (changed > 0)
+            // {
+            //     var infectedObject = _persons.Where(p => p.personData != null).ToList();
+            //     for (var i = 0; i < changed; i++)
+            //     {
+            //         if (infectedObject.Count <= 0)
+            //         {
+            //             var p = _persons[Random.Range(0, _persons.Count)];
+            //             personDataList[i].personObject = p;
+            //             p.PreInfected(personDataList[i]);
+            //             infectedObject.Add(p);
+            //             continue;
+            //         }
+            //
+            //         var target = infectedObject[Random.Range(0, infectedObject.Count)];
+            //         var targetPosition = target.transform.position;
+            //         var targetPerson = _persons.Where(p => p.personData == null)
+            //             .OrderBy(p => (p.transform.position - targetPosition).sqrMagnitude)
+            //             .First();
+            //         personDataList[i].personObject = targetPerson;
+            //         targetPerson.PreInfected(personDataList[i]);
+            //         infectedObject.Add(targetPerson);
+            //     }
+            // }
+
             // var person = ValueManager.Instance.person;
             // var personObjectCount = _persons.Count;
             //
@@ -152,6 +177,8 @@ namespace _root.Scripts.Player
 
         public Vector3 GetBackPosition() => backPosition
                                             + new Vector3(backPositionSize.x * (Random.value - 0.5f), 0.1f, backPositionSize.y * (Random.value - 0.5f));
+
+        public Vector3 GetNurseOfficePosition() => nurseOffice.GetPosition();
 
         public Vector3 GetIsolationPosition() => isolationPosition
                                                  + new Vector3(isolationPositionSize.x * (Random.value - 0.5f), 0.1f, isolationPositionSize.y * (Random.value - 0.5f));

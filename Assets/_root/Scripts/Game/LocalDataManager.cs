@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -61,7 +62,7 @@ namespace _root.Scripts.Game
                     TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
                     break;
                 case "학생 격리 1":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
+                    PathManager.Instance.Clear();
                     break;
             }
 

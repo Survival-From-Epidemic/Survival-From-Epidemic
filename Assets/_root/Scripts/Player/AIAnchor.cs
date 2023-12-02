@@ -4,11 +4,12 @@ namespace _root.Scripts.Player
 {
     public class AIAnchor : MonoBehaviour
     {
+        [SerializeField] private bool noRegister;
         [SerializeField] private Vector2 distance;
 
         private void Awake()
         {
-            PathManager.Instance.AddAnchor(this);
+            if (!noRegister) PathManager.Instance.AddAnchor(this);
         }
 
         private void OnDrawGizmos()

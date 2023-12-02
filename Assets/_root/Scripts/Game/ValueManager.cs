@@ -145,7 +145,7 @@ namespace _root.Scripts.Game
             disease.infectPower = GetInfectPower();
             if (diseaseEnabled)
             {
-                var modifyList = new List<PersonData>();
+                List<PersonData> modifyList = null;
                 var now = TimeManager.Instance.date;
                 var gridDisease = localGridData.gridDisease;
                 preDisease = new Disease
@@ -161,6 +161,7 @@ namespace _root.Scripts.Game
                 {
                     if (chance.Chance())
                     {
+                        modifyList = new List<PersonData>();
                         var count = Mathf.Max(Mathf.FloorToInt(Mathf.Min(preDisease.infectivity, total)), 0);
                         person.healthyPerson -= count;
                         for (var i = 0; i < count; i++)
@@ -249,23 +250,25 @@ namespace _root.Scripts.Game
                     // }
                 }
 
-                var personUpdate = new Person
-                {
-                    deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100),
-                    infectedPerson = personsSet.Count(p => p.isInfected),
-                    totalPerson = person.totalPerson
-                };
-                personUpdate.healthyPerson = personUpdate.totalPerson - personUpdate.deathPerson - personUpdate.infectedPerson;
+                // var personUpdate = new Person
+                // {
+                //     deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100),
+                //     infectedPerson = personsSet.Count(p => p.isInfected),
+                //     totalPerson = person.totalPerson
+                // };
+                // personUpdate.healthyPerson = personUpdate.totalPerson - personUpdate.deathPerson - personUpdate.infectedPerson;
 
                 if (Debugger.IsDebug()) persons = personsSet.ToList();
                 else if (persons.Count > 0) persons = new List<PersonData>();
 
+                if (modifyList != null) PathManager.Instance.Modify(modifyList);
+
                 foreach (var p in personsSet.Where(p => p.recoverWeight >= 100)) p.personObject.UnInfected();
                 personsSet.RemoveWhere(p => p.recoverWeight >= 100);
 
-                PathManager.Instance.Modify(person, personUpdate, modifyList);
-
-                person = personUpdate;
+                person.deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100);
+                person.infectedPerson = personsSet.Count(p => p.isInfected);
+                person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
             }
         }
     }

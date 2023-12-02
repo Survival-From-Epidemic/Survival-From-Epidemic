@@ -255,7 +255,7 @@ namespace _root.Scripts.UI.InGameMenuView
             var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
             if (isBought)
             {
-                if (_currentGridData.name is "연구 지원 1" or "연구 지원 2" or "연구 지원 3")
+                if (_currentGridData.name is "연구 지원 1" or "연구 지원 2" or "연구 지원 3" or "학생 격리 1" or "학생 격리 2" or "의심 학생 격리 1" or "의심 학생 격리 2")
                 {
                     clickerText.color = Color.red;
                     clickerText.text = "판매 불가";

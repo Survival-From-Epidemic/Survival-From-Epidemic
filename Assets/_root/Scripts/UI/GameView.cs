@@ -26,7 +26,7 @@ namespace _root.Scripts.UI
 
         protected virtual void Start()
         {
-            defaultUI.playButton.onClickDown.AddListener(_ => TimeManager.SpeedCycle(TimeManager.Instance.speedIdx = (TimeManager.Instance.speedIdx + 1) % 4));
+            defaultUI.playButton.onClickDown.AddListener(_ => TimeManager.SpeedCycle());
 
             InitGraph();
         }

@@ -14,7 +14,7 @@ namespace _root.Scripts.Game
     public class TimeManager : SingleMono<TimeManager>, IDataUpdateable
     {
         [SerializeField] public int speedIdx;
-        [Range(0.01f, 4f)] [SerializeField] public float timeScale = 2f;
+        [Range(0.01f, 4f)] [SerializeField] public float timeScale = 1.5f;
         [SerializeField] public int date;
         [SerializeField] public int nextNews;
         public int modificationCount;
@@ -93,14 +93,19 @@ namespace _root.Scripts.Game
             globalInfected = kGlobalData.kTimeManager.globalInfected;
         }
 
-        public static void SpeedCycle(int idx)
+        public static void SpeedCycle(int idx = -1) => Instance._SpeedCycle(idx);
+
+        private void _SpeedCycle(int idx)
         {
             if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
+            if (idx == -1) speedIdx = (speedIdx + 1) % 4;
+            else speedIdx = idx;
             // Debugger.Log($"SpeedCycle: {idx}");
-            switch (idx)
+            switch (speedIdx)
             {
                 case 0:
                     Time.timeScale = 0;
+                    Instance.timeScale = 0f;
                     break;
                 case 1:
                     Time.timeScale = 1;
