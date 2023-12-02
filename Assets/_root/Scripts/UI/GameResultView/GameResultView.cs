@@ -43,7 +43,11 @@ namespace _root.Scripts.UI.GameResultView
             pauseButton.UpdateImage();
             playButton.UpdateImage();
 
-            resetButton.onClickDown.AddListener(_ => time = 0);
+            resetButton.onClickDown.AddListener(_ =>
+            {
+                time = 0;
+                GraphUpdate();
+            });
             pauseButton.onClickDown.AddListener(_ =>
             {
                 if (_coroutine != null) StopCoroutine(_coroutine);
@@ -61,7 +65,11 @@ namespace _root.Scripts.UI.GameResultView
                 pauseButton.UpdateImage();
                 playButton.UpdateImage();
             });
-            skipButton.onClickDown.AddListener(_ => time = ServerDataManager.Instance.TimeLeapLength() - 1);
+            skipButton.onClickDown.AddListener(_ =>
+            {
+                time = ServerDataManager.Instance.TimeLeapLength() - 1;
+                GraphUpdate();
+            });
             mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
 
             _graphImages = new[] { new List<Image>(), new(), new() };
@@ -78,7 +86,6 @@ namespace _root.Scripts.UI.GameResultView
                 }
             }
 
-            _coroutine = StartCoroutine(Run());
             GraphUpdate();
         }
 
@@ -107,6 +114,8 @@ namespace _root.Scripts.UI.GameResultView
                 GameEndType.Authority => "당신의 판단으로 인해 많은 사상자가 발생했습니다. 방역에 도움이 되지 않아 권위를 실추당했습니다.",
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+            time = 0;
         }
 
         private void GraphUpdate()
@@ -149,7 +158,7 @@ namespace _root.Scripts.UI.GameResultView
                         break;
                 }
 
-                for (var j = 0; j < 4; j++) texts[j].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[j].fillAmount));
+                for (var j = 0; j < texts.Count; j++) texts[j].rectTransform.anchoredPosition = new Vector2(0, GetGraphYPos(images[j].fillAmount));
             }
 
             dateText.text = TimeManager.Instance.startDate.AddDays(timeLeap.date).ToShortDateString();
@@ -162,8 +171,16 @@ namespace _root.Scripts.UI.GameResultView
         {
             while (true)
             {
-                yield return new WaitForSecondsRealtime(0.02f);
-                if (++time >= ServerDataManager.Instance.TimeLeapLength()) yield break;
+                yield return new WaitForSecondsRealtime(0.03f);
+                if (time >= ServerDataManager.Instance.TimeLeapLength() - 1)
+                {
+                    pauseButton.isSelected = true;
+                    playButton.isSelected = false;
+                    pauseButton.UpdateImage();
+                    playButton.UpdateImage();
+                    yield break;
+                }
+                time++;
                 GraphUpdate();
             }
         }
