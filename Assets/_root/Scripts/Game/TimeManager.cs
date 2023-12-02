@@ -186,6 +186,7 @@ namespace _root.Scripts.Game
                 }
 
                 ValueManager.Instance.Cycle();
+                ServerDataManager.Instance.RecordTime();
                 today = startDate.AddDays(date);
                 // Debug.unityLogger.Log($"dayCycle: {today.ToShortDateString()}");
                 if (lastMoneyMonth != today.Month)
@@ -327,8 +328,6 @@ namespace _root.Scripts.Game
                     NewsManager.Instance.ShowRandomNews();
                     nextNews = Random.Range(14, 44);
                 }
-
-                ServerDataManager.Instance.RecordTime();
             }
         }
 
