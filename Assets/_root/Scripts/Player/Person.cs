@@ -152,7 +152,7 @@ namespace _root.Scripts.Player
             }
         }
 
-        public void UpdateSpeed() => aiPath.maxSpeed = 8 * _speedMultiply * TimeManager.Instance.timeScale;
+        public void UpdateSpeed() => aiPath.maxSpeed = 8 * _speedMultiply / (TimeManager.Instance.timeScale / 1.5f);
 
         public void SetSpeed(float multi)
         {
