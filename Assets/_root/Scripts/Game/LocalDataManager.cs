@@ -60,6 +60,9 @@ namespace _root.Scripts.Game
                 case "연구 지원 3":
                     TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
                     break;
+                case "학생 격리 1":
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
+                    break;
             }
 
             SoundManager.Instance.PlayEffectSound(SoundKey.BuySound);

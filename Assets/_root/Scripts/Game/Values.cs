@@ -30,6 +30,7 @@ namespace _root.Scripts.Game
     [Serializable]
     public class PersonData
     {
+        public Player.Person personObject;
         public int catchDate;
         public bool isInfected;
 
