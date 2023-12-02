@@ -12,10 +12,18 @@ namespace _root.Scripts.UI.GameStartView
         [SerializeField] private Button settingButton;
         [SerializeField] private Button rankButton;
         [SerializeField] private Button quitButton;
+        private bool _sceneLoading;
 
         private void Start()
         {
-            gameStartButton.onClick.AddListener(() => { UIManager.Instance.EnableUI(UIElements.InGame); });
+            _sceneLoading = false;
+            // StartCoroutine(SceneLoad());
+            gameStartButton.onClick.AddListener(() =>
+            {
+                if (_sceneLoading) return;
+                _sceneLoading = true;
+                UIManager.Instance.EnableUI(UIElements.InGame);
+            });
             quitButton.onClick.AddListener(() =>
             {
 #if UNITY_EDITOR

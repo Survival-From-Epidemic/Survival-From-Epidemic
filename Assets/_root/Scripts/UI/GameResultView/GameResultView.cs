@@ -7,6 +7,7 @@ using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _root.Scripts.UI.GameResultView
@@ -70,7 +71,11 @@ namespace _root.Scripts.UI.GameResultView
                 time = ServerDataManager.Instance.TimeLeapLength() - 1;
                 GraphUpdate();
             });
-            mainButton.onClickDown.AddListener(_ => UIManager.Instance.EnableUI(UIElements.GameStart));
+            mainButton.onClickDown.AddListener(_ =>
+            {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+                UIManager.Instance.EnableUI(UIElements.GameStart);
+            });
 
             _graphImages = new[] { new List<Image>(), new(), new() };
             _graphTexts = new[] { new List<TextMeshProUGUI>(), new(), new() };
@@ -180,6 +185,7 @@ namespace _root.Scripts.UI.GameResultView
                     playButton.UpdateImage();
                     yield break;
                 }
+
                 time++;
                 GraphUpdate();
             }
