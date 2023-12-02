@@ -328,8 +328,8 @@ namespace _root.Scripts.UI.InGameMenuView
                     if (!isBought) clickerCostEnableInfo.DOFade(1f, 0.2f).SetUpdate(true);
                     else clickerCostDisableInfo.DOFade(1f, 0.2f).SetUpdate(true);
 
-                    clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1.5 ? -4f : 4f), uiImagePosition.y);
-                    clickerText.rectTransform.position = new Vector3(uiImagePosition.x, uiImagePosition.y - 0.8f);
+                    clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1050 ? -415f : 415f), uiImagePosition.y);
+                    clickerText.rectTransform.position = new Vector3(uiImagePosition.x, uiImagePosition.y - 85f);
 
                     clickerTitle.text = _currentGridData.name;
                     clickerDescription.text = _currentGridData.message;
