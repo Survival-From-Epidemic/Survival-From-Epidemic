@@ -53,13 +53,13 @@ namespace _root.Scripts.Game
             switch (key)
             {
                 case "연구 지원 1":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 20));
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)(1 - TimeManager.Instance.GetVaccinePercent()) * 40));
                     break;
                 case "연구 지원 2":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 40));
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)(1 - TimeManager.Instance.GetVaccinePercent()) * 60));
                     break;
                 case "연구 지원 3":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
+                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)(1 - TimeManager.Instance.GetVaccinePercent()) * 80));
                     break;
                 case "학생 격리 1":
                     PathManager.Instance.Clear();
