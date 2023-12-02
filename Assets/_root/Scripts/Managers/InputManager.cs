@@ -8,15 +8,15 @@ namespace _root.Scripts.Managers
 {
     public class InputManager : MonoBehaviour
     {
-        private float _xRotate;
-        private float _xRotateMove;
-        private float _yRotate;
-        private float _yRotateMove;
-
-        private void Start()
-        {
-            _xRotate = _yRotate = _xRotateMove = _yRotateMove = 0;
-        }
+        // private float _xRotate;
+        // private float _xRotateMove;
+        // private float _yRotate;
+        // private float _yRotateMove;
+        //
+        // private void Start()
+        // {
+        //     _xRotate = _yRotate = _xRotateMove = _yRotateMove = 0;
+        // }
 
         private void Update()
         {
@@ -73,16 +73,16 @@ namespace _root.Scripts.Managers
 
             velocity = velocity.normalized;
 
-            _xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime;
-            _yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime;
-
-            _yRotate = transform.eulerAngles.y + _yRotateMove;
-            _xRotate += _xRotateMove;
-
-            _xRotate = Mathf.Clamp(_xRotate, -90, 90);
-
-            Player.Player.Instance.transform.eulerAngles = new Vector3(_xRotate, _yRotate, 0);
-
+            // _xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime;
+            // _yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime;
+            //
+            // _yRotate = transform.eulerAngles.y + _yRotateMove;
+            // _xRotate += _xRotateMove;
+            //
+            // _xRotate = Mathf.Clamp(_xRotate, -90, 90);
+            //
+            // Player.Player.Instance.transform.eulerAngles = new Vector3(_xRotate, _yRotate, 0);
+            //
             Player.Player.Instance.transform.Translate(Player.Player.Instance.speed * Time.deltaTime * velocity);
         }
     }
