@@ -148,7 +148,7 @@ namespace _root.Scripts.Player
                 SetSpeed(1);
                 aiPath.destination = PathManager.Instance.GetRandomPosition();
                 yield return new WaitUntil(() => aiPath.reachedDestination);
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(8f);
             }
         }
 
