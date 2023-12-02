@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
@@ -67,6 +68,31 @@ namespace _root.Scripts.Game
             authorityDate = kGlobalData.kValueManager.authorityDate;
             authorityGoodDate = kGlobalData.kValueManager.authorityGoodDate;
             currentAuthority = kGlobalData.kValueManager.currentAuthority;
+        }
+
+        public KValueManager Parse()
+        {
+            var kValueManager = new KValueManager();
+            kValueManager.diseaseEnabled = diseaseEnabled;
+            kValueManager.pcrEnabled = pcrEnabled;
+            kValueManager.kitEnabled = kitEnabled;
+            kValueManager.kitChance = kitChance;
+            kValueManager.vaccineResearch = vaccineResearch;
+            kValueManager.vaccineEnded = vaccineEnded;
+            kValueManager.localGridData = localGridData;
+            kValueManager.preDisease = preDisease;
+            kValueManager.disease = disease;
+            kValueManager.person = person;
+            kValueManager.persons = persons;
+            kValueManager.diseaseEnabled = diseaseEnabled;
+            kValueManager.banbal = banbal;
+            kValueManager.authority = authority;
+            kValueManager.currentBanbal = currentBanbal;
+            kValueManager.banbalDate = banbalDate;
+            kValueManager.authorityDate = authorityDate;
+            kValueManager.authorityGoodDate = authorityGoodDate;
+            kValueManager.currentAuthority = currentAuthority;
+            return kValueManager;
         }
 
         private static SymptomType GenerateSymptomType()

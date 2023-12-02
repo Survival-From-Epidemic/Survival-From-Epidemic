@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.SingleTon;
 using _root.Scripts.UI.InGameView;
 using DG.Tweening;
@@ -59,6 +60,13 @@ namespace _root.Scripts.Game
             _newsLeft = Enumerable.ToHashSet(kGlobalData.kNewsManager.newsKeys);
         }
 
+        public KNewsManager Parse()
+        {
+            var kNewsManager = new KNewsManager();
+            kNewsManager.newsKeys = _newsLeft.ToList();
+            return kNewsManager;
+        }
+        
         private void New()
         {
             var news = Resources.Load<TextAsset>("Data/news_data");

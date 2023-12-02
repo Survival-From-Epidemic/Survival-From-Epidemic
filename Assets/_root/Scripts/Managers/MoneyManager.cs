@@ -1,6 +1,7 @@
 using System;
 using _root.Scripts.Game;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
@@ -38,6 +39,13 @@ namespace _root.Scripts.Managers
         public void RegisterData(KGlobalData kGlobalData)
         {
             money = kGlobalData.kMoneyManager.money;
+        }
+
+        public KMoneyManager Parse()
+        {
+            var kMoneyManager = new KMoneyManager();
+            kMoneyManager.money = money;
+            return kMoneyManager;
         }
 
         // private void OnEnable()

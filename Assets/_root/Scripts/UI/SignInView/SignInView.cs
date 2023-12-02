@@ -26,15 +26,16 @@ namespace _root.Scripts.UI.SignInView
             base.Update();
             if (Input.GetKeyDown(KeyCode.Return))
                 if (idInputField.text.Length != 0 && passwordInputField.text.Length != 0)
-                    new Networking.Post<string>("/auth/tokens", new SignInRequest
+                    new Networking.Post<SignInResponse>("/auth/tokens", new SignInRequest
                         {
                             accountId = idInputField.text,
                             password = passwordInputField.text
                         })
                         .OnResponse(data =>
                         {
-                            Debugger.Log(data);
                             UIManager.Instance.EnableUI(UIElements.GameStart);
+                            PlayerPrefs.SetString("Token", data.accessToken);
+                            Debugger.Log(data.accessToken);
                         })
                         .Build();
             if (Input.GetKeyDown(KeyCode.Tab))

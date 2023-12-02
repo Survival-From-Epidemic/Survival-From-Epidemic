@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Network;
@@ -11,13 +12,16 @@ namespace _root.Scripts.Game
     {
         [SerializeField] private KGlobalData kGlobalData;
         private bool _isLoaded;
-        private int _getCount;
 
         protected override void Awake()
         {
             base.Awake();
+            Time.timeScale = 0;
             _isLoaded = false;
-            _getCount = 5;
+        }
+
+        private void Start()
+        {
             RequestData();
             StartCoroutine(AutoSaving());
         }
@@ -27,40 +31,84 @@ namespace _root.Scripts.Game
             yield return new WaitUntil(() => _isLoaded);
             while (true)
             {
-                yield return new WaitForSecondsRealtime(90);
                 new Networking.Put<KGlobalData>("/progresses", kGlobalData)
                     .OnError(() =>
                     {
                         Debugger.Log("Error!!");
                     })
                     .Build();
+                yield return new WaitForSecondsRealtime(10);
             }
         }
 
         private void RequestData()
         {
-            //TODO: write code
-            if(_getCount-- <= 0) return;
             new Networking.Get<KGlobalData>("/progresses")
                 .OnResponse(body =>
                 {
-                    Debugger.Log("");
+                    Debugger.Log("Done");
                     kGlobalData = body;
                     _isLoaded = true;
+                    RegisterData();
                 })
-                .OnError(RequestData)
+                .OnError(() =>
+                {
+                    _isLoaded = true;
+                })
                 .Build();
         }
 
         private void RegisterData()
         {
-            GameManager.Instance.RegisterData(kGlobalData);
-            LocalDataManager.Instance.RegisterData(kGlobalData);
-            MoneyManager.Instance.RegisterData(kGlobalData);
-            NewsManager.Instance.RegisterData(kGlobalData);
-            ServerDataManager.Instance.RegisterData(kGlobalData);
-            TimeManager.Instance.RegisterData(kGlobalData);
-            ValueManager.Instance.RegisterData(kGlobalData);
+            try
+            {
+                GameManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                LocalDataManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                MoneyManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                NewsManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                ServerDataManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                TimeManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
+            try
+            {
+                ValueManager.Instance.RegisterData(kGlobalData);
+            }
+            catch (Exception)
+            { // ignored
+            }
         }
     }
 }
