@@ -97,9 +97,15 @@ namespace _root.Scripts.Player
         {
             for (var i = _persons.Count - 1; i >= 0; i--)
             {
-                if (_persons[i] == null) _persons.RemoveAt(i);
                 yield return new WaitForSeconds(delay);
-                person(_persons[i]);
+                try
+                {
+                    if (_persons[i] == null) _persons.RemoveAt(i);
+                    person(_persons[i]);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
             }
         }
 
@@ -232,12 +238,12 @@ namespace _root.Scripts.Player
         }
 
         public Vector3 GetBackPosition() => backPosition
-                                            + new Vector3(backPositionSize.x * (Random.value - 0.5f), 0.1f, backPositionSize.y * (Random.value - 0.5f));
+                                            + new Vector3(backPositionSize.x * (Random.value - 0.5f), 0f, backPositionSize.y * (Random.value - 0.5f));
 
         public Vector3 GetNurseOfficePosition() => nurseOffice.GetPosition();
 
         public Vector3 GetIsolationPosition() => isolationPosition
-                                                 + new Vector3(isolationPositionSize.x * (Random.value - 0.5f), 0.1f, isolationPositionSize.y * (Random.value - 0.5f));
+                                                 + new Vector3(isolationPositionSize.x * (Random.value - 0.5f), 0f, isolationPositionSize.y * (Random.value - 0.5f));
 
         public Vector3 GetRandomPosition() => _anchorPosition[Random.Range(0, _anchorPosition.Count)].GetPosition();
     }
