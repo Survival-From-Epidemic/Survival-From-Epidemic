@@ -119,7 +119,7 @@ namespace _root.Scripts.Game
             {
                 case 0:
                     Time.timeScale = 0;
-                    Instance.timeScale = 0f;
+                    Instance.timeScale = 1.5f;
                     break;
                 case 1:
                     Time.timeScale = 1;
