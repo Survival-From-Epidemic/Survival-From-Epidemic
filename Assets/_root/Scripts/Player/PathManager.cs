@@ -141,20 +141,21 @@ namespace _root.Scripts.Player
 
         public void Modify(PersonData personData)
         {
-            var infectedObject = _persons.Where(p => p.allocatedPersonData && !p.outOfControl && !p.inNurse).ToList();
-            Person targetPerson;
-            if (infectedObject.Count <= 0)
-            {
-                targetPerson = _persons[Random.Range(0, _persons.Count)];
-            }
-            else
-            {
-                var target = infectedObject[Random.Range(0, infectedObject.Count)];
-                var pos = target.transform.position;
-                targetPerson = _persons.Where(p => !p.allocatedPersonData)
-                    .OrderBy(p => (p.transform.position - pos).sqrMagnitude)
-                    .First();
-            }
+            // var infectedObject = _persons.Where(p => p.allocatedPersonData && !p.outOfControl && !p.inNurse).ToList();
+            // Person targetPerson;
+            // if (infectedObject.Count <= 0)
+            // {
+            //     targetPerson = _persons[Random.Range(0, _persons.Count)];
+            // }
+            // else
+            // {
+            //     var target = infectedObject[Random.Range(0, infectedObject.Count)];
+            //     var pos = target.transform.position;
+            //     targetPerson = _persons.Where(p => !p.allocatedPersonData)
+            //         .OrderBy(p => (p.transform.position - pos).sqrMagnitude)
+            //         .First();
+            // }
+            var targetPerson = _persons[Random.Range(0, _persons.Count)];
 
             personData.personObject = targetPerson;
             targetPerson.PreInfected(personData);
