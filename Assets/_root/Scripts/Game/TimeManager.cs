@@ -14,6 +14,7 @@ namespace _root.Scripts.Game
 {
     public class TimeManager : SingleMono<TimeManager>, IDataUpdateable
     {
+        private static int _beforeSpeedIdx;
         [SerializeField] public int speedIdx;
         [Range(0.01f, 4f)] [SerializeField] public float timeScale = 1.5f;
         [SerializeField] public int date;
@@ -92,6 +93,18 @@ namespace _root.Scripts.Game
             lastMoneyMonth = kGlobalData.kTimeManager.lastMoneyMonth;
             started = kGlobalData.kTimeManager.started;
             globalInfected = kGlobalData.kTimeManager.globalInfected;
+        }
+
+        public static void Pause()
+        {
+            if (Instance.speedIdx == 0) return;
+            _beforeSpeedIdx = Instance.speedIdx;
+            SpeedCycle(0);
+        }
+
+        public static void UnPause()
+        {
+            SpeedCycle(_beforeSpeedIdx);
         }
 
         public static void SpeedCycle(int idx = -1) => Instance._SpeedCycle(idx);
