@@ -145,7 +145,6 @@ namespace _root.Scripts.Game
             disease.infectPower = GetInfectPower();
             if (diseaseEnabled)
             {
-                List<PersonData> modifyList = null;
                 var now = TimeManager.Instance.date;
                 var gridDisease = localGridData.gridDisease;
                 preDisease = new Disease
@@ -161,7 +160,6 @@ namespace _root.Scripts.Game
                 {
                     if (chance.Chance())
                     {
-                        modifyList = new List<PersonData>();
                         var count = Mathf.Max(Mathf.FloorToInt(Mathf.Min(preDisease.infectivity, total)), 0);
                         person.healthyPerson -= count;
                         for (var i = 0; i < count; i++)
@@ -174,7 +172,7 @@ namespace _root.Scripts.Game
                                 recoverWeight = 0,
                                 symptomType = GenerateSymptomType()
                             };
-                            modifyList.Add(personData);
+                            PathManager.Instance.Modify(personData);
                             personsSet.Add(personData);
                         }
                     }
@@ -202,11 +200,17 @@ namespace _root.Scripts.Game
                 {
                     if (pcrEnabled)
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
+                        {
+                            p.personObject.NurseOut();
                             p.isInfected = true;
+                        }
 
                     if (kitEnabled && localKitChance.Chance())
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
+                        {
+                            p.personObject.NurseOut();
                             p.isInfected = true;
+                        }
 
                     p.recoverWeight += Random.Range(0.5f, 1f) + (mad4 ? Random.Range(0.2f, 0.6f) : 0);
                     switch (p.symptomType)
@@ -261,12 +265,14 @@ namespace _root.Scripts.Game
                 if (Debugger.IsDebug()) persons = personsSet.ToList();
                 else if (persons.Count > 0) persons = new List<PersonData>();
 
-                if (modifyList != null) PathManager.Instance.Modify(modifyList);
+                // if (modifyList != null) PathManager.Instance.Modify(modifyList);
 
                 foreach (var p in personsSet.Where(p => p.recoverWeight >= 100)) p.personObject.UnInfected();
                 personsSet.RemoveWhere(p => p.recoverWeight >= 100);
 
-                person.deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100);
+                foreach (var p in personsSet.Where(p => p.deathWeight >= 100)) p.personObject.Death();
+                person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
+
                 person.infectedPerson = personsSet.Count(p => p.isInfected);
             }
 

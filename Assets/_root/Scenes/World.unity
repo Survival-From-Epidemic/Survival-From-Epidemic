@@ -1647,7 +1647,7 @@ MonoBehaviour:
     infectivity: 0
     infectPower: 0
   person:
-    totalPerson: 300
+    totalPerson: 1000
     healthyPerson: 0
     deathPerson: 0
     infectedPerson: 0
@@ -28624,12 +28624,13 @@ MonoBehaviour:
   canBeDestroy: 0
   personPrefab: {fileID: 5539601311230615830, guid: a832c919a238f4541aebe21e97c975e2, type: 3}
   testPersons: 2000
-  nurseOffice: {fileID: 0}
-  backPosition: {x: -19.2, y: 0, z: -22.9}
-  backPositionSize: {x: 8.97, y: 0}
-  isolationPosition: {x: 0, y: 0, z: 0}
-  isolationPositionSize: {x: 0, y: 0}
+  nurseOffice: {fileID: 2132208560}
+  backPosition: {x: -19.2, y: 0, z: -22.5}
+  backPositionSize: {x: 7.5, y: 0}
+  isolationPosition: {x: -19.2, y: 0, z: 30.9}
+  isolationPositionSize: {x: 7.5, y: 0}
   dormitory: 0
+  dormIn: 0
 --- !u!4 &1891151548
 Transform:
   m_ObjectHideFlags: 0
@@ -29203,7 +29204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noRegister: 0
+  noRegister: 1
   distance: {x: 18, y: 20}
 --- !u!1 &2136010956
 GameObject:

@@ -64,6 +64,9 @@ namespace _root.Scripts.Game
                 case "학생 격리 1":
                     PathManager.Instance.Clear();
                     break;
+                case "의심 학생 격리 1":
+                    PathManager.Instance.Isolation();
+                    break;
             }
 
             SoundManager.Instance.PlayEffectSound(SoundKey.BuySound);

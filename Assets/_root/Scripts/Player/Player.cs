@@ -1,5 +1,4 @@
-﻿using _root.Scripts.Game;
-using _root.Scripts.SingleTon;
+﻿using _root.Scripts.SingleTon;
 using UnityEngine;
 
 namespace _root.Scripts.Player
@@ -32,12 +31,12 @@ namespace _root.Scripts.Player
 
         private void Update()
         {
-            if (selectedPerson is not null && !selectedPerson.gameObject.activeSelf)
-            {
-                selectedPerson = null;
-                transform.position = _beforePosition;
-                transform.eulerAngles = _beforeEulerAngle;
-            }
+            // if (selectedPerson is not null && !selectedPerson.gameObject.activeSelf)
+            // {
+            //     selectedPerson = null;
+            //     transform.position = _beforePosition;
+            //     transform.eulerAngles = _beforeEulerAngle;
+            // }
 
             var scrollY = Input.mouseScrollDelta.y;
             if (scrollY > 0) distance -= Time.deltaTime * scrollMultiplier;
@@ -46,22 +45,22 @@ namespace _root.Scripts.Player
             UpdatePosition();
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, transform.rotation * transform.position, Time.fixedDeltaTime * animDelta);
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (Physics.Raycast(MainCamera.Component.ScreenPointToRay(Input.mousePosition), out var hit))
-                {
-                    Debugger.Log("Person Selected");
-                    selectedPerson = hit.collider.GetComponent<Person>();
-                    _beforePosition = transform.position;
-                    _beforeEulerAngle = transform.eulerAngles;
-                }
-                else
-                {
-                    selectedPerson = null;
-                    transform.position = _beforePosition;
-                    transform.eulerAngles = _beforeEulerAngle;
-                }
-            }
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     if (Physics.Raycast(MainCamera.Component.ScreenPointToRay(Input.mousePosition), out var hit))
+            //     {
+            //         Debugger.Log("Person Selected");
+            //         selectedPerson = hit.collider.GetComponent<Person>();
+            //         _beforePosition = transform.position;
+            //         _beforeEulerAngle = transform.eulerAngles;
+            //     }
+            //     else
+            //     {
+            //         selectedPerson = null;
+            //         transform.position = _beforePosition;
+            //         transform.eulerAngles = _beforeEulerAngle;
+            //     }
+            // }
         }
 
         private void UpdatePosition()
@@ -92,19 +91,19 @@ namespace _root.Scripts.Player
             var par = (-Mathf.Abs(Mathf.Abs(angle.y % 180) - 90) + 90) / 90 + 1;
 
             var mainCameraTransform = mainCamera.transform;
-            if (selectedPerson)
-            {
-                var personPosition = selectedPerson.transform.position;
-                mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
-                    Quaternion.LookRotation(personPosition - mainCameraTransform.position), Time.fixedDeltaTime * animDelta);
-                thisTransform.position = par * distance * 0.05f * Vector3.forward + personPosition;
-            }
-            else
-            {
-                mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
-                    Quaternion.LookRotation(-mainCameraTransform.position), Time.fixedDeltaTime * animDelta);
-                thisTransform.position = par * distance * Vector3.forward;
-            }
+            // if (selectedPerson)
+            // {
+            //     var personPosition = selectedPerson.transform.position;
+            //     mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
+            //         Quaternion.LookRotation(personPosition - mainCameraTransform.position), Time.fixedDeltaTime * animDelta);
+            //     thisTransform.position = par * distance * 0.05f * Vector3.forward + personPosition;
+            // }
+            // else
+            // {
+            mainCameraTransform.rotation = Quaternion.Lerp(mainCameraTransform.rotation,
+                Quaternion.LookRotation(-mainCameraTransform.position), Time.fixedDeltaTime * animDelta);
+            thisTransform.position = par * distance * Vector3.forward;
+            // }
         }
     }
 }

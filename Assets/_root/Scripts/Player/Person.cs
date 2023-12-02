@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using _root.Scripts.Game;
-using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
 
@@ -11,8 +10,10 @@ namespace _root.Scripts.Player
         [SerializeField] private AIPath aiPath;
         [SerializeField] private AIDestinationSetter aiDestinationSetter;
         [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] public bool inNurse;
         [SerializeField] public bool outOfControl;
         public PersonData personData;
+        public bool allocatedPersonData;
         private Coroutine _nextPathCoroutine;
         private float _speedMultiply;
 
@@ -29,13 +30,23 @@ namespace _root.Scripts.Player
             StartNextPath();
         }
 
+        private void Update()
+        {
+            // if (aiPath.canSearch && !aiPath.hasPath)
+            // {
+            //     StopAllCoroutines();
+            //     OutDormitory();
+            // }
+        }
+
         public void PreInfected(PersonData data)
         {
+            Debugger.Log("============ Person : PreInfected");
+            allocatedPersonData = true;
             personData = data;
 
             if (LocalDataManager.Instance.IsBought("의심 학생 격리 1"))
             {
-                meshRenderer.materials[0].DOColor(Color.yellow, 2f);
                 InfectCheck();
             }
 
@@ -44,33 +55,41 @@ namespace _root.Scripts.Player
 
         public void InfectCheck()
         {
+            Debugger.Log("============ Person : InfectCheck");
             StartCoroutine(_NurseOffice());
             // if (LocalDataManager.Instance.IsBought("학생 격리 1")) Isolation();
         }
 
         private IEnumerator _NurseOffice()
         {
-            outOfControl = true;
-            meshRenderer.materials[0].DOColor(Color.yellow, 2f);
+            Debugger.Log("============ Person : NurseOffice Coroutine");
+            inNurse = true;
+            meshRenderer.material.color = Color.yellow;
             StopNextPath();
             SetSpeed(1f);
             aiPath.destination = PathManager.Instance.GetNurseOfficePosition();
             yield return new WaitUntil(() => aiPath.reachedDestination);
+        }
 
-            yield return new WaitForSeconds(Random.Range(5f, 12f));
+        public void NurseOut()
+        {
+            Debugger.Log("============ Person : NurseOut");
+            inNurse = false;
+            meshRenderer.material.color = Color.red;
             if (LocalDataManager.Instance.IsBought("학생 격리 1"))
             {
                 Isolation();
             }
             else
             {
-                outOfControl = false;
                 StartNextPath();
             }
         }
 
         public void Isolation()
         {
+            Debugger.Log("============ Person : Isolation");
+            gameObject.SetActive(true);
             StartCoroutine(_Isolation());
         }
 
@@ -78,7 +97,7 @@ namespace _root.Scripts.Player
         {
             outOfControl = true;
             StopNextPath();
-            meshRenderer.materials[0].DOColor(Color.red, 2f);
+            meshRenderer.material.color = Color.red;
             SetSpeed(2.5f);
             aiPath.destination = PathManager.Instance.GetIsolationPosition();
             yield return new WaitUntil(() => aiPath.reachedDestination);
@@ -87,9 +106,17 @@ namespace _root.Scripts.Player
 
         public void UnInfected()
         {
-            personData = null;
+            Debugger.Log("============ Person : UnInfected");
+            meshRenderer.material.color = Color.white;
+            allocatedPersonData = true;
             outOfControl = false;
             OutDormitory();
+        }
+
+        public void Death()
+        {
+            // PathManager.Instance.Death(this);
+            Destroy(gameObject);
         }
 
         // public void UnInfected()
@@ -103,16 +130,20 @@ namespace _root.Scripts.Player
 
         public void EnterDormitory()
         {
-            if (outOfControl) return;
+            Debugger.Log("============ Person : EnterDormitory");
+            if (outOfControl || inNurse) return;
             StopNextPath();
+            gameObject.SetActive(true);
             StartCoroutine(_EnterDormitory());
         }
 
         public void OutDormitory()
         {
-            if (outOfControl) return;
+            Debugger.Log("============ Person : OutDormitory");
+            if (outOfControl || inNurse) return;
             gameObject.SetActive(true);
-            transform.position = PathManager.Instance.GetBackPosition();
+            aiPath.Teleport(PathManager.Instance.GetBackPosition() + Vector3.up);
+            // transform.position = PathManager.Instance.GetBackPosition() + Vector3.up;
             StartNextPath();
         }
 
@@ -123,13 +154,10 @@ namespace _root.Scripts.Player
 
         private void StartNextPath()
         {
-            if (outOfControl) return;
-            if (PathManager.Instance.dormitory)
-            {
-                EnterDormitory();
-                return;
-            }
-
+            if (outOfControl || inNurse) return;
+            if (PathManager.Instance.dormIn) return;
+            gameObject.SetActive(true);
+            StopNextPath();
             _nextPathCoroutine = StartCoroutine(NextPath());
         }
 
@@ -143,7 +171,6 @@ namespace _root.Scripts.Player
 
         private IEnumerator NextPath()
         {
-            gameObject.SetActive(true);
             while (true)
             {
                 SetSpeed(1);
