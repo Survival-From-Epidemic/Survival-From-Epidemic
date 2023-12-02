@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 27.8, y: 28.3}
 --- !u!1 &27996452
 GameObject:
@@ -316,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1001 &170385605
 PrefabInstance:
@@ -566,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &202584278
 GameObject:
@@ -611,6 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 38, y: 28.3}
 --- !u!224 &284243959 stripped
 RectTransform:
@@ -661,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &302172252
 GameObject:
@@ -781,6 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &365208331
 GameObject:
@@ -826,6 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &398594478
 GameObject:
@@ -871,6 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1001 &402259676
 PrefabInstance:
@@ -1234,6 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!224 &583240987 stripped
 RectTransform:
@@ -1344,6 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &714838115
 GameObject:
@@ -1457,6 +1467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &866940962
 GameObject:
@@ -1775,6 +1786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &1129897685
 GameObject:
@@ -1820,6 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &1133644045
 GameObject:
@@ -24472,6 +24485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &1484713616
 GameObject:
@@ -24588,6 +24602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &1519349264
 GameObject:
@@ -27607,7 +27622,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 1980619040}
-  m_VersionIndex: 33828
+  m_VersionIndex: 33831
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -27838,6 +27853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!43 &1751432783
 Mesh:
@@ -28528,6 +28544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &1869367839
 GameObject:
@@ -28573,6 +28590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &1891151546
 GameObject:
@@ -28606,10 +28624,12 @@ MonoBehaviour:
   canBeDestroy: 0
   personPrefab: {fileID: 5539601311230615830, guid: a832c919a238f4541aebe21e97c975e2, type: 3}
   testPersons: 2000
+  nurseOffice: {fileID: 0}
   backPosition: {x: -19.2, y: 0, z: -22.9}
   backPositionSize: {x: 8.97, y: 0}
   isolationPosition: {x: 0, y: 0, z: 0}
   isolationPositionSize: {x: 0, y: 0}
+  dormitory: 0
 --- !u!4 &1891151548
 Transform:
   m_ObjectHideFlags: 0
@@ -28690,6 +28710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!43 &1980619040
 Mesh:
@@ -29182,6 +29203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 18, y: 20}
 --- !u!1 &2136010956
 GameObject:
@@ -29227,6 +29249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!224 &597434892843158895 stripped
 RectTransform:
