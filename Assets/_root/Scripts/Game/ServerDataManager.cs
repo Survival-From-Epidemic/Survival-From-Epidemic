@@ -31,11 +31,9 @@ namespace _root.Scripts.Game
 
         public KServerDataManager Parse()
         {
-            var kServerDataManager = new KServerDataManager();
-            kServerDataManager.timeLeaps = new List<KTimeLeap>();
-            foreach (var timeLeap in _timeLeapData)
+            var kServerDataManager = new KServerDataManager
             {
-                kServerDataManager.timeLeaps.Add(new KTimeLeap
+                timeLeaps = _timeLeapData.Select(timeLeap => new KTimeLeap
                 {
                     date = timeLeap.date,
                     nodeBuy = timeLeap.nodeBuy.ToList(),
@@ -51,8 +49,8 @@ namespace _root.Scripts.Game
                     },
                     diseaseGraph = timeLeap.diseaseGraph.ToList(),
                     personGraph = timeLeap.personGraph.ToList()
-                });
-            }
+                }).ToList()
+            };
             return kServerDataManager;
         }
 
