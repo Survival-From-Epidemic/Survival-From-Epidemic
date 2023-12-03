@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 156669635}
-  m_IndirectSpecularColor: {r: 0.25330132, g: 0.21698837, b: 0.2331919, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330302, g: 0.21698889, b: 0.23319246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -253,7 +253,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &103140664
 GameObject:
@@ -528,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 18, y: 20}
 --- !u!1 &121963503
 GameObject:
@@ -573,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &156669634
 GameObject:
@@ -869,6 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &397564623
 GameObject:
@@ -1032,6 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &613047131
 GameObject:
@@ -1077,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &632983917
 GameObject:
@@ -1122,6 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &701561238
 GameObject:
@@ -1167,6 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &773480128
 GameObject:
@@ -1212,6 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 20, y: 20}
 --- !u!1 &893014351
 GameObject:
@@ -1257,6 +1266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &904756169
 GameObject:
@@ -1513,6 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &1051818283
 GameObject:
@@ -1558,6 +1569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &1167902315
 GameObject:
@@ -4490,6 +4502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &1256531415
 GameObject:
@@ -4535,6 +4548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &1334830217
 GameObject:
@@ -26514,6 +26528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 27.8, y: 28.3}
 --- !u!1 &1494626032
 GameObject:
@@ -26559,6 +26574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 38, y: 28.3}
 --- !u!1 &1499917153
 GameObject:
@@ -26604,6 +26620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 8.35, y: 20.9}
 --- !u!1 &1557891501
 GameObject:
@@ -26649,6 +26666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1 &1598046172
 GameObject:
@@ -26694,6 +26712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &1643153903
 GameObject:
@@ -26763,8 +26782,13 @@ MonoBehaviour:
   canBeDestroy: 0
   personPrefab: {fileID: 5539601311230615830, guid: a832c919a238f4541aebe21e97c975e2, type: 3}
   testPersons: 2000
+  nurseOffice: {fileID: 0}
   backPosition: {x: -19.2, y: 0, z: -22.9}
   backPositionSize: {x: 8.97, y: 0}
+  isolationPosition: {x: 0, y: 0, z: 0}
+  isolationPositionSize: {x: 0, y: 0}
+  dormitory: 0
+  dormIn: 0
 --- !u!1 &1763102085
 GameObject:
   m_ObjectHideFlags: 0
@@ -26809,6 +26833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 7.7, y: 29}
 --- !u!1001 &1912226951
 PrefabInstance:
@@ -26915,6 +26940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da292f68c6cf470bb107a6dd520e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noRegister: 0
   distance: {x: 19.2, y: 20.9}
 --- !u!1 &2061708258
 GameObject:
