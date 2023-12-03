@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 297817201}
-  m_IndirectSpecularColor: {r: 0.25330132, g: 0.21698837, b: 0.2331919, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330302, g: 0.21698889, b: 0.23319246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1056,10 +1056,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 2028640105}
     m_Modifications:
     - target: {fileID: 327359043304969452, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
-      propertyPath: m_text
-      value: "\uB85C\uADF8\uC544\uC6C3"
-      objectReference: {fileID: 0}
-    - target: {fileID: 327359043304969452, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
@@ -1076,16 +1072,12 @@ PrefabInstance:
       value: -431
       objectReference: {fileID: 0}
     - target: {fileID: 1510191187976823822, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
-      propertyPath: m_text
-      value: How To Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 1510191187976823822, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 2293612846191607591, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 3100011310154479019, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Pivot.x
@@ -1173,7 +1165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3646695122399913470, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3672991412703487997, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1189,11 +1181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859107699945884793, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4598610390794403096, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4776134924186797258, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Camera
@@ -1209,19 +1201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6563857031068331911, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
-      objectReference: {fileID: 0}
-    - target: {fileID: 7048284295374273507, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
-      propertyPath: m_text
-      value: "\uD50C\uB808\uC774 \uBC29\uBC95"
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7048284295374273507, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522292477968326409, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
-      propertyPath: m_text
-      value: Logout
       objectReference: {fileID: 0}
     - target: {fileID: 7522292477968326409, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
