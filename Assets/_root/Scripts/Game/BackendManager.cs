@@ -31,19 +31,34 @@ namespace _root.Scripts.Game
             yield return new WaitUntil(() => _isLoaded);
             while (true)
             {
-                new Networking.Put<KGlobalData>("/progresses", kGlobalData)
+                var nowData = new KGlobalData()
+                {
+                    kGameManager = GameManager.Instance.Parse(),
+                    kNewsManager = NewsManager.Instance.Parse(),
+                    kTimeManager = TimeManager.Instance.Parse(),
+                    kLocalDataManager = LocalDataManager.Instance.Parse(),
+                    kMoneyManager = MoneyManager.Instance.Parse(),
+                    kServerDataManager = ServerDataManager.Instance.Parse(),
+                    kValueManager = ValueManager.Instance.Parse(),
+                    lastSaveDate = DateTime.Now.ToShortDateString()
+                };
+                new Networking.Put<KGlobalData>("/progresses", nowData)
+                    .AddHeader("Authorization", $"Bearer {PlayerPrefs.GetString("AccessToken")}")
+                    .AddHeader("Content-Type", "application/json")
                     .OnError(() =>
                     {
                         Debugger.Log("Error!!");
                     })
                     .Build();
-                yield return new WaitForSecondsRealtime(10);
+                yield return new WaitForSecondsRealtime(50);
             }
         }
 
         private void RequestData()
         {
             new Networking.Get<KGlobalData>("/progresses")
+                .AddHeader("Authorization", $"Bearer {PlayerPrefs.GetString("AccessToken")}")
+                .AddHeader("Content-Type", "application/json")
                 .OnResponse(body =>
                 {
                     Debugger.Log("Done");

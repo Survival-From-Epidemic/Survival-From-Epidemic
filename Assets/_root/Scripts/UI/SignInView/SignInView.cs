@@ -1,3 +1,4 @@
+using System;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
@@ -34,7 +35,8 @@ namespace _root.Scripts.UI.SignInView
                         .OnResponse(data =>
                         {
                             UIManager.Instance.EnableUI(UIElements.GameStart);
-                            PlayerPrefs.SetString("Token", data.accessToken);
+                            PlayerPrefs.SetString("AccessToken", data.accessToken);
+                            PlayerPrefs.SetString("RefreshToken", data.refreshToken);
                             Debugger.Log(data.accessToken);
                         })
                         .Build();

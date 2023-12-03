@@ -45,11 +45,6 @@ namespace _root.Scripts.Network
                 _params = new LinkedList<string>();
                 _headers = new Dictionary<string, string>();
                 _path = path;
-
-                if (PlayerPrefs.HasKey("Token"))
-                {
-                    _headers.Add("Authorization", $"Bearer {PlayerPrefs.GetString("Token")}");
-                }
             }
 
             public Request<T> AddParam(string key, string value)
