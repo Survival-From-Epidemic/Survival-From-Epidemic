@@ -50,7 +50,11 @@ namespace _root.Scripts.Game
             kLocalDataManager.pairs = new List<KLocalDataPair>();
             foreach (var kLocalDataPair in _buyDictionary)
             {
-                kLocalDataManager.pairs.Add(new KLocalDataPair() { key = kLocalDataPair.Key, date = kLocalDataPair.Value.ToShortDateString()});
+                kLocalDataManager.pairs.Add(new KLocalDataPair()
+                {
+                    key = kLocalDataPair.Key, 
+                    date = kLocalDataPair.Value.ToShortDateString()
+                });
             }
             return kLocalDataManager;
         }
