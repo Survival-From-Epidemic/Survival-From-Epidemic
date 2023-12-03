@@ -37,7 +37,11 @@ namespace _root.Scripts.UI.GameStartView
             howToPlayButton.onClick.AddListener(() =>
             {
                 howToIdx = 0;
-                howTo.gameObject.SetActive(true);
+                howTo.transform.GetChild(0).gameObject.SetActive(true);
+                howTo.transform.GetChild(1).gameObject.SetActive(false);
+                howTo.transform.GetChild(2).gameObject.SetActive(false);
+                howTo.transform.GetChild(3).gameObject.SetActive(false);
+                howTo.SetActive(true);
             });
         }
 
@@ -48,7 +52,7 @@ namespace _root.Scripts.UI.GameStartView
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    howTo.gameObject.SetActive(false);
+                    howTo.SetActive(false);
                 }
                 else if (Input.GetKeyDown(KeyCode.A) && howToIdx > 0)
                 {
