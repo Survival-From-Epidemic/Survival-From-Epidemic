@@ -8,7 +8,6 @@ namespace _root.Scripts.Player
     public class Person : MonoBehaviour
     {
         [SerializeField] private AIPath aiPath;
-        [SerializeField] private AIDestinationSetter aiDestinationSetter;
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] public bool inNurse;
         [SerializeField] public bool outOfControl;
@@ -21,7 +20,6 @@ namespace _root.Scripts.Player
         {
             PathManager.Instance.AddPerson(this);
             aiPath = GetComponent<AIPath>();
-            aiDestinationSetter = GetComponent<AIDestinationSetter>();
             meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         }
 
