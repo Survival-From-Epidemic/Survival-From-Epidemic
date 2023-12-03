@@ -1647,7 +1647,7 @@ MonoBehaviour:
     infectivity: 0
     infectPower: 0
   person:
-    totalPerson: 1000
+    totalPerson: 300
     healthyPerson: 0
     deathPerson: 0
     infectedPerson: 0
@@ -28389,6 +28389,7 @@ MonoBehaviour:
   nodeBuy: 
   nodeSell: 
   money: 
+  timeLeapData: []
 --- !u!1 &1820854829
 GameObject:
   m_ObjectHideFlags: 0

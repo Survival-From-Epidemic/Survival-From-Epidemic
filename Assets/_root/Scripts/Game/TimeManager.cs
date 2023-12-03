@@ -194,7 +194,7 @@ namespace _root.Scripts.Game
                     lastMoneyMonth = today.Month;
                     if (globalInfected)
                     {
-                        var money = 80000;
+                        var money = 80000 + ValueManager.Instance.person.totalPerson * 100;
                         if (ValueManager.Instance.authorityGoodDate >= 30) money += 40000;
                         MoneyManager.Instance.AddMoneyNotify(money);
                     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 297817201}
-  m_IndirectSpecularColor: {r: 0.25330302, g: 0.21698889, b: 0.23319246, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330132, g: 0.21698837, b: 0.2331919, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1057,7 +1057,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 327359043304969452, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 1429955330311229333, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1073,11 +1073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1510191187976823822, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 2293612846191607591, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 3100011310154479019, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Pivot.x
@@ -1165,7 +1165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3646695122399913470, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3672991412703487997, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1181,11 +1181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859107699945884793, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 4598610390794403096, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 4776134924186797258, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Camera
@@ -1197,19 +1197,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6375976498731580593, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 6563857031068331911, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 7048284295374273507, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 7522292477968326409, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 4043309055
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   - key: 3
     scene: 1
     targetUI: {fileID: 935211213}
-  startUIKey: 2
+  startUIKey: 0
 --- !u!4 &2028640105
 Transform:
   m_ObjectHideFlags: 0

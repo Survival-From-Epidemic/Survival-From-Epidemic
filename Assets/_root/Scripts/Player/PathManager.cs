@@ -21,18 +21,17 @@ namespace _root.Scripts.Player
 
         public bool dormitory;
         public bool dormIn;
+        private List<Person> _persons;
 
         // private List<AIAnchor> _anchors;
-        private List<AIAnchor> _anchorPosition;
-        private Coroutine _cycle;
-        private List<Person> _persons;
+        private List<AIAnchor> anchorPosition;
 
         protected override void Awake()
         {
             base.Awake();
             // _anchors = new List<AIAnchor>();
             _persons = new List<Person>();
-            _anchorPosition = new List<AIAnchor>();
+            anchorPosition = new List<AIAnchor>();
         }
 
         private void Start()
@@ -43,7 +42,7 @@ namespace _root.Scripts.Player
                 Instantiate(personPrefab, GetRandomPosition(), Quaternion.identity, transform);
             }
 
-            _cycle = StartCoroutine(Cycle());
+            StartCoroutine(Cycle());
         }
 
         private void OnDrawGizmos()
@@ -62,7 +61,7 @@ namespace _root.Scripts.Player
             {
                 if (!dormitory)
                 {
-                    yield return new WaitForSeconds(45);
+                    yield return new WaitForSeconds(15 + ValueManager.Instance.person.totalPerson * 0.02f);
                     dormIn = true;
                     ForeachPerson(p => p.EnterDormitory());
                 }
@@ -167,8 +166,21 @@ namespace _root.Scripts.Player
             //         .OrderBy(p => (p.transform.position - pos).sqrMagnitude)
             //         .First();
             // }
-            var persons = _persons.Where(p => p != null).ToList();
-            var targetPerson = persons[Random.Range(0, persons.Count)];
+            var persons = _persons.Where(p => p != null && !p.allocatedPersonData).ToList();
+            Person targetPerson;
+            while (true)
+            {
+                try
+                {
+                    targetPerson = persons[Random.Range(0, persons.Count)];
+                    break;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
+            }
+
+
             personData.personObject = targetPerson;
             targetPerson.PreInfected(personData);
         }
@@ -247,7 +259,7 @@ namespace _root.Scripts.Player
         public void AddAnchor(AIAnchor anchor)
         {
             // _anchors.Add(anchor);
-            _anchorPosition.Add(anchor);
+            anchorPosition.Add(anchor);
         }
 
         public Vector3 GetBackPosition() => backPosition
@@ -258,6 +270,6 @@ namespace _root.Scripts.Player
         public Vector3 GetIsolationPosition() => isolationPosition
                                                  + new Vector3(isolationPositionSize.x * (Random.value - 0.5f), 0f, isolationPositionSize.y * (Random.value - 0.5f));
 
-        public Vector3 GetRandomPosition() => _anchorPosition[Random.Range(0, _anchorPosition.Count)].GetPosition();
+        public Vector3 GetRandomPosition() => anchorPosition[Random.Range(0, anchorPosition.Count)].GetPosition();
     }
 }
