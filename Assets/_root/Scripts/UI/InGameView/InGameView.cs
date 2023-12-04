@@ -35,7 +35,7 @@ namespace _root.Scripts.UI.InGameView
             if (ValueManager.Instance.vaccineResearch)
             {
                 vaccineBackground.gameObject.SetActive(true);
-                var vaccinePercent = vaccineGageImage.fillAmount = (float)TimeManager.Instance.GetVaccinePercent();
+                var vaccinePercent = vaccineGageImage.fillAmount = Mathf.Min((float)TimeManager.Instance.GetVaccinePercent(), 1);
                 vaccinePercentText.text = $"{vaccinePercent * 100:n0}%";
             }
             else
