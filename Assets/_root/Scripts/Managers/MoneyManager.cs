@@ -65,8 +65,9 @@ namespace _root.Scripts.Managers
             coinAnchor.gameObject.SetActive(true);
             coinText.text = $"+{value:n0}￦";
             coinAnchor.anchoredPosition = new Vector2(368, 336);
-            coinAnchor.DOAnchorPosY(375, 2.25f);
+            coinAnchor.DOAnchorPosY(375, 2.25f).SetUpdate(true);
             DOTween.Sequence()
+                .SetUpdate(true)
                 .Append(coinIcon.DOFade(1, 0.25f))
                 .Join(coinText.DOFade(1, 0.25f))
                 .Append(coinIcon.DOFade(0, 2f))
