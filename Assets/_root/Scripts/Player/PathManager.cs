@@ -61,15 +61,16 @@ namespace _root.Scripts.Player
             {
                 if (!dormitory)
                 {
-                    yield return new WaitForSeconds(15 + ValueManager.Instance.person.totalPerson * 0.02f);
+                    yield return new WaitForSeconds(50);
                     dormIn = true;
                     ForeachPerson(p => p.EnterDormitory());
                 }
                 else
                 {
-                    yield return new WaitForSeconds(15);
+                    yield return new WaitForSeconds(50);
                     dormIn = false;
                     ForeachPersonDelay(p => p.OutDormitory(), 0.02f);
+                    foreach (var _ in _persons) yield return new WaitForSeconds(0.02f);
                 }
 
                 _persons.RemoveAll(p => p == null);
