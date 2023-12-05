@@ -118,6 +118,8 @@ namespace _root.Scripts.Game
                 gridAuthority.study += data.authority.study;
             }
 
+            gridDisease.infectivity *= 1.5f;
+
             ValueManager.Instance.localGridData.gridDisease = gridDisease;
             ValueManager.Instance.localGridData.gridAuthority = gridAuthority;
         }

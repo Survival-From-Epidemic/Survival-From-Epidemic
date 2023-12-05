@@ -11,7 +11,7 @@
     ],
     "disease": {
       "infectWeight": 0,
-      "infectivity": 0.5,
+      "infectivity": 1,
       "infectPower": 0,
       "modificationDecrease": 0
     },
@@ -36,7 +36,7 @@
     ],
     "disease": {
       "infectWeight": 0,
-      "infectivity": 1,
+      "infectivity": 1.5,
       "infectPower": 0,
       "modificationDecrease": 0
     },
@@ -60,7 +60,7 @@
     ],
     "disease": {
       "infectWeight": 0,
-      "infectivity": 2.5,
+      "infectivity": 3.5,
       "infectPower": 0,
       "modificationDecrease": 0
     },
@@ -154,8 +154,8 @@
       "출입증 강화"
     ],
     "disease": {
-      "infectWeight": 0.1,
-      "infectivity": 0.2,
+      "infectWeight": 0.25,
+      "infectivity": 0.25,
       "infectPower": 0,
       "modificationDecrease": 0
     },
@@ -222,9 +222,9 @@
     ],
     "child": [],
     "disease": {
-      "infectWeight": 0,
+      "infectWeight": 0.5,
       "infectivity": 0,
-      "infectPower": 0.03,
+      "infectPower": 0.02,
       "modificationDecrease": 0
     },
     "authority": {
@@ -247,7 +247,7 @@
     "disease": {
       "infectWeight": 1.5,
       "infectivity": 0,
-      "infectPower": 0.08,
+      "infectPower": 0.05,
       "modificationDecrease": 0
     },
     "authority": {
@@ -261,7 +261,7 @@
     "nodeIdx": 0,
     "name": "학생 격리 1",
     "message": "확진된 학생을 격리합니다.\n\n주의: 해당 서비스는 환불이 불가능합니다!",
-    "weight": 2,
+    "weight": 3,
     "parent": [
     ],
     "child": [
@@ -271,7 +271,7 @@
     "disease": {
       "infectWeight": 1,
       "infectivity": 0,
-      "infectPower": 0,
+      "infectPower": 0.05,
       "modificationDecrease": 0
     },
     "authority": {
@@ -285,16 +285,16 @@
     "nodeIdx": 0,
     "name": "학생 격리 2",
     "message": "확진된 학생을 학교에 남게 하지 않고 즉시 귀가 조치 합니다.\n\n주의: 해당 정책은 환불이 불가능합니다!",
-    "weight": 3,
+    "weight": 7,
     "parent": [
       "학생 격리 1"
     ],
     "child": [
     ],
     "disease": {
-      "infectWeight": 3.5,
+      "infectWeight": 2,
       "infectivity": 0,
-      "infectPower": 0,
+      "infectPower": 0.1,
       "modificationDecrease": 0
     },
     "authority": {
@@ -318,14 +318,14 @@
     "disease": {
       "infectWeight": 1.5,
       "infectivity": 0,
-      "infectPower": 0,
+      "infectPower": 0.025,
       "modificationDecrease": 0
     },
     "authority": {
       "study": 5,
       "concentration": 0,
       "mask": 0,
-      "annoy": 5
+      "annoy": 2
     }
   },
   "접촉2": {
@@ -348,7 +348,7 @@
       "study": 15,
       "concentration": 0,
       "mask": 0,
-      "annoy": 8
+      "annoy": 4
     }
   },
   "실내 마스크1": {
@@ -365,7 +365,7 @@
     "disease": {
       "infectWeight": 0.5,
       "infectivity": 1,
-      "infectPower": 0.05,
+      "infectPower": 0.04,
       "modificationDecrease": 0
     },
     "authority": {
@@ -379,7 +379,7 @@
     "nodeIdx": 1,
     "name": "실내 마스크 착용 2",
     "message": "교실, 복도, 청죽관을 포함해 전반적인 공간에서도 마스크를 착용하도록 권고합니다.",
-    "weight": 4,
+    "weight": 5,
     "parent": [
       "실내 마스크 착용 1"
     ],
@@ -389,7 +389,7 @@
     "disease": {
       "infectWeight": 0.5,
       "infectivity": 2.5,
-      "infectPower": 0.08,
+      "infectPower": 0.05,
       "modificationDecrease": 0
     },
     "authority": {
@@ -412,8 +412,8 @@
     ],
     "disease": {
       "infectWeight": 0.5,
-      "infectivity": 4,
-      "infectPower": 0.1,
+      "infectivity": 3,
+      "infectPower": 0.06,
       "modificationDecrease": 0
     },
     "authority": {
@@ -435,9 +435,9 @@
       "마스크 착용 의무화"
     ],
     "disease": {
-      "infectWeight": 1,
+      "infectWeight": 0.5,
       "infectivity": 5,
-      "infectPower": 0.15,
+      "infectPower": 0,
       "modificationDecrease": 0
     },
     "authority": {
@@ -451,7 +451,7 @@
     "nodeIdx": 1,
     "name": "마스크 착용 의무화",
     "message": "실외와 실내 상관 없이 교내에서 상시 마스크 착용을 의무화 합니다. 지키지 않는 학생이 있을 경우 징계를 내릴 수 있게 됩니다.",
-    "weight": 10,
+    "weight": 11.5,
     "parent": [
       "실내 마스크 착용 3",
       "실외 마스크 착용"
@@ -460,7 +460,7 @@
     ],
     "disease": {
       "infectWeight": 0,
-      "infectivity": 10,
+      "infectivity": 12,
       "infectPower": 0,
       "modificationDecrease": 0
     },
@@ -475,7 +475,7 @@
     "nodeIdx": 1,
     "name": "손 씻기 1",
     "message": "가능한 많이 손을 씻을 수 있도록 지시합니다.",
-    "weight": 1,
+    "weight": 1.5,
     "parent": [
     ],
     "child": [
@@ -500,7 +500,7 @@
     "nodeIdx": 1,
     "name": "손 씻기 2",
     "message": "등교시, 무조건 손을 한 번 씻도록 합니다. 그 외의 시간에도 가능한 많이 손을 씻을 수 있도록 유도합니다.",
-    "weight": 3,
+    "weight": 5,
     "parent": [
       "손 씻기 1"
     ],
@@ -509,7 +509,7 @@
     "disease": {
       "infectWeight": 3,
       "infectivity": 0,
-      "infectPower": 0.01,
+      "infectPower": 0.03,
       "modificationDecrease": 0
     },
     "authority": {
@@ -547,7 +547,7 @@
     "nodeIdx": 1,
     "name": "소독 2",
     "message": "하루에 두 번, 정해진 시간에 손 소독을 하도록 지도합니다.",
-    "weight": 4,
+    "weight": 4.5,
     "parent": [
       "소독 1"
     ],
@@ -571,7 +571,7 @@
     "nodeIdx": 1,
     "name": "소독 3",
     "message": "자신의 책상과 주변을 하루에 한 번씩 소독 티슈를 이용해 닦을 수 있도록 합니다.",
-    "weight": 6,
+    "weight": 6.5,
     "parent": [
       "소독 2"
     ],
@@ -651,7 +651,7 @@
       "infectWeight": 0,
       "infectivity": 0,
       "infectPower": 0,
-      "modificationDecrease": 2
+      "modificationDecrease": 4
     },
     "authority": {
       "study": 0,
@@ -674,7 +674,7 @@
       "infectWeight": 0,
       "infectivity": 0,
       "infectPower": 0,
-      "modificationDecrease": 5
+      "modificationDecrease": 6
     },
     "authority": {
       "study": 0,
@@ -695,9 +695,9 @@
     ],
     "disease": {
       "infectWeight": 0,
-      "infectivity": 1,
+      "infectivity": 0.5,
       "infectPower": 0,
-      "modificationDecrease": 2
+      "modificationDecrease": 1
     },
     "authority": {
       "study": 0,
@@ -721,7 +721,7 @@
       "infectWeight": 0,
       "infectivity": 1,
       "infectPower": 0,
-      "modificationDecrease": 3
+      "modificationDecrease": 2
     },
     "authority": {
       "study": 0,
@@ -745,7 +745,7 @@
       "infectWeight": 0,
       "infectivity": 1.5,
       "infectPower": 0,
-      "modificationDecrease": 4
+      "modificationDecrease": 3
     },
     "authority": {
       "study": 0,
@@ -769,7 +769,7 @@
       "infectWeight": 0,
       "infectivity": 2,
       "infectPower": 0,
-      "modificationDecrease": 5
+      "modificationDecrease": 4
     },
     "authority": {
       "study": 5,
@@ -792,7 +792,7 @@
       "infectWeight": 0,
       "infectivity": 2,
       "infectPower": 0,
-      "modificationDecrease": 7
+      "modificationDecrease": 5
     },
     "authority": {
       "study": 5,
@@ -821,14 +821,14 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 10
+      "annoy": 30
     }
   },
   "행사 축소": {
     "nodeIdx": 1,
     "name": "행사 축소",
     "message": "거리두기가 진행되는 동안 이루어지는 모든 행사의 규모나 진행 시간을 크게 축소합니다.",
-    "weight": 3,
+    "weight": 2,
     "parent": [
       "거리두기 1"
     ],
@@ -838,14 +838,14 @@
     "disease": {
       "infectWeight": 0,
       "infectivity": 0,
-      "infectPower": 0.04,
+      "infectPower": 0.025,
       "modificationDecrease": 0
     },
     "authority": {
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 15
+      "annoy": 30
     }
   },
   "행사 취소": {
@@ -859,16 +859,16 @@
     "child": [
     ],
     "disease": {
-      "infectWeight": 0,
+      "infectWeight": 1,
       "infectivity": 0,
-      "infectPower": 0.1,
+      "infectPower": 0.06,
       "modificationDecrease": 0
     },
     "authority": {
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": 15
+      "annoy": 40
     }
   },
   "손소독제 1": {
@@ -914,7 +914,7 @@
       "study": -5,
       "concentration": -5,
       "mask": 0,
-      "annoy": -35
+      "annoy": -40
     }
   },
   "소독티슈": {
@@ -936,7 +936,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": -20
+      "annoy": -25
     }
   },
   "마스크 1": {
@@ -959,7 +959,7 @@
       "study": 0,
       "concentration": 0,
       "mask": -25,
-      "annoy": -15
+      "annoy": -30
     }
   },
   "마스크 2": {
@@ -982,8 +982,8 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": -45,
-      "annoy": -15
+      "mask": -50,
+      "annoy": -20
     }
   },
   "마스크 3": {
@@ -1005,8 +1005,8 @@
     "authority": {
       "study": 0,
       "concentration": 0,
-      "mask": -85,
-      "annoy": -15
+      "mask": -90,
+      "annoy": -20
     }
   },
   "연구 1": {
@@ -1195,7 +1195,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": -5
+      "annoy": -10
     }
   },
   "키트2": {
@@ -1218,7 +1218,7 @@
       "study": 0,
       "concentration": 0,
       "mask": 0,
-      "annoy": -10
+      "annoy": -25
     }
   },
   "칸막이": {
@@ -1240,7 +1240,7 @@
       "study": -3,
       "concentration": -3,
       "mask": -3,
-      "annoy": 6
+      "annoy": 10
     }
   }
 }

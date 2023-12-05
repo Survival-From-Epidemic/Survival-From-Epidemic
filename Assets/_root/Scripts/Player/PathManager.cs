@@ -168,22 +168,20 @@ namespace _root.Scripts.Player
             //         .First();
             // }
             var persons = _persons.Where(p => p != null && !p.allocatedPersonData).ToList();
-            Person targetPerson;
             while (true)
             {
+                if(persons.Count <= 0) break;
                 try
                 {
-                    targetPerson = persons[Random.Range(0, persons.Count)];
+                    var targetPerson = persons[Random.Range(0, persons.Count)];
+                    personData.personObject = targetPerson;
+                    targetPerson.PreInfected(personData);
                     break;
                 }
                 catch (ArgumentOutOfRangeException)
                 {
                 }
             }
-
-
-            personData.personObject = targetPerson;
-            targetPerson.PreInfected(personData);
         }
 
         public void Modify(List<PersonData> personDataList)

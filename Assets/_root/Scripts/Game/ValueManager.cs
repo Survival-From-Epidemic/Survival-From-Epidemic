@@ -76,7 +76,7 @@ namespace _root.Scripts.Game
             {
                 < 20 => Nothing,
                 < 50 => Weak,
-                < 80 => Normal,
+                < 82.5f => Normal,
                 < 92.5f => Strong,
                 _ => Emergency
             };
@@ -206,7 +206,7 @@ namespace _root.Scripts.Game
                         }
 
                     if (!p.isInfected && kitEnabled && localKitChance.Chance())
-                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
+                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.2f : kit1 ? 0.6f : 1)) <= now)
                         {
                             if (p.personObject != null) p.personObject.NurseOut();
                             p.isInfected = true;

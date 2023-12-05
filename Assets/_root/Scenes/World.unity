@@ -1690,6 +1690,7 @@ MonoBehaviour:
   lastMoneyMonth: 0
   started: 0
   globalInfected: 0
+  vaccineAdditionDate: 0
 --- !u!4 &955204821
 Transform:
   m_ObjectHideFlags: 0
@@ -29076,7 +29077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2111669571
 MonoBehaviour:
   m_ObjectHideFlags: 0

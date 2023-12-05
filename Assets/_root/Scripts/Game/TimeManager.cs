@@ -145,7 +145,7 @@ namespace _root.Scripts.Game
             // vaccineEndDateSerialized = vaccineEndDate.AddDays(-days).ToShortDateString();
         }
 
-        public float ModificationWeight() => modificationCount * 20f / (modificationCount + 30f);
+        public float ModificationWeight() => modificationCount * 30f / (modificationCount + 30f + ValueManager.Instance.localGridData.gridDisease.modificationDecrease);
 
         private Disease NewDisease() =>
             new()
@@ -182,9 +182,9 @@ namespace _root.Scripts.Game
                 UIManager.Instance.UpdateTime(today);
                 yield return new WaitForSeconds(timeScale);
 
-                if (GameManager.Instance.gameEnd)
+                if (GameManager.Instance.gameEnd && today >= gameEndDate)
                 {
-                    Debugger.Log("Game ENDED");
+                    UIManager.Instance.EnableUI(UIElements.GameResult);
                     yield break;
                 }
 
@@ -334,11 +334,10 @@ namespace _root.Scripts.Game
                             break;
                     }
                 }
-
+                
                 if (today.AddDays(vaccineAdditionDate - 4) >= vaccineEndDate)
                 {
                     GameManager.Instance.GameEnd(GameEndType.Win);
-                    UIManager.Instance.EnableUI(UIElements.GameResult);
                 }
 
                 date++;
