@@ -353,15 +353,12 @@ namespace _root.Scripts.UI.InGameMenuView
                     clickerDescription.text = _currentGridData.message;
                     clickerDataText.text = _currentGridData.GetClickerData();
 
-                    if (buyAllowed)
+                    if (_currentGridData.name is not ("연구 지원 1" or "연구 지원 2" or "연구 지원 3" or "학생 격리 1" or "학생 격리 2" or "의심 학생 격리 1" or "의심 학생 격리 2") || !isBought)
                     {
                         clickerCost.text = $"{_currentCost:n0}\uffe6";
-                        clickerCost.color = canBuy ? Color.white : Color.red;
                     }
-                    else
-                    {
-                        clickerCost.text = "";
-                    }
+
+                    clickerCost.color = canBuy ? Color.white : Color.red;
 
                     clickerPreObjectImage.onClickDown.RemoveAllListeners();
 
