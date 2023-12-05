@@ -53,13 +53,13 @@ namespace _root.Scripts.Game
             switch (key)
             {
                 case "연구 지원 1":
-                    TimeManager.Instance.VaccineUpgrade(30);
+                    TimeManager.Instance.VaccineUpgrade(40);
                     break;
                 case "연구 지원 2":
-                    TimeManager.Instance.VaccineUpgrade(50);
+                    TimeManager.Instance.VaccineUpgrade(60);
                     break;
                 case "연구 지원 3":
-                    TimeManager.Instance.VaccineUpgrade(80);
+                    TimeManager.Instance.VaccineUpgrade(90);
                     break;
                 case "학생 격리 1":
                     PathManager.Instance.Clear();

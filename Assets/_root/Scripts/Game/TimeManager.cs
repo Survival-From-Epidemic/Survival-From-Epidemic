@@ -145,7 +145,7 @@ namespace _root.Scripts.Game
             // vaccineEndDateSerialized = vaccineEndDate.AddDays(-days).ToShortDateString();
         }
 
-        public float ModificationWeight() => modificationCount * 30f / (modificationCount + 30f + ValueManager.Instance.localGridData.gridDisease.modificationDecrease);
+        public float ModificationWeight() => modificationCount * 20f / (modificationCount + 30f + ValueManager.Instance.localGridData.gridDisease.modificationDecrease);
 
         private Disease NewDisease() =>
             new()
@@ -219,7 +219,7 @@ namespace _root.Scripts.Game
                 if (!globalInfected && today >= infectGlobalDate)
                 {
                     NewsManager.Instance.ShowNews(2);
-                    MoneyManager.Instance.AddMoneyNotify(500000);
+                    MoneyManager.Instance.AddMoneyNotify(500000 + ValueManager.Instance.person.totalPerson * 500);
                     Debugger.Log("First Infected");
                     globalInfected = true;
                 }
@@ -334,7 +334,7 @@ namespace _root.Scripts.Game
                             break;
                     }
                 }
-                
+
                 if (today.AddDays(vaccineAdditionDate - 4) >= vaccineEndDate)
                 {
                     GameManager.Instance.GameEnd(GameEndType.Win);
