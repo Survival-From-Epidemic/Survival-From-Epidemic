@@ -61,5 +61,8 @@ namespace _root.Scripts.Utils
                 (list[k], list[n]) = (list[n], list[k]);
             }
         }
+
+        public static string SetColor(this string text, Color col) => $"<color={ColorHexFromUnityColor(col)}>{text}</color>";
+        public static string ColorHexFromUnityColor(this Color unityColor) => $"#{ColorUtility.ToHtmlStringRGBA(unityColor)}";
     }
 }
