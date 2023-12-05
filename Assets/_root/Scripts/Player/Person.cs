@@ -39,7 +39,7 @@ namespace _root.Scripts.Player
 
         public void PreInfected(PersonData data)
         {
-            Debugger.Log("============ Person : PreInfected");
+            // Debugger.Log("============ Person : PreInfected");
             allocatedPersonData = true;
             personData = data;
 
@@ -53,7 +53,7 @@ namespace _root.Scripts.Player
 
         public void InfectCheck()
         {
-            Debugger.Log("============ Person : InfectCheck");
+            // Debugger.Log("============ Person : InfectCheck");
             gameObject.SetActive(true);
             StartCoroutine(_NurseOffice());
             // if (LocalDataManager.Instance.IsBought("학생 격리 1")) Isolation();
@@ -61,18 +61,19 @@ namespace _root.Scripts.Player
 
         private IEnumerator _NurseOffice()
         {
-            Debugger.Log("============ Person : NurseOffice Coroutine");
+            // Debugger.Log("============ Person : NurseOffice Coroutine");
             inNurse = true;
             meshRenderer.material.color = Color.yellow;
             StopNextPath();
             SetSpeed(1f);
             aiPath.destination = PathManager.Instance.GetNurseOfficePosition();
-            yield return new WaitUntil(() => aiPath.reachedDestination);
+            yield return new WaitUntil(() => aiPath.reachedDestination || !allocatedPersonData);
+            inNurse = false;
         }
 
         public void NurseOut()
         {
-            Debugger.Log("============ Person : NurseOut");
+            // Debugger.Log("============ Person : NurseOut");
             inNurse = false;
             if (!meshRenderer) return;
             meshRenderer.material.color = Color.red;
@@ -89,7 +90,7 @@ namespace _root.Scripts.Player
 
         public void Isolation()
         {
-            Debugger.Log("============ Person : Isolation");
+            // Debugger.Log("============ Person : Isolation");
             StopAllCoroutines();
             gameObject.SetActive(true);
             StartCoroutine(_Isolation());
@@ -108,7 +109,8 @@ namespace _root.Scripts.Player
 
         public void UnInfected()
         {
-            Debugger.Log("============ Person : UnInfected");
+            StopAllCoroutines();
+            // Debugger.Log("============ Person : UnInfected");
             meshRenderer.material.color = Color.white;
             allocatedPersonData = true;
             outOfControl = false;
@@ -132,7 +134,7 @@ namespace _root.Scripts.Player
 
         public void EnterDormitory()
         {
-            Debugger.Log("============ Person : EnterDormitory");
+            // Debugger.Log("============ Person : EnterDormitory");
             if (outOfControl || inNurse) return;
             StopNextPath();
             gameObject.SetActive(true);
@@ -141,7 +143,7 @@ namespace _root.Scripts.Player
 
         public void OutDormitory()
         {
-            Debugger.Log("============ Person : OutDormitory");
+            // Debugger.Log("============ Person : OutDormitory");
             if (outOfControl || inNurse) return;
             gameObject.SetActive(true);
             aiPath.Teleport(PathManager.Instance.GetBackPosition() + Vector3.up);
