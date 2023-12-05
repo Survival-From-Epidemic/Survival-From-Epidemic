@@ -16,10 +16,10 @@
       "modificationDecrease": 0
     },
     "authority": {
-      "study": 0,
+      "study": 5,
       "concentration": 0,
       "mask": 0,
-      "annoy": 4
+      "annoy": 0
     }
   },
   "단축2": {
@@ -41,10 +41,10 @@
       "modificationDecrease": 0
     },
     "authority": {
-      "study": 15,
+      "study": 20,
       "concentration": 0,
       "mask": 0,
-      "annoy": 2
+      "annoy": 0
     }
   },
   "단축3": {
@@ -90,9 +90,9 @@
     },
     "authority": {
       "study": -10,
-      "concentration": 0,
+      "concentration": 5,
       "mask": 0,
-      "annoy": 5
+      "annoy": 0
     }
   },
   "온라인2": {
@@ -114,10 +114,10 @@
       "modificationDecrease": 0
     },
     "authority": {
-      "study": -25,
-      "concentration": 5,
+      "study": -30,
+      "concentration": 10,
       "mask": 0,
-      "annoy": 5
+      "annoy": 0
     }
   },
   "온라인3": {
@@ -137,10 +137,10 @@
       "modificationDecrease": 0
     },
     "authority": {
-      "study": -65,
-      "concentration": 10,
+      "study": -70,
+      "concentration": 20,
       "mask": 0,
-      "annoy": 5
+      "annoy": 0
     }
   },
   "모니터링": {
