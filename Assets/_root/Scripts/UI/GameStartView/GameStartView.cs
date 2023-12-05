@@ -37,11 +37,12 @@ namespace _root.Scripts.UI.GameStartView
             howToPlayButton.onClick.AddListener(() =>
             {
                 howToIdx = 0;
+                howTo.SetActive(true);
                 howTo.transform.GetChild(0).gameObject.SetActive(true);
                 howTo.transform.GetChild(1).gameObject.SetActive(false);
                 howTo.transform.GetChild(2).gameObject.SetActive(false);
                 howTo.transform.GetChild(3).gameObject.SetActive(false);
-                howTo.SetActive(true);
+                howTo.transform.GetChild(4).gameObject.SetActive(false);
             });
         }
 
@@ -50,17 +51,17 @@ namespace _root.Scripts.UI.GameStartView
             base.Update();
             if (howTo.activeSelf)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     howTo.SetActive(false);
                 }
-                else if (Input.GetKeyDown(KeyCode.A) && howToIdx > 0)
+                else if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && howToIdx > 0)
                 {
                     howTo.transform.GetChild(howToIdx - 1).gameObject.SetActive(true);
                     howTo.transform.GetChild(howToIdx).gameObject.SetActive(false);
                     howToIdx--;
                 }
-                else if (Input.GetKeyDown(KeyCode.D) && howToIdx < howTo.transform.childCount - 1)
+                else if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && howToIdx < howTo.transform.childCount - 1)
                 {
                     howTo.transform.GetChild(howToIdx + 1).gameObject.SetActive(true);
                     howTo.transform.GetChild(howToIdx).gameObject.SetActive(false);
