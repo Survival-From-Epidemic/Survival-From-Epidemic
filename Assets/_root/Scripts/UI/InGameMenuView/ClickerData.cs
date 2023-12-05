@@ -12,7 +12,7 @@ namespace _root.Scripts.UI.InGameMenuView
         private static readonly float[] Infectivity = { 0.5f, 2f };
         private static readonly float[] InfectPower = { 0.03f, 0.05f };
         private static readonly float[] ModificationDecrease = { 1.5f, 4f };
-        private static readonly int[] StudyPlus = { 5, 15 };
+        private static readonly int[] StudyPlus = { 5, 20 };
         private static readonly int[] StudyMinus = { -5, -25 };
         private static readonly int[] ConcentrationPlus = { 0, 5 };
         private static readonly int[] ConcentrationMinus = { -999, -3 };
@@ -35,10 +35,14 @@ namespace _root.Scripts.UI.InGameMenuView
         private static string Authority(this int value, string prefix, IReadOnlyList<int> plus, IReadOnlyList<int> minus)
         {
             if (value == 0) return "";
-            for (var i = 0; i < minus.Count; i++)
-                if (value <= minus[i])
-                    return $"{prefix}{StrMinusArr[i]}\n".SetColor(Color.green);
-            if (value < 0) return $"{prefix}{StrMinusArr[minus.Count]}\n".SetColor(Color.green);
+            if (value < 0)
+            {
+                for (var i = 0; i < minus.Count; i++)
+                    if (value >= minus[i])
+                        return $"{prefix}{StrMinusArr[i]}\n".SetColor(Color.green);
+                return $"{prefix}{StrMinusArr[minus.Count]}\n".SetColor(Color.green);
+            }
+
             for (var i = 0; i < plus.Count; i++)
                 if (value <= plus[i])
                     return $"{prefix}{StrPlusArr[i]}\n".SetColor(Color.red);
