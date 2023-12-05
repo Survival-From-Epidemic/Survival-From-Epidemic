@@ -319,6 +319,7 @@ namespace _root.Scripts.UI.InGameMenuView
                     var isBought = localDataManager.IsBought(_currentGridData.name);
 
                     _currentCost = Mathf.FloorToInt(_currentGridData.weight * (isBought ? SellPricer(localDataManager.GetBuy(_currentGridData.name)) : 30000));
+                    var buyAllowed = UpdateClickerText();
                     var canBuy = !isBought || MoneyManager.Instance.HasMoney(_currentCost);
                     var uiImagePosition = uiImage.image.rectTransform.position;
                     clicker.gameObject.SetActive(true);
@@ -330,8 +331,18 @@ namespace _root.Scripts.UI.InGameMenuView
                     clickerCost.DOFade(1f, 0.2f).SetUpdate(true);
                     clickerText.DOFade(1f, 0.2f).SetUpdate(true);
                     clickerDataText.DOFade(1f, 0.2f).SetUpdate(true);
-                    if (!isBought) clickerCostEnableInfo.DOFade(1f, 0.2f).SetUpdate(true);
-                    else clickerCostDisableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    if (!isBought)
+                    {
+                        clickerCostEnableInfo.gameObject.SetActive(true);
+                        clickerCostDisableInfo.gameObject.SetActive(false);
+                        clickerCostEnableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    }
+                    else
+                    {
+                        clickerCostDisableInfo.gameObject.SetActive(true);
+                        clickerCostEnableInfo.gameObject.SetActive(false);
+                        clickerCostDisableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    }
 
                     clickerDataText.alignment = uiImagePosition.x < 1050 ? TextAlignmentOptions.MidlineRight : TextAlignmentOptions.MidlineLeft;
                     clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1050 ? -415f : 415f), uiImagePosition.y);
@@ -342,9 +353,15 @@ namespace _root.Scripts.UI.InGameMenuView
                     clickerDescription.text = _currentGridData.message;
                     clickerDataText.text = _currentGridData.GetClickerData();
 
-                    clickerCost.text = $"{_currentCost:n0}\uffe6";
-
-                    clickerCost.color = canBuy ? Color.white : Color.red;
+                    if (buyAllowed)
+                    {
+                        clickerCost.text = $"{_currentCost:n0}\uffe6";
+                        clickerCost.color = canBuy ? Color.white : Color.red;
+                    }
+                    else
+                    {
+                        clickerCost.text = "";
+                    }
 
                     clickerPreObjectImage.onClickDown.RemoveAllListeners();
 
