@@ -5633,14 +5633,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB2E4\uC2DC \uD074\uB9AD\uD574 \uD65C\uC131\uD654"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 02d36c785bfe9bd4fb69accadd47f966, type: 2}
-  m_sharedMaterial: {fileID: 4511116189162537613, guid: 02d36c785bfe9bd4fb69accadd47f966, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a5f76fa5ebdeb1144b4a7bca342db0ab, type: 2}
+  m_sharedMaterial: {fileID: -5583390914720956903, guid: a5f76fa5ebdeb1144b4a7bca342db0ab, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4291809231
   m_fontColor: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5658,8 +5658,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
