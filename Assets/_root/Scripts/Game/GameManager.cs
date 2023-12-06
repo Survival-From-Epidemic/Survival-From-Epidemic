@@ -1,5 +1,6 @@
 ﻿using System;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
 using UnityEngine;
@@ -21,6 +22,12 @@ namespace _root.Scripts.Game
             gameEnd = kGlobalData.kGameManager.gameEnd;
             gameEndType = kGlobalData.kGameManager.gameEndType;
         }
+
+        public KGameManager Parse() => new()
+        {
+            gameEnd = gameEnd,
+            gameEndType = gameEndType
+        };
 
         public void GameEnd(GameEndType type)
         {

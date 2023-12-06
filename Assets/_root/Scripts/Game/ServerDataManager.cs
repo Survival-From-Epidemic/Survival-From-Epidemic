@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 
@@ -26,6 +27,31 @@ namespace _root.Scripts.Game
             timeLeapData = kGlobalData.kServerDataManager.timeLeaps
                 .Select(v => v.ToTimeLeap())
                 .ToList();
+        }
+
+        public KServerDataManager Parse()
+        {
+            var kServerDataManager = new KServerDataManager
+            {
+                timeLeaps = _timeLeapData.Select(timeLeap => new KTimeLeap
+                {
+                    date = timeLeap.date,
+                    nodeBuy = timeLeap.nodeBuy.ToList(),
+                    nodeSell = timeLeap.nodeSell.ToList(),
+                    money = timeLeap.money.ToList(),
+                    authority = timeLeap.authority.ToList(),
+                    person = new KPerson
+                    {
+                        deathPerson = timeLeap.person.deathPerson,
+                        healthyPerson = timeLeap.person.healthyPerson,
+                        infectedPerson = timeLeap.person.infectedPerson,
+                        totalPerson = timeLeap.person.totalPerson
+                    },
+                    diseaseGraph = timeLeap.diseaseGraph.ToList(),
+                    personGraph = timeLeap.personGraph.ToList()
+                }).ToList()
+            };
+            return kServerDataManager;
         }
 
         private void New()

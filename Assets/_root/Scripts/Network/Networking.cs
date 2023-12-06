@@ -14,12 +14,13 @@ namespace _root.Scripts.Network
         private static string _baseUrl;
         private static int _timeOut;
         private static Networking _networking;
+        [SerializeField] private bool debug;
 
         [SerializeField] private string baseUrl;
 
         [SerializeField] private int timeOut = 30;
 
-        private void Start()
+        private void Awake()
         {
             _baseUrl = baseUrl;
             _timeOut = timeOut;
@@ -54,7 +55,7 @@ namespace _root.Scripts.Network
 
             public Request<T> AddHeader(string key, string value)
             {
-                _headers[key] = value;
+                _headers.Add(key, value);
                 return this;
             }
 
@@ -81,25 +82,26 @@ namespace _root.Scripts.Network
                     webRequest.SetRequestHeader(key, value);
                 yield return webRequest.SendWebRequest();
 
+                Debugger.Log($"ResponseCode: {webRequest.responseCode}");
+                var bodyText = webRequest.downloadHandler.text;
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
                     if (webRequest.responseCode is >= 200 and <= 299)
                     {
                         Debugger.Log($"Response for {url}: {webRequest.responseCode}");
-                        var text = webRequest.downloadHandler.text;
                         if (typeof(T) == typeof(string))
                         {
-                            _responseAction?.Invoke(text as T);
+                            _responseAction?.Invoke(bodyText as T);
                         }
                         else
                         {
-                            _responseAction?.Invoke(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
+                            _responseAction?.Invoke(JsonUtility.FromJson<T>(bodyText));
                         }
 
                         yield break;
                     }
                 }
-
+                Debugger.Log($"Error Handled: {bodyText}");
                 _errorAction?.Invoke();
             }
 

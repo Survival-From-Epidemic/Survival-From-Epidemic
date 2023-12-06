@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
@@ -97,6 +98,29 @@ namespace _root.Scripts.Game
             lastMoneyMonth = kGlobalData.kTimeManager.lastMoneyMonth;
             started = kGlobalData.kTimeManager.started;
             globalInfected = kGlobalData.kTimeManager.globalInfected;
+        }
+        
+        public KTimeManager Parse()
+        {
+            var kTimeManager = new KTimeManager();
+            kTimeManager.speedIdx = speedIdx;
+            kTimeManager.timeScale = timeScale;
+            kTimeManager.date = date;
+            kTimeManager.nextNews = nextNews;
+            kTimeManager.modificationCount = modificationCount;
+            kTimeManager.infectDate = infectDate.ToShortDateString();
+            kTimeManager.kitDate = kitDate.ToShortDateString();
+            kTimeManager.nextKitUpgradeDate = nextKitUpgradeDate.ToShortDateString();
+            kTimeManager.nextModificationDate = nextModificationDate.ToShortDateString();
+            kTimeManager.pcrDate = pcrDate.ToShortDateString();
+            kTimeManager.startDate = startDate.ToShortDateString();
+            kTimeManager.today = today.ToShortDateString();
+            kTimeManager.vaccineEndDate = vaccineEndDate.ToShortDateString();
+            kTimeManager.vaccineStartDate = vaccineStartDate.ToShortDateString();
+            kTimeManager.lastMoneyMonth = lastMoneyMonth;
+            kTimeManager.started = started;
+            kTimeManager.globalInfected = globalInfected;
+            return kTimeManager;
         }
 
         public static void Pause()

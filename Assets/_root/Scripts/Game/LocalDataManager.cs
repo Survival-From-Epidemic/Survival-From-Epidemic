@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _root.Scripts.Game.Data;
+using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.Player;
@@ -42,6 +43,21 @@ namespace _root.Scripts.Game
             {
                 _buyDictionary.Add(kLocalDataPair.key, Convert.ToDateTime(kLocalDataPair.date));
             }
+        }
+
+        public KLocalDataManager Parse()
+        {
+            var kLocalDataManager = new KLocalDataManager();
+            kLocalDataManager.pairs = new List<KLocalDataPair>();
+            foreach (var kLocalDataPair in _buyDictionary)
+            {
+                kLocalDataManager.pairs.Add(new KLocalDataPair()
+                {
+                    key = kLocalDataPair.Key, 
+                    date = kLocalDataPair.Value.ToShortDateString()
+                });
+            }
+            return kLocalDataManager;
         }
 
         public string GetKey(string key) => _keySet[key];
