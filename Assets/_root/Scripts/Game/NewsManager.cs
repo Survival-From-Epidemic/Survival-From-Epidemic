@@ -79,6 +79,7 @@ namespace _root.Scripts.Game
             _importantNewsLeft = LinqUtility.ToHashSet(importantNewsList.Select(v => v.id));
 
             _newsSequence = DOTween.Sequence()
+                .SetUpdate(true)
                 .AppendCallback(() => newsChatText.rectTransform.anchoredPosition = new Vector2(680, 0))
                 .Append(newsChatText.rectTransform.DOAnchorPosX(-1000, 12f))
                 .OnStepComplete(ShowRandomNews)
@@ -98,9 +99,9 @@ namespace _root.Scripts.Game
             newsDescriptionText.text = first.description;
 
             NewsObject.Instance.gameObject.SetActive(true);
-            NewsObject.Instance.image.DOFade(1f, 0.2f);
-            newsTitleText.DOFade(1f, 0.2f);
-            newsDescriptionText.DOFade(1f, 0.2f);
+            NewsObject.Instance.image.DOFade(1f, 0.2f).SetUpdate(true);
+            newsTitleText.DOFade(1f, 0.2f).SetUpdate(true);
+            newsDescriptionText.DOFade(1f, 0.2f).SetUpdate(true);
             // Debugger.Log($"Show Main News: {first.title}");
             _newsSequence.Restart();
         }

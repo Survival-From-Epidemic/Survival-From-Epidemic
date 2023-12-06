@@ -33,6 +33,7 @@ namespace _root.Scripts.UI.InGameMenuView
         [SerializeField] private TextMeshProUGUI clickerCostEnableInfo;
         [SerializeField] private TextMeshProUGUI clickerCostDisableInfo;
         [SerializeField] private TextMeshProUGUI clickerText;
+        [SerializeField] private TextMeshProUGUI clickerDataText;
         [SerializeField] private InGameMenuPage inGameMenuPage = InGameMenuPage.Policy;
         [SerializeField] private Sprite[] enableSprites;
         [SerializeField] private Sprite[] disableSprites;
@@ -123,6 +124,7 @@ namespace _root.Scripts.UI.InGameMenuView
                 clickerCostEnableInfo.DOFade(0, 0.2f).SetUpdate(true);
                 clickerCostDisableInfo.DOFade(0, 0.2f).SetUpdate(true);
                 clickerText.DOFade(0, 0.2f).SetUpdate(true);
+                clickerDataText.DOFade(0, 0.2f).SetUpdate(true);
                 clickerBackground.image.DOFade(0, 0.2f).SetUpdate(true)
                     .OnComplete(() =>
                     {
@@ -130,6 +132,7 @@ namespace _root.Scripts.UI.InGameMenuView
                         clickerBackground.gameObject.SetActive(false);
                         clickerPreObjectImage.gameObject.SetActive(false);
                         clickerText.gameObject.SetActive(false);
+                        clickerDataText.gameObject.SetActive(false);
                     });
             };
 
@@ -255,7 +258,7 @@ namespace _root.Scripts.UI.InGameMenuView
             var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
             if (isBought)
             {
-                if (_currentGridData.name is "연구 지원 1" or "연구 지원 2" or "연구 지원 3")
+                if (_currentGridData.name is "연구 지원 1" or "연구 지원 2" or "연구 지원 3" or "학생 격리 1" or "학생 격리 2" or "의심 학생 격리 1" or "의심 학생 격리 2")
                 {
                     clickerText.color = Color.red;
                     clickerText.text = "판매 불가";
@@ -316,25 +319,44 @@ namespace _root.Scripts.UI.InGameMenuView
                     var isBought = localDataManager.IsBought(_currentGridData.name);
 
                     _currentCost = Mathf.FloorToInt(_currentGridData.weight * (isBought ? SellPricer(localDataManager.GetBuy(_currentGridData.name)) : 30000));
-                    var canBuy = isBought || MoneyManager.Instance.HasMoney(_currentCost);
+                    var buyAllowed = UpdateClickerText();
+                    var canBuy = !isBought || MoneyManager.Instance.HasMoney(_currentCost);
                     var uiImagePosition = uiImage.image.rectTransform.position;
                     clicker.gameObject.SetActive(true);
                     clickerText.gameObject.SetActive(true);
+                    clickerDataText.gameObject.SetActive(true);
                     clicker.DOFade(0.85f, 0.2f).SetUpdate(true);
                     clickerTitle.DOFade(1f, 0.2f).SetUpdate(true);
                     clickerDescription.DOFade(1f, 0.2f).SetUpdate(true);
                     clickerCost.DOFade(1f, 0.2f).SetUpdate(true);
                     clickerText.DOFade(1f, 0.2f).SetUpdate(true);
-                    if (!isBought) clickerCostEnableInfo.DOFade(1f, 0.2f).SetUpdate(true);
-                    else clickerCostDisableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    clickerDataText.DOFade(1f, 0.2f).SetUpdate(true);
+                    if (!isBought)
+                    {
+                        clickerCostEnableInfo.gameObject.SetActive(true);
+                        clickerCostDisableInfo.gameObject.SetActive(false);
+                        clickerCostEnableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    }
+                    else
+                    {
+                        clickerCostDisableInfo.gameObject.SetActive(true);
+                        clickerCostEnableInfo.gameObject.SetActive(false);
+                        clickerCostDisableInfo.DOFade(1f, 0.2f).SetUpdate(true);
+                    }
 
-                    clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1.5 ? -4f : 4f), uiImagePosition.y);
-                    clickerText.rectTransform.position = new Vector3(uiImagePosition.x, uiImagePosition.y - 0.8f);
+                    clickerDataText.alignment = uiImagePosition.x < 1050 ? TextAlignmentOptions.MidlineRight : TextAlignmentOptions.MidlineLeft;
+                    clicker.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x >= 1050 ? -415f : 415f), uiImagePosition.y);
+                    clickerText.rectTransform.position = new Vector3(uiImagePosition.x, uiImagePosition.y - 85f);
+                    clickerDataText.rectTransform.position = new Vector3(uiImagePosition.x + (uiImagePosition.x < 1050 ? -250f : 250f), uiImagePosition.y);
 
                     clickerTitle.text = _currentGridData.name;
                     clickerDescription.text = _currentGridData.message;
+                    clickerDataText.text = _currentGridData.GetClickerData();
 
-                    clickerCost.text = $"{_currentCost:n0}\uffe6";
+                    if (_currentGridData.name is not ("연구 지원 1" or "연구 지원 2" or "연구 지원 3" or "학생 격리 1" or "학생 격리 2" or "의심 학생 격리 1" or "의심 학생 격리 2") || !isBought)
+                    {
+                        clickerCost.text = $"{_currentCost:n0}\uffe6";
+                    }
 
                     clickerCost.color = canBuy ? Color.white : Color.red;
 

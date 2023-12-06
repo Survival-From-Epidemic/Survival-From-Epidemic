@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
@@ -6,6 +6,7 @@ using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
 using _root.Scripts.Managers.UI;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,8 +15,11 @@ namespace _root.Scripts.Game
 {
     public class TimeManager : SingleMono<TimeManager>, IDataUpdateable
     {
+        private static int _beforeSpeedIdx;
+
+        private static bool _paused;
         [SerializeField] public int speedIdx;
-        [Range(0.01f, 4f)] [SerializeField] public float timeScale = 2f;
+        [Range(0.01f, 4f)] [SerializeField] public float timeScale = 1.5f;
         [SerializeField] public int date;
         [SerializeField] public int nextNews;
         public int modificationCount;
@@ -36,6 +40,7 @@ namespace _root.Scripts.Game
         [SerializeField] private bool started;
 
         public bool globalInfected;
+        public int vaccineAdditionDate;
         private double _vaccineTotalDays;
         public DateTime gameEndDate;
         public DateTime infectDate;
@@ -56,6 +61,7 @@ namespace _root.Scripts.Game
             date = 0;
             today = startDate = DateTime.Today;
             gameEndDate = DateTime.MaxValue;
+            vaccineAdditionDate = 0;
 
             lastMoneyMonth = today.Month;
             infectGlobalDateSerialized = (infectGlobalDate = startDate.AddDays(Random.Range(7, 15))).ToShortDateString();
@@ -63,7 +69,7 @@ namespace _root.Scripts.Game
             pcrDateSerialized = (pcrDate = infectGlobalDate.AddDays(Random.Range(14, 21))).ToShortDateString();
             kitDateSerialized = (kitDate = startDate.AddDays(Random.Range(84, 105))).ToShortDateString();
             vaccineStartDateSerialized = (vaccineStartDate = startDate.AddDays(Random.Range(154, 203))).ToShortDateString();
-            vaccineEndDateSerialized = (vaccineEndDate = startDate.AddDays(Random.Range(709, 808))).ToShortDateString();
+            vaccineEndDateSerialized = (vaccineEndDate = startDate.AddDays(Random.Range(809, 908))).ToShortDateString();
             _vaccineTotalDays = (vaccineEndDate - vaccineStartDate).TotalDays;
             nextNews = Random.Range(14, 44);
 
@@ -93,7 +99,7 @@ namespace _root.Scripts.Game
             started = kGlobalData.kTimeManager.started;
             globalInfected = kGlobalData.kTimeManager.globalInfected;
         }
-
+        
         public KTimeManager Parse()
         {
             var kTimeManager = new KTimeManager();
@@ -117,36 +123,58 @@ namespace _root.Scripts.Game
             return kTimeManager;
         }
 
-        public static void SpeedCycle(int idx)
+        public static void Pause()
         {
+            if (Instance.speedIdx == 0) return;
+            _beforeSpeedIdx = Instance.speedIdx;
+            _paused = true;
+            SpeedCycle(0);
+        }
+
+        public static void UnPause()
+        {
+            _paused = false;
+            SpeedCycle(_beforeSpeedIdx);
+        }
+
+        public static void SpeedCycle(int idx = -1) => Instance._SpeedCycle(idx);
+
+        private void _SpeedCycle(int idx)
+        {
+            if (_paused) return;
             if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
-            Debugger.Log($"SpeedCycle: {idx}");
-            switch (idx)
+            if (idx == -1) speedIdx = (speedIdx + 1) % 4;
+            else speedIdx = idx;
+            // Debugger.Log($"SpeedCycle: {idx}");
+            switch (speedIdx)
             {
                 case 0:
                     Time.timeScale = 0;
                     break;
                 case 1:
                     Time.timeScale = 1;
-                    Instance.timeScale = 2;
+                    // Instance.timeScale = 1.5f;
                     break;
                 case 2:
-                    Time.timeScale = 1;
-                    Instance.timeScale = 1.1f;
+                    Time.timeScale = 2.1f;
+                    // Instance.timeScale = 0.75f;
                     break;
                 case 3:
-                    Time.timeScale = 1;
-                    Instance.timeScale = 0.5f;
+                    Time.timeScale = 4.2f;
+                    // Instance.timeScale = 0.35f;
                     break;
             }
+
+            PathManager.Instance.UpdateSpeed();
         }
 
         public void VaccineUpgrade(int days)
         {
-            vaccineEndDateSerialized = vaccineEndDate.AddDays(-days).ToShortDateString();
+            vaccineAdditionDate += days;
+            // vaccineEndDateSerialized = vaccineEndDate.AddDays(-days).ToShortDateString();
         }
 
-        public float ModificationWeight() => modificationCount * 20f / (modificationCount + 30f);
+        public float ModificationWeight() => modificationCount * 20f / (modificationCount + 30f + ValueManager.Instance.localGridData.gridDisease.modificationDecrease);
 
         private Disease NewDisease() =>
             new()
@@ -183,13 +211,14 @@ namespace _root.Scripts.Game
                 UIManager.Instance.UpdateTime(today);
                 yield return new WaitForSeconds(timeScale);
 
-                if (GameManager.Instance.gameEnd)
+                if (GameManager.Instance.gameEnd && today >= gameEndDate)
                 {
-                    Debugger.Log("Game ENDED");
+                    UIManager.Instance.EnableUI(UIElements.GameResult);
                     yield break;
                 }
 
                 ValueManager.Instance.Cycle();
+                ServerDataManager.Instance.RecordTime();
                 today = startDate.AddDays(date);
                 // Debug.unityLogger.Log($"dayCycle: {today.ToShortDateString()}");
                 if (lastMoneyMonth != today.Month)
@@ -197,8 +226,8 @@ namespace _root.Scripts.Game
                     lastMoneyMonth = today.Month;
                     if (globalInfected)
                     {
-                        var money = 60000;
-                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 30000;
+                        var money = 80000 + ValueManager.Instance.person.totalPerson * 100;
+                        if (ValueManager.Instance.authorityGoodDate >= 30) money += 40000 + ValueManager.Instance.person.totalPerson * 100;
                         MoneyManager.Instance.AddMoneyNotify(money);
                     }
                 }
@@ -211,15 +240,15 @@ namespace _root.Scripts.Game
 
                 NewsCycle();
 
-                if (today >= gameEndDate)
-                {
-                    UIManager.Instance.EnableUI(UIElements.GameResult);
-                }
+                // if (today >= gameEndDate)
+                // {
+                //     UIManager.Instance.EnableUI(UIElements.GameResult);
+                // }
 
                 if (!globalInfected && today >= infectGlobalDate)
                 {
                     NewsManager.Instance.ShowNews(2);
-                    MoneyManager.Instance.AddMoneyNotify(500000);
+                    MoneyManager.Instance.AddMoneyNotify(500000 + ValueManager.Instance.person.totalPerson * 500);
                     Debugger.Log("First Infected");
                     globalInfected = true;
                 }
@@ -293,34 +322,51 @@ namespace _root.Scripts.Game
                 {
                     switch (GetVaccinePercent())
                     {
+                        case >= 1:
+                            NewsManager.Instance.ShowNews(23);
+                            Debugger.Log("Vaccine Completion");
+                            ValueManager.Instance.vaccineEnded = true;
+                            break;
                         case >= 0.95:
                             NewsManager.Instance.ShowNews(22);
                             break;
                         case >= 0.85:
-                            NewsManager.Instance.ShowNews(19);
+                            if (NewsManager.Instance.IsNotShowed(19))
+                            {
+                                vaccineAdditionDate += 5;
+                                NewsManager.Instance.ShowNews(19);
+                            }
+
                             break;
                         case >= 0.7:
-                            NewsManager.Instance.ShowNews(18);
+                            if (NewsManager.Instance.IsNotShowed(18))
+                            {
+                                vaccineAdditionDate += 30;
+                                NewsManager.Instance.ShowNews(18);
+                            }
+
                             break;
                         case >= 0.4:
-                            NewsManager.Instance.ShowNews(15);
+                            if (NewsManager.Instance.IsNotShowed(15))
+                            {
+                                vaccineAdditionDate += 65;
+                                NewsManager.Instance.ShowNews(15);
+                            }
+
                             break;
                         case >= 0.2:
-                            NewsManager.Instance.ShowNews(7);
+                            if (NewsManager.Instance.IsNotShowed(7))
+                            {
+                                NewsManager.Instance.ShowNews(7);
+                            }
+
                             break;
                     }
+                }
 
-                    if (today >= vaccineEndDate)
-                    {
-                        NewsManager.Instance.ShowNews(23);
-                        Debugger.Log("Vaccine Completion");
-                        ValueManager.Instance.vaccineEnded = true;
-
-                        if (today >= vaccineEndDate.AddDays(7))
-                        {
-                            GameManager.Instance.GameEnd(GameEndType.Win);
-                        }
-                    }
+                if (today.AddDays(vaccineAdditionDate - 4) >= vaccineEndDate)
+                {
+                    GameManager.Instance.GameEnd(GameEndType.Win);
                 }
 
                 date++;
@@ -331,11 +377,9 @@ namespace _root.Scripts.Game
                     NewsManager.Instance.ShowRandomNews();
                     nextNews = Random.Range(14, 44);
                 }
-
-                ServerDataManager.Instance.RecordTime();
             }
         }
 
-        public double GetVaccinePercent() => 1 - (vaccineEndDate - today).TotalDays / _vaccineTotalDays;
+        public double GetVaccinePercent() => 1 - (vaccineEndDate - today.AddDays(vaccineAdditionDate)).TotalDays / _vaccineTotalDays;
     }
 }

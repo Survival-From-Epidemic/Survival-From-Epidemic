@@ -14,8 +14,8 @@ TagManager:
   - 
   - Blur
   - 
-  - 
-  - 
+  - Person
+  - Obstacle
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2952204521
     locked: 0

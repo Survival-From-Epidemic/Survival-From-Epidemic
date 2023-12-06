@@ -830,7 +830,7 @@ Canvas:
   m_GameObject: {fileID: 347342186770230270}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -902,7 +902,6 @@ MonoBehaviour:
     playButton: {fileID: 6252788338371237389}
     playButtonImage: {fileID: 4099043326688664476}
   graphButton: {fileID: 3247895120902139164}
-  graphType: 0
   graphs:
   - {fileID: 3850035420791837128}
   - {fileID: 6166496369627163539}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using _root.Scripts.Managers.UI;
 using _root.Scripts.SingleTon;
@@ -16,6 +17,8 @@ namespace _root.Scripts.Managers
         private UIElements _currentUIKey;
 
         private Dictionary<UIElements, UIElement> _elementDictionary;
+
+        private bool _sceneLoading;
 
         private void Start()
         {
@@ -45,8 +48,20 @@ namespace _root.Scripts.Managers
             if (_currentUI) _currentUI.gameObject.SetActive(false);
             _currentUIKey = key;
             var element = _elementDictionary[key];
-            if (SceneManager.GetActiveScene().name != element.scene.GetString()) SceneManager.LoadScene(element.scene.GetString());
+            if (!_sceneLoading && SceneManager.GetActiveScene().name != element.scene.GetString())
+            {
+                StartCoroutine(SceneLoad(element.scene.GetString()));
+                // SceneManager.LoadSceneAsync(element.scene.GetString());
+            }
+
             (_currentUI = element.targetUI)?.gameObject.SetActive(true);
+        }
+
+        private IEnumerator SceneLoad(string sceneName)
+        {
+            _sceneLoading = true;
+            yield return SceneManager.LoadSceneAsync(sceneName);
+            _sceneLoading = false;
         }
 
         public void UpdateTime(DateTime dateTime)

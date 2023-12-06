@@ -4,6 +4,7 @@ using _root.Scripts.Game.Data;
 using _root.Scripts.Game.Data.Child;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.Sound;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -68,13 +69,19 @@ namespace _root.Scripts.Game
             switch (key)
             {
                 case "연구 지원 1":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 20));
+                    TimeManager.Instance.VaccineUpgrade(40);
                     break;
                 case "연구 지원 2":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 40));
+                    TimeManager.Instance.VaccineUpgrade(60);
                     break;
                 case "연구 지원 3":
-                    TimeManager.Instance.VaccineUpgrade(Mathf.CeilToInt((float)TimeManager.Instance.GetVaccinePercent() * 60));
+                    TimeManager.Instance.VaccineUpgrade(90);
+                    break;
+                case "학생 격리 1":
+                    PathManager.Instance.Clear();
+                    break;
+                case "의심 학생 격리 1":
+                    PathManager.Instance.Isolation();
                     break;
             }
 
@@ -126,6 +133,8 @@ namespace _root.Scripts.Game
                 gridAuthority.mask += data.authority.mask;
                 gridAuthority.study += data.authority.study;
             }
+
+            gridDisease.infectivity *= 1.5f;
 
             ValueManager.Instance.localGridData.gridDisease = gridDisease;
             ValueManager.Instance.localGridData.gridAuthority = gridAuthority;
