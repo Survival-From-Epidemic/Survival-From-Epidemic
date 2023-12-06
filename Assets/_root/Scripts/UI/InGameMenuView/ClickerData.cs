@@ -32,21 +32,21 @@ namespace _root.Scripts.UI.InGameMenuView
             return $"{prefix}{StrMinusArr[arr.Count]}\n".SetColor(Color.cyan);
         }
 
-        private static string Authority(this int value, string prefix, IReadOnlyList<int> plus, IReadOnlyList<int> minus)
+        private static string Authority(this int value, string prefix, IReadOnlyList<int> plus, IReadOnlyList<int> minus, bool inversedColor = false)
         {
             if (value == 0) return "";
             if (value < 0)
             {
                 for (var i = 0; i < minus.Count; i++)
                     if (value >= minus[i])
-                        return $"{prefix}{StrMinusArr[i]}\n".SetColor(Color.green);
-                return $"{prefix}{StrMinusArr[minus.Count]}\n".SetColor(Color.green);
+                        return inversedColor ? $"{prefix}{StrMinusArr[i]}\n".SetColor(Color.red) : $"{prefix}{StrMinusArr[i]}\n".SetColor(Color.green);
+                return inversedColor ? $"{prefix}{StrMinusArr[minus.Count]}\n".SetColor(Color.red) : $"{prefix}{StrMinusArr[minus.Count]}\n".SetColor(Color.green);
             }
 
             for (var i = 0; i < plus.Count; i++)
                 if (value <= plus[i])
-                    return $"{prefix}{StrPlusArr[i]}\n".SetColor(Color.red);
-            return $"{prefix}{StrPlusArr[plus.Count]}\n".SetColor(Color.red);
+                    return inversedColor ? $"{prefix}{StrPlusArr[i]}\n".SetColor(Color.green) : $"{prefix}{StrPlusArr[i]}\n".SetColor(Color.red);
+            return inversedColor ? $"{prefix}{StrPlusArr[minus.Count]}\n".SetColor(Color.green) : $"{prefix}{StrPlusArr[plus.Count]}\n".SetColor(Color.red);
         }
 
         public static string GetClickerData(this LocalDataManager.GridData gridData) =>
@@ -56,7 +56,7 @@ namespace _root.Scripts.UI.InGameMenuView
                 .Append(gridData.disease.infectPower.Disease("감염 확률 ", InfectPower))
                 .Append(((float)gridData.disease.modificationDecrease).Disease("공기 감염률 ", ModificationDecrease))
                 .Append(gridData.authority.study.Authority("교육 방해 ", StudyPlus, StudyMinus))
-                .Append((-gridData.authority.concentration).Authority("수업 집중 방해 ", ConcentrationPlus, ConcentrationMinus))
+                .Append(gridData.authority.concentration.Authority("수업 집중 ", ConcentrationPlus, ConcentrationMinus, true))
                 .Append(gridData.authority.mask.Authority("마스크 반발도 ", MaskPlus, MaskMinus))
                 .Append(gridData.authority.annoy.Authority("짜증 ", AnnoyPlus, AnnoyMinus))
                 .ToString();
