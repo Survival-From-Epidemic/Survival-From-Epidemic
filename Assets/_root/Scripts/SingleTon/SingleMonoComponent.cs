@@ -14,7 +14,7 @@ namespace _root.Scripts.SingleTon
 
         public static T2 Component => _component ? _component : _component = FindObjectOfType<T>().GetComponent<T2>();
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_instance && _component && !canBeDestroy)
             {

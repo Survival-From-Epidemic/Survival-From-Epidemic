@@ -575,3 +575,4 @@ FodyWeavers.xsd
 
 Assets/AstarPathfindingProject/**
 Assets/AstarPathfindingProject.meta
+**/Build/**

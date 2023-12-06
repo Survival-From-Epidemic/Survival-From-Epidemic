@@ -13,7 +13,7 @@ namespace _root.Scripts.Game
         [ReadOnly] public int[] nodeBuy;
         [ReadOnly] public int[] nodeSell;
         [ReadOnly] public int[] money;
-        private List<TimeLeap> _timeLeapData;
+        [SerializeField] private List<TimeLeap> timeLeapData;
 
         protected override void Awake()
         {
@@ -23,7 +23,7 @@ namespace _root.Scripts.Game
 
         public void RegisterData(KGlobalData kGlobalData)
         {
-            _timeLeapData = kGlobalData.kServerDataManager.timeLeaps
+            timeLeapData = kGlobalData.kServerDataManager.timeLeaps
                 .Select(v => v.ToTimeLeap())
                 .ToList();
         }
@@ -33,7 +33,7 @@ namespace _root.Scripts.Game
             nodeBuy = new int[3];
             nodeSell = new int[3];
             money = new int[2];
-            _timeLeapData = new List<TimeLeap>();
+            timeLeapData = new List<TimeLeap>();
         }
 
         public void RecordTime()
@@ -46,7 +46,7 @@ namespace _root.Scripts.Game
             var deathValue = mad4 ? 0.06f : mad3 ? 0.2f : mad2 ? 0.45f : mad1 ? 0.75f : 1;
             var valueManager = ValueManager.Instance;
 
-            _timeLeapData.Add(new TimeLeap
+            timeLeapData.Add(new TimeLeap
             {
                 date = TimeManager.Instance.date,
                 nodeBuy = nodeBuy,
@@ -69,13 +69,13 @@ namespace _root.Scripts.Game
             });
         }
 
-        public TimeLeap GetTimeLeap(int time) => _timeLeapData[time];
+        public TimeLeap GetTimeLeap(int time) => timeLeapData[time];
 
-        public int TimeLeapLength() => _timeLeapData.Count;
+        public int TimeLeapLength() => timeLeapData.Count;
 
         public void ForEachTimeLeap(Action<TimeLeap, DateTime> action)
         {
-            foreach (var timeLeap in _timeLeapData) action(timeLeap, TimeManager.Instance.startDate.AddDays(timeLeap.date));
+            foreach (var timeLeap in timeLeapData) action(timeLeap, TimeManager.Instance.startDate.AddDays(timeLeap.date));
         }
 
         [Serializable]

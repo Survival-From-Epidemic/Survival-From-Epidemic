@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.002
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -26,8 +26,8 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
-  m_HaloStrength: 0.5
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
+  m_HaloStrength: 0.137
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 297817201}
-  m_IndirectSpecularColor: {r: 0.1728247, g: 0.21596955, b: 0.29791713, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330132, g: 0.21698837, b: 0.2331919, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: a02694b831b850242baf3def76265bae, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd903ff3cd3544d9a170a2bd4936d6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 0
+  canBeDestroy: 1
   debug: 1
 --- !u!4 &654853491
 Transform:
@@ -854,52 +854,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3100011310154479019, guid: da27cfd7ac7db4b228160242540f8601, type: 3}
   m_PrefabInstance: {fileID: 849066700}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &924076768
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 924076770}
-  - component: {fileID: 924076769}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &924076769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924076768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94ab1216bfe4135becc066d52a60b61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBeDestroy: 0
-  speed: 5
---- !u!4 &924076770
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924076768}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.818699, y: 0.7528615, z: 6.990617}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &935211211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1103,15 +1057,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 327359043304969452, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429955330311229333, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 468.6693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429955330311229333, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 109
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429955330311229333, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -431
       objectReference: {fileID: 0}
     - target: {fileID: 1510191187976823822, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 2293612846191607591, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 3100011310154479019, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Pivot.x
@@ -1201,33 +1167,49 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3672991412703487997, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 485.6583
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672991412703487997, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 51
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672991412703487997, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3859107699945884793, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 4598610390794403096, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 4776134924186797258, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1411546291}
     - target: {fileID: 6375976498731580593, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
+      propertyPath: m_text
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 6375976498731580593, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 6563857031068331911, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 7048284295374273507, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     - target: {fileID: 7522292477968326409, guid: dd89ff71ebdc4462fb671096178cd305, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3087007743
+      value: 4043309055
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1358,7 +1340,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -1413,8 +1395,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -1496,7 +1478,7 @@ MonoBehaviour:
   - key: 3
     scene: 1
     targetUI: {fileID: 935211213}
-  startUIKey: 2
+  startUIKey: 0
 --- !u!4 &2028640105
 Transform:
   m_ObjectHideFlags: 0
@@ -1532,7 +1514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4966362984114931878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1631,7 +1613,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 924076770}
   - {fileID: 1411546292}
   - {fileID: 297817202}
   - {fileID: 5096376754197224494}

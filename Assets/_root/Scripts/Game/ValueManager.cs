@@ -5,6 +5,7 @@ using _root.Scripts.Attribute;
 using _root.Scripts.Game.Data;
 using _root.Scripts.Managers;
 using _root.Scripts.Managers.UI;
+using _root.Scripts.Player;
 using _root.Scripts.SingleTon;
 using _root.Scripts.Utils;
 using UnityEngine;
@@ -75,7 +76,7 @@ namespace _root.Scripts.Game
             {
                 < 20 => Nothing,
                 < 50 => Weak,
-                < 80 => Normal,
+                < 82.5f => Normal,
                 < 92.5f => Strong,
                 _ => Emergency
             };
@@ -85,7 +86,9 @@ namespace _root.Scripts.Game
         {
             if (personsSet == null) return 1;
             var rate = (float)personsSet.Count / person.healthyPerson;
-            return 1 + rate * rate * 5;
+            var infectPower = 1 + rate * rate * (LocalDataManager.Instance.IsBought("학생 격리 2") ? 5 : LocalDataManager.Instance.IsBought("학생 격리 2") ? 10 : 35);
+            if (infectPower >= 4) NewsManager.Instance.ShowNews(32);
+            return infectPower;
         }
 
         public void Cycle()
@@ -96,7 +99,7 @@ namespace _root.Scripts.Game
 
             if ((float)person.deathPerson / person.totalPerson >= 0.15) NewsManager.Instance.ShowNews(25);
 
-            currentAuthority = (person.deathPerson * 6 + person.infectedPerson / 1.333f) / person.totalPerson;
+            currentAuthority = (person.deathPerson * 3 + person.infectedPerson / 1.333f) / person.totalPerson;
 
             banbal = Mathf.Lerp(banbal, currentBanbal * 0.01f, 0.08f);
             authority = Mathf.Lerp(authority, currentAuthority, 0.08f);
@@ -127,7 +130,7 @@ namespace _root.Scripts.Game
                     NewsManager.Instance.ShowNews(26);
                     break;
                 case <= 0.2f:
-                    if (TimeManager.Instance.today >= TimeManager.Instance.vaccineStartDate)
+                    if (TimeManager.Instance.today >= TimeManager.Instance.kitDate)
                     {
                         authorityGoodDate++;
                         if (authorityGoodDate >= 30) NewsManager.Instance.ShowNews(29);
@@ -161,14 +164,16 @@ namespace _root.Scripts.Game
                         person.healthyPerson -= count;
                         for (var i = 0; i < count; i++)
                         {
-                            personsSet.Add(new PersonData
+                            var personData = new PersonData
                             {
                                 catchDate = now,
                                 deathWeight = 0,
                                 isInfected = false,
                                 recoverWeight = 0,
                                 symptomType = GenerateSymptomType()
-                            });
+                            };
+                            PathManager.Instance.Modify(personData);
+                            personsSet.Add(personData);
                         }
                     }
                 }
@@ -193,13 +198,19 @@ namespace _root.Scripts.Game
 
                 foreach (var p in personsSet)
                 {
-                    if (pcrEnabled)
+                    if (pcrEnabled && !p.isInfected)
                         if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(1f, 2f)) <= now)
+                        {
+                            if (p.personObject != null) p.personObject.NurseOut();
                             p.isInfected = true;
+                        }
 
-                    if (kitEnabled && localKitChance.Chance())
-                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.33f : kit1 ? 0.7f : 1)) <= now)
+                    if (!p.isInfected && kitEnabled && localKitChance.Chance())
+                        if (p.catchDate + Mathf.FloorToInt(p.symptomType.SymptomPcrDate() * Random.Range(0.5f, 1f) * (kit2 ? 0.2f : kit1 ? 0.6f : 1)) <= now)
+                        {
+                            if (p.personObject != null) p.personObject.NurseOut();
                             p.isInfected = true;
+                        }
 
                     p.recoverWeight += Random.Range(0.5f, 1f) + (mad4 ? Random.Range(0.2f, 0.6f) : 0);
                     switch (p.symptomType)
@@ -243,12 +254,30 @@ namespace _root.Scripts.Game
                     // }
                 }
 
-                person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
-                person.infectedPerson = personsSet.Count(p => p.isInfected);
-                personsSet.RemoveWhere(p => p.recoverWeight >= 100);
+                // var personUpdate = new Person
+                // {
+                //     deathPerson = personsSet.RemoveWhere(p => p.deathWeight >= 100),
+                //     infectedPerson = personsSet.Count(p => p.isInfected),
+                //     totalPerson = person.totalPerson
+                // };
+                // personUpdate.healthyPerson = personUpdate.totalPerson - personUpdate.deathPerson - personUpdate.infectedPerson;
 
                 if (Debugger.IsDebug()) persons = personsSet.ToList();
                 else if (persons.Count > 0) persons = new List<PersonData>();
+
+                // if (modifyList != null) PathManager.Instance.Modify(modifyList);
+
+                foreach (var p in personsSet.Where(p => p.recoverWeight >= 100))
+                    if (p.personObject != null)
+                        p.personObject.UnInfected();
+                personsSet.RemoveWhere(p => p.recoverWeight >= 100);
+
+                foreach (var p in personsSet.Where(p => p.deathWeight >= 100))
+                    if (p.personObject != null)
+                        p.personObject.Death();
+                person.deathPerson += personsSet.RemoveWhere(p => p.deathWeight >= 100);
+
+                person.infectedPerson = personsSet.Count(p => p.isInfected);
             }
 
             person.healthyPerson = person.totalPerson - person.deathPerson - person.infectedPerson;
