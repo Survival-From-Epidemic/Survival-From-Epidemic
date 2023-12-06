@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _root.Scripts.Game;
 using _root.Scripts.Managers;
+using _root.Scripts.Managers.Sound;
 using _root.Scripts.UI.InGameMenuView;
 using _root.Scripts.Utils;
 using TMPro;
@@ -35,6 +36,12 @@ namespace _root.Scripts.UI
         {
             defaultUI.moneyText.text = $"{MoneyManager.Instance.GetMoney():n0}";
             defaultUI.playButtonImage.sprite = GetPlaySprite();
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                _graphType = (InGameMenuGraph)(((int)_graphType + 1) % 3);
+                SoundManager.Instance.PlayEffectSound(SoundKey.ClickSound);
+            }
 
             UpdateGraph();
         }

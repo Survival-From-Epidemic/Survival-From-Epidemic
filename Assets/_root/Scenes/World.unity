@@ -1673,7 +1673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeDestroy: 0
   speedIdx: 0
-  timeScale: 0.8
+  timeScale: 0.6
   date: 0
   nextNews: 0
   modificationCount: 0

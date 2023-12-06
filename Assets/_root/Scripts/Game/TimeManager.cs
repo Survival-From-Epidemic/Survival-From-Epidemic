@@ -127,8 +127,8 @@ namespace _root.Scripts.Game
         {
             if (Instance.speedIdx == 0) return;
             _beforeSpeedIdx = Instance.speedIdx;
-            _paused = true;
             SpeedCycle(0);
+            _paused = true;
         }
 
         public static void UnPause()
