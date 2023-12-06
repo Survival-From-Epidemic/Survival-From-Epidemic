@@ -15,6 +15,8 @@ namespace _root.Scripts.Game
     public class TimeManager : SingleMono<TimeManager>, IDataUpdateable
     {
         private static int _beforeSpeedIdx;
+
+        private static bool _paused;
         [SerializeField] public int speedIdx;
         [Range(0.01f, 4f)] [SerializeField] public float timeScale = 1.5f;
         [SerializeField] public int date;
@@ -101,11 +103,13 @@ namespace _root.Scripts.Game
         {
             if (Instance.speedIdx == 0) return;
             _beforeSpeedIdx = Instance.speedIdx;
+            _paused = true;
             SpeedCycle(0);
         }
 
         public static void UnPause()
         {
+            _paused = false;
             SpeedCycle(_beforeSpeedIdx);
         }
 
@@ -113,6 +117,7 @@ namespace _root.Scripts.Game
 
         private void _SpeedCycle(int idx)
         {
+            if (_paused) return;
             if (UIManager.Instance.GetKey() is UIElements.InGameMenu) return;
             if (idx == -1) speedIdx = (speedIdx + 1) % 4;
             else speedIdx = idx;

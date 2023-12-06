@@ -189,7 +189,7 @@ namespace _root.Scripts.Player
         public void SetSpeed(float multi)
         {
             _speedMultiply = multi;
-            aiPath.maxSpeed = 4 * _speedMultiply * TimeManager.Instance.timeScale;
+            UpdateSpeed();
         }
     }
 }
